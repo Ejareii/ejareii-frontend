@@ -1,5 +1,5 @@
-'use client';
-import Image from 'next/image'
+"use client";
+import { MainLayout } from "@/src/shared/components/layouts/main-layout";
 
 export default function Home() {
   console.log(process.env.NEXT_PUBLIC_TEST);
@@ -8,6 +8,11 @@ export default function Home() {
     <main className="">
       <h1>yyyyy</h1>
     </main>
-  )
+  );
 }
 
+Home.getLayout = (page: any) => {
+  return <MainLayout>
+    {page}
+  </MainLayout>
+};

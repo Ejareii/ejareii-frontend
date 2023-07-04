@@ -5,6 +5,9 @@ const Navigation:FC = () =>{
 
     return(
         <>
+        <p className={styles.new}>sfszfzf</p>
         </>
     )
 }
+
+export default Navigation;

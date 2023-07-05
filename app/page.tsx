@@ -5,7 +5,9 @@ export default function Home() {
 
   return (
     // <Grid container height="100vh" alignItems="center" justifyContent="center" direction="column">
-      <h1>Using Material UI with Next.js 13</h1>
+    <h1 className="text-6xl font-bold underline new">
+    Hello world!
+  </h1>
       
   );
 }

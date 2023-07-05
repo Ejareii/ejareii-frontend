@@ -1,5 +1,4 @@
 import { MainLayout } from "@/src/shared/components/layouts/main-layout";
-import { Button, Grid, Stack } from "@mui/material";
 
 export default function Home() {
   console.log(process.env.NEXT_PUBLIC_TEST);

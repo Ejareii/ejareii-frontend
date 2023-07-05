@@ -6,7 +6,7 @@ interface BearState {
   increase: (by: number) => void
 }
 
-const useBearStore = create<BearState>()(
+export const useBearStore = create<BearState>()(
   devtools(
     persist(
       (set) => ({

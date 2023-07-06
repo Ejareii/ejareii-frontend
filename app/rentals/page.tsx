@@ -7,7 +7,7 @@ export default async function Rentals() {
   console.log(process.env.NEXT_PUBLIC_TEST);
 
   //const x = useBearStore(store => store)
-  let apiData = await fetchWrapper("https://jsonplaceholder.typicode.com/todos")as string[]
+  let apiData = await fetchWrapper<string[]>("https://jsonplaceholder.typicode.com/todos")
   console.log({apiData});
   
   return (

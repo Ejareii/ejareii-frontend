@@ -9,7 +9,7 @@ export default function RootLayout({
 }) {
   return (
     // <RecoilRoot>
-    <html lang="en">
+    <html lang="fa" dir="rtl">
       <body >{children}</body>
     </html>
     // </RecoilRoot>

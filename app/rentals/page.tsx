@@ -8,7 +8,10 @@ export default async function Rentals() {
 
   //const x = useBearStore(store => store)
   let apiData = await fetchWrapper<string[]>("https://jsonplaceholder.typicode.com/todos")
-  console.log({apiData});
+  console.log(apiData.length);
+
+  useBearStore.setState({bears: apiData.length})
+  console.log(useBearStore.getState());
   
   return (
     <main className="">

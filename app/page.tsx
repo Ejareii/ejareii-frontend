@@ -7,9 +7,10 @@ export default function Home() {
     // <Grid container height="100vh" alignItems="center" justifyContent="center" direction="column">
     <div className="h-full border-2 border-gray-200
                 border-opacity-60 rounded-lg
+                bg-primary
                 overflow-hidden">
  
-        <div className="p-6 hover:bg-green-600
+        <div className="p-6 hover:bg-accent
                     hover:text-white transition
                     duration-300 ease-in">
  
@@ -21,9 +22,3 @@ export default function Home() {
       
   );
 }
-
-Home.getLayout = (page: any) => {
-  return <MainLayout>
-    {page}
-  </MainLayout>
-};

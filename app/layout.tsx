@@ -1,6 +1,5 @@
-// import Navigation from '@/src/shared/components/navigation/main'
+import { MainLayout } from '@/src/shared/components/layouts/main-layout'
 import './globals.css'
-//import 'tailwindcss/ta'
 
 export default function RootLayout({
   children,
@@ -8,10 +7,12 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    // <RecoilRoot>
-    <html lang="fa" dir="rtl">
-      <body >{children}</body>
+    <html lang="fa" dir="rtl">      
+      <body >
+        <MainLayout>
+        {children}
+        </MainLayout>
+      </body>
     </html>
-    // </RecoilRoot>
   )
 }

@@ -1,11 +1,17 @@
-import { FC } from "react"
+import { FC , ReactNode } from "react"
 import { JsxElement } from "typescript"
+import Navigation from "../navigation/navigation"
+
 
 interface IMainLayout{
-    children : JsxElement
+    children : JsxElement | ReactNode
 }
 export const MainLayout:FC<IMainLayout> = (props) => {
     return (
-        <>{props.children}</>
+        <>
+        <Navigation/>
+        {props.children}
+        
+        </>
     )
 }

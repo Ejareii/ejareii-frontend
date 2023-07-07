@@ -11,8 +11,3 @@ export default function Lend() {
   );
 }
 
-Lend.getLayout = (page: any) => {
-  return <MainLayout>
-    {page}
-  </MainLayout>
-};

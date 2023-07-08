@@ -10,8 +10,8 @@ export default async function Rentals() {
   let apiData = await fetchWrapper<string[]>("https://jsonplaceholder.typicode.com/todos")
   console.log(apiData.length);
 
+  //State drilled from Parent RSC to child RSC
   useBearStore.setState({bears: apiData.length})
-  console.log(useBearStore.getState());
   
   return (
     <main className="">

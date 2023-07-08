@@ -1,8 +1,11 @@
+import { useBearStore } from "@/src/infrastructure/store/store";
 import Image from "next/image"
 
 const RentalsTable = ({ array }: {
     array: string[]
 }) => {
+    //State drilled from Parent RSC to child RSC
+    console.log(222,useBearStore.getState());
     return (
         <>
             <div className="grid grid-cols-4 gap-4">

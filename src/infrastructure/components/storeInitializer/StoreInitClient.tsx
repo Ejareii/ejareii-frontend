@@ -6,6 +6,11 @@ function StoreInitClient({storeName , params}:{
     storeName:string , params:any
 }) {
     console.log(stores);
+
+    //APROACHES:
+    //1- dynamic calling func from * import all store
+    //2- prop drill the desired store
+    //3- dynamic import???
     
     const initialized = useRef(false)
     if(initialized.current) {

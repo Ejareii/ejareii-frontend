@@ -1,12 +1,16 @@
 "use client";
 import {useRef} from 'react'
-import { useBearStore } from "../../store/store";
-
+import * as stores  from "../../store/store";
 //This component willaccept a server side store and send it to client side store
-function StoreInitClient(params:any) {
+function StoreInitClient({storeName , params}:{
+    storeName:string , params:any
+}) {
+    console.log(stores);
+    
     const initialized = useRef(false)
     if(initialized.current) {
-        useBearStore.setState({bears : 5})
+        //@ts-ignore
+        stores[storeName].setState({bears : 5})
         initialized.current = true
     }    
     return null

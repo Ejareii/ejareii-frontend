@@ -1,4 +1,5 @@
 "use client";
+import StoreInitClient from "@/src/infrastructure/components/storeInitializer/StoreInitClient";
 import { useBearStore } from "@/src/infrastructure/store/store";
 import { MainLayout } from "@/src/shared/components/layouts/main-layout";
 
@@ -9,6 +10,7 @@ export default function Lend() {
   
   return (
     <main className="">
+      <StoreInitClient storeName={'useBearStore'} params={undefined}/>
       {/* <h1>{data.bears}</h1> */}
     </main>
   );

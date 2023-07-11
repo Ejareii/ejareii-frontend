@@ -1,5 +1,6 @@
 import { FC } from "react";
 import Image from "next/image";
+import { BeakerIcon } from '@heroicons/react/24/solid'
 
 const Navigation:FC = () =>{
 
@@ -17,7 +18,9 @@ const Navigation:FC = () =>{
 						</div>
 						{/* Primary Navbar items */}
 						<div className="hidden md:flex items-center space-x-1">
-							<a href="" className="py-4 px-2 text-primary border-b-4 border-primary font-semibold ">Home</a>
+							<a href="" className="py-4 px-2 text-primary border-b-4 border-primary font-semibold ">Home
+							<BeakerIcon className="h-6 w-6 text-blue-500" />
+							</a>
 							<a href="" className="py-4 px-2 text-gray font-semibold hover:text-primary transition duration-300">Services</a>
 							<a href="" className="py-4 px-2 text-gray font-semibold hover:text-primary transition duration-300">About</a>
 							<a href="" className="py-4 px-2 text-gray font-semibold hover:text-primary transition duration-300">Contact Us</a>

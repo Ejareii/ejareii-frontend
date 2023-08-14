@@ -4,7 +4,6 @@ export default function Home() {
   console.log(process.env.NEXT_PUBLIC_TEST);
 
   return (
-<<<<<<< HEAD
     <>
     <div 
           className="
@@ -19,17 +18,12 @@ export default function Home() {
             gap-8
           "
         >
-            <ListingCard
+            {/* <ListingCard
               currentUser={currentUser}
               key={listing.id}
               data={listing}
-            />
+            /> */}
         </div>
     </>
-=======
-    // <Grid container height="100vh" alignItems="center" justifyContent="center" direction="column">
-   <div></div>
-      
->>>>>>> d16d2425dbaf2fd03246b3d8266026ceededbb43
   );
 }

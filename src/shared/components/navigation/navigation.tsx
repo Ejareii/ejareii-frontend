@@ -1,10 +1,10 @@
 'use client';
 
 import { FC } from "react";
-import Container from "../container";
 import Logo from "./Logo";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
+import Container from "../common/Container";
 
 const Navigation:FC = () =>{
 

@@ -1,26 +1,40 @@
-import { useBearStore } from "@/src/infrastructure/store/store";
-import RentalsTable from "@/src/modules/rentals/rentalsTable";
-import { MainLayout } from "@/src/shared/components/layouts/main-layout";
-import { fetchWrapper } from "@/src/shared/utils/fetchWrapper";
 
-export default async function Rentals() {
-  console.log(process.env.NEXT_PUBLIC_TEST);
+//import getCurrentUser from "@/app/actions/getCurrentUser";
+//import getListingById from "@/app/actions/getListingById";
+//import getReservations from "@/app/actions/getReservations";
 
-  //const x = useBearStore(store => store)
-  let apiData = await fetchWrapper<string[]>("https://jsonplaceholder.typicode.com/todos")
-  console.log(apiData.length);
+//import ClientOnly from "@/app/components/ClientOnly";
+//import EmptyState from "@/app/components/EmptyState";
 
-  //State drilled from Parent RSC to child RSC
-  useBearStore.setState({bears: apiData.length})
-  
+import RentalMainComp from "@/src/modules/rentals/components/RentalMainComp";
+
+interface IParams {
+  listingId?: string;
+}
+
+const ListingPage = async ({ params }: { params: IParams }) => {
+
+  // const listing = await getListingById(params);
+  // const reservations = await getReservations(params);
+  // const currentUser = await getCurrentUser();
+
+  // if (!listing) {
+  //   return (
+  //     <ClientOnly>
+  //       <EmptyState />
+  //     </ClientOnly>
+  //   );
+  // }
+
   return (
-    <main className="">
-
-      {/* <h1>{x.bears}</h1>
-      <button
-      onClick={()=>x.increase(10)}
-      >increase</button> */}
-      <RentalsTable array={apiData}/>
-    </main>
+    // <ClientOnly>
+      <RentalMainComp
+        // listing={listing}
+        // reservations={reservations}
+        // currentUser={currentUser}
+      />
+    // </ClientOnly>
   );
 }
+ 
+export default ListingPage;

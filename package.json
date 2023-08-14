@@ -25,7 +25,11 @@
     "next": "13.4.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+<<<<<<< HEAD
     "shx": "^0.3.4",
+=======
+    "react-icons": "^4.10.1",
+>>>>>>> d16d2425dbaf2fd03246b3d8266026ceededbb43
     "tailwind-merge": "^1.13.2",
     "tailwindcss-animate": "^1.0.6",
     "typescript": "5.1.3",

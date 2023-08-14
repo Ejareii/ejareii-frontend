@@ -16,9 +16,9 @@ interface RentalReservationProps {
 }
 
 const RentalReservation: React.FC<
-  RentalReservationProps
+  any
 > = ({
-  price,
+  price = 777,
   dateRange,
   totalPrice,
   onChangeDate,
@@ -46,19 +46,19 @@ const RentalReservation: React.FC<
         </div>
       </div>
       <hr />
-      <Calendar
+      {/* <Calendar
         value={dateRange}
         disabledDates={disabledDates}
         onChange={(value) => 
           onChangeDate(value.selection)}
-      />
+      /> */}
       <hr />
       <div className="p-4">
-        <Button 
+        {/* <Button 
           disabled={disabled} 
           label="Reserve" 
           onClick={onSubmit}
-        />
+        /> */}
       </div>
       <hr />
       <div 

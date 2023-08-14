@@ -7,6 +7,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Container from "@/src/shared/components/common/Container";
 import RentalHead from "./RentalHead";
+import RentalInfo from "./RentalInfo";
+import RentalReservation from "./RentalReservation";
 // import { differenceInDays, eachDayOfInterval } from 'date-fns';
 
 //import useLoginModal from "@/app/hooks/useLoginModal";
@@ -137,13 +139,13 @@ const RentalMainComp: React.FC<any> = ({
             "
           >
             <RentalInfo
-              user={listing.user}
-              category={category}
-              description={listing.description}
-              roomCount={listing.roomCount}
-              guestCount={listing.guestCount}
-              bathroomCount={listing.bathroomCount}
-              locationValue={listing.locationValue}
+              // user={listing.user}
+              // category={category}
+              // description={listing.description}
+              // roomCount={listing.roomCount}
+              // guestCount={listing.guestCount}
+              // bathroomCount={listing.bathroomCount}
+              // locationValue={listing.locationValue}
             />
             <div 
               className="
@@ -154,13 +156,13 @@ const RentalMainComp: React.FC<any> = ({
               "
             >
               <RentalReservation
-                price={listing.price}
-                totalPrice={totalPrice}
-                onChangeDate={(value) => setDateRange(value)}
-                dateRange={dateRange}
-                onSubmit={onCreateReservation}
-                disabled={isLoading}
-                disabledDates={disabledDates}
+                // price={listing.price}
+                // totalPrice={totalPrice}
+                // onChangeDate={(value) => setDateRange(value)}
+                // dateRange={dateRange}
+                // onSubmit={onCreateReservation}
+                // disabled={isLoading}
+                // disabledDates={disabledDates}
               />
             </div>
           </div>

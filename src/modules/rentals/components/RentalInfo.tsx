@@ -3,18 +3,18 @@
 import dynamic from "next/dynamic";
 import { IconType } from "react-icons";
 
-import useCountries from "@/app/hooks/useCountries";
-import { SafeUser } from "@/app/types";
+// import useCountries from "@/app/hooks/useCountries";
+// import { SafeUser } from "@/app/types";
 
-import Avatar from "../Avatar";
-import ListingCategory from "./ListingCategory";
+// import Avatar from "../Avatar";
+// import ListingCategory from "./ListingCategory";
 
-const Map = dynamic(() => import('../Map'), { 
-  ssr: false 
-});
+// const Map = dynamic(() => import('../Map'), { 
+//   ssr: false 
+// });
 
-interface ListingInfoProps {
-  user: SafeUser,
+interface RentalInfoProps {
+  // user: SafeUser,
   description: string;
   guestCount: number;
   roomCount: number;
@@ -27,18 +27,18 @@ interface ListingInfoProps {
   locationValue: string;
 }
 
-const ListingInfo: React.FC<ListingInfoProps> = ({
+const RentalInfo: React.FC<any> = ({
   user,
-  description,
-  guestCount,
-  roomCount,
-  bathroomCount,
+  description = 'sdf',
+  guestCount = 2,
+  roomCount = 2,
+  bathroomCount = 2,
   category,
   locationValue,
 }) => {
-  const { getByValue } = useCountries();
+  // const { getByValue } = useCountries();
 
-  const coordinates = getByValue(locationValue)?.latlng
+  // const coordinates = getByValue(locationValue)?.latlng
 
   return ( 
     <div className="col-span-4 flex flex-col gap-8">
@@ -54,7 +54,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
           "
         >
           <div>Hosted by {user?.name}</div>
-          <Avatar src={user?.image} />
+          {/* <Avatar src={user?.image} /> */}
         </div>
         <div className="
             flex 
@@ -77,22 +77,22 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
         </div>
       </div>
       <hr />
-      {category && (
+      {/* {category && (
         <ListingCategory
           icon={category.icon} 
           label={category?.label}
           description={category?.description} 
         />
-      )}
+      )} */}
       <hr />
       <div className="
       text-lg font-light text-neutral-500">
         {description}
       </div>
       <hr />
-      <Map center={coordinates} />
+      {/* <Map center={coordinates} /> */}
     </div>
    );
 }
  
-export default ListingInfo;
+export default RentalInfo;

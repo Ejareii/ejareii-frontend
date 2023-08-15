@@ -1,5 +1,7 @@
 'use client';
 
+import DatePicker from "@/src/shared/components/common/DatePicker";
+
 // import { Range } from "react-date-range";
 
 // import Button from "../Button";
@@ -16,7 +18,7 @@ interface RentalReservationProps {
 }
 
 const RentalReservation: React.FC<
-  RentalReservationProps
+  any
 > = ({
   price,
   dateRange,
@@ -42,23 +44,23 @@ const RentalReservation: React.FC<
           $ {price}
         </div>
         <div className="font-light text-neutral-600">
-          night
+          قیمت
         </div>
       </div>
       <hr />
-      <Calendar
-        value={dateRange}
-        disabledDates={disabledDates}
-        onChange={(value) => 
-          onChangeDate(value.selection)}
+      <DatePicker
+        //value={dateRange}
+        //disabledDates={disabledDates}
+        // onChange={(value) => 
+        //   onChangeDate(value.selection)}
       />
       <hr />
       <div className="p-4">
-        <Button 
+        {/* <Button 
           disabled={disabled} 
           label="Reserve" 
           onClick={onSubmit}
-        />
+        /> */}
       </div>
       <hr />
       <div 

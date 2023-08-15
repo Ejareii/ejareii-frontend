@@ -7,6 +7,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import Container from "@/src/shared/components/common/Container";
 import RentalHead from "./RentalHead";
+import RentalReservation from "./RentalReservation";
+import RentalInfo from "./RentalInfo";
 // import { differenceInDays, eachDayOfInterval } from 'date-fns';
 
 //import useLoginModal from "@/app/hooks/useLoginModal";
@@ -121,6 +123,9 @@ const RentalMainComp: React.FC<any> = ({
       >
         <div className="flex flex-col gap-6">
           <RentalHead
+          title={'ملک'}
+          locationValue={'تهران'}
+          imageSrc={'/pics/card-top.jpg'}
             // title={listing.title}
             // imageSrc={listing.imageSrc}
             // locationValue={listing.locationValue}
@@ -137,13 +142,15 @@ const RentalMainComp: React.FC<any> = ({
             "
           >
             <RentalInfo
-              user={listing.user}
-              category={category}
-              description={listing.description}
-              roomCount={listing.roomCount}
-              guestCount={listing.guestCount}
-              bathroomCount={listing.bathroomCount}
-              locationValue={listing.locationValue}
+            user={"معین"}
+            description={"khut"}
+              // user={listing.user}
+              // category={category}
+              // description={listing.description}
+              // roomCount={listing.roomCount}
+              // guestCount={listing.guestCount}
+              // bathroomCount={listing.bathroomCount}
+              // locationValue={listing.locationValue}
             />
             <div 
               className="
@@ -154,13 +161,14 @@ const RentalMainComp: React.FC<any> = ({
               "
             >
               <RentalReservation
-                price={listing.price}
-                totalPrice={totalPrice}
-                onChangeDate={(value) => setDateRange(value)}
-                dateRange={dateRange}
-                onSubmit={onCreateReservation}
-                disabled={isLoading}
-                disabledDates={disabledDates}
+              price={"1000"}
+                // price={listing.price}
+                // totalPrice={totalPrice}
+                // onChangeDate={(value) => setDateRange(value)}
+                // dateRange={dateRange}
+                // onSubmit={onCreateReservation}
+                // disabled={isLoading}
+                // disabledDates={disabledDates}
               />
             </div>
           </div>

@@ -9,7 +9,7 @@ import Container from "../common/Container";
 const Navigation:FC = () =>{
 
     return(
-		<div className="fixed w-full bg-white z-10 shadow-sm">
+		<div className="sticky w-full bg-white z-10 shadow-sm">
 			<div
 				className="
 				py-4 

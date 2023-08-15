@@ -2,19 +2,24 @@
 
 import dynamic from "next/dynamic";
 import { IconType } from "react-icons";
+import CategoryView from "./CategoryView";
 
-import useCountries from "@/app/hooks/useCountries";
-import { SafeUser } from "@/app/types";
+import { FaBeer } from 'react-icons/fa';
+import Map from "@/src/shared/components/common/Map";
 
-import Avatar from "../Avatar";
-import ListingCategory from "./ListingCategory";
+// import useCountries from "@/app/hooks/useCountries";
+// import { SafeUser } from "@/app/types";
 
-const Map = dynamic(() => import('../Map'), { 
-  ssr: false 
-});
+// import Avatar from "../Avatar";
+// import ListingCategory from "./ListingCategory";
 
-interface ListingInfoProps {
-  user: SafeUser,
+// const Map = dynamic(() => import('../Map'), { 
+//   ssr: false 
+// });
+
+interface RentalInfoProps {
+  // user: SafeUser,
+  user: string,
   description: string;
   guestCount: number;
   roomCount: number;
@@ -27,18 +32,18 @@ interface ListingInfoProps {
   locationValue: string;
 }
 
-const ListingInfo: React.FC<ListingInfoProps> = ({
+const RentalInfo: React.FC<any> = ({
   user,
   description,
-  guestCount,
-  roomCount,
-  bathroomCount,
-  category,
+  guestCount = 3,
+  roomCount = 4,
+  bathroomCount = 6,
+  category = true,
   locationValue,
 }) => {
-  const { getByValue } = useCountries();
+  // const { getByValue } = useCountries();
 
-  const coordinates = getByValue(locationValue)?.latlng
+  // const coordinates = getByValue(locationValue)?.latlng
 
   return ( 
     <div className="col-span-4 flex flex-col gap-8">
@@ -53,8 +58,9 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
             gap-2
           "
         >
-          <div>Hosted by {user?.name}</div>
-          <Avatar src={user?.image} />
+          {/* <div>اجاره دهنده {user?.name}</div> */}
+          <div>اجاره دهنده {user}</div>
+          {/* <Avatar src={user?.image} /> */}
         </div>
         <div className="
             flex 
@@ -78,10 +84,13 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
       </div>
       <hr />
       {category && (
-        <ListingCategory
-          icon={category.icon} 
-          label={category?.label}
-          description={category?.description} 
+        <CategoryView
+        icon={FaBeer} 
+        label={'hukh'}
+        description={'fchhfc'}
+          // icon={category.icon} 
+          // label={category?.label}
+          // description={category?.description} 
         />
       )}
       <hr />
@@ -90,9 +99,11 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
         {description}
       </div>
       <hr />
-      <Map center={coordinates} />
+      <Map
+      // center={coordinates} 
+      />
     </div>
    );
 }
  
-export default ListingInfo;
+export default RentalInfo;

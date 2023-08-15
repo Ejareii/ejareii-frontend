@@ -8,20 +8,20 @@ import Image from "next/image";
 import Heading from "@/src/shared/components/common/Heading";
 //import HeartButton from "../HeartButton";
 
-// interface ListingHeadProps {
-//   title: string;
-//   locationValue: string;
-//   imageSrc: string;
-//   id: string;
-//   currentUser?: SafeUser | null
-// }
+interface RentalHeadProps {
+  title: string;
+  locationValue: string;
+  imageSrc: string;
+  // id: string;
+  // currentUser?: SafeUser | null
+}
 
-const RentalHead: React.FC<any> = ({
+const RentalHead: React.FC<RentalHeadProps> = ({
   title,
   locationValue,
   imageSrc,
-  id,
-  currentUser
+  // id,
+  // currentUser
 }) => {
 //   const { getByValue } = useCountries();
 
@@ -30,9 +30,9 @@ const RentalHead: React.FC<any> = ({
   return ( 
     <>
       <Heading
-        title={'title'}
+        title={title}
         //subtitle={`${location?.region}, ${location?.label}`}
-        subtitle={`ddfg`}
+        subtitle={locationValue}
       />
       <div className="
           w-full
@@ -43,7 +43,7 @@ const RentalHead: React.FC<any> = ({
         "
       >
         <Image
-          src={'/pics/card-top.jpg'}
+          src={imageSrc}
           fill
           className="object-cover w-full"
           alt="Image"

@@ -1,6 +1,9 @@
 'use client';
 
 import { DateRangePicker } from 'react-dates';
+import DatePicker from 'react-multi-date-picker';
+import persian from "react-date-object/calendars/persian"
+import persian_fa from "react-date-object/locales/persian_fa"
 
 
 const CustomDatePicker: React.FC<any> = ({
@@ -31,15 +34,11 @@ const CustomDatePicker: React.FC<any> = ({
     //   renderMonthText={renderMonthText}
     //   renderDayContents={renderDayContents}
     // />
-    <DateRangePicker
-  startDate={null} // momentPropTypes.momentObj or null,
-  startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
-  endDate={null} // momentPropTypes.momentObj or null,
-  endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
-  onDatesChange={()=>{}} // PropTypes.func.isRequired,
-  focusedInput={null} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-  onFocusChange={()=>{}} // PropTypes.func.isRequired,
-/>
+    <DatePicker
+        calendar={persian}
+        locale={persian_fa}
+        calendarPosition="bottom-right"
+      />
   );
 }
 

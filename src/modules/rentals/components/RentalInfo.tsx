@@ -100,6 +100,7 @@ const RentalInfo: React.FC<any> = ({
       </div>
       <hr />
       <Map
+      center={[51, -0.09]}
       // center={coordinates} 
       />
     </div>

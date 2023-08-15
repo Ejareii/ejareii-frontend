@@ -2,6 +2,10 @@
 
 import dynamic from "next/dynamic";
 import { IconType } from "react-icons";
+import CategoryView from "./CategoryView";
+
+import { FaBeer } from 'react-icons/fa';
+import Map from "@/src/shared/components/common/Map";
 
 // import useCountries from "@/app/hooks/useCountries";
 // import { SafeUser } from "@/app/types";
@@ -15,6 +19,7 @@ import { IconType } from "react-icons";
 
 interface RentalInfoProps {
   // user: SafeUser,
+  user: string,
   description: string;
   guestCount: number;
   roomCount: number;
@@ -29,11 +34,11 @@ interface RentalInfoProps {
 
 const RentalInfo: React.FC<any> = ({
   user,
-  description = 'sdf',
-  guestCount = 2,
-  roomCount = 2,
-  bathroomCount = 2,
-  category,
+  description,
+  guestCount = 3,
+  roomCount = 4,
+  bathroomCount = 6,
+  category = true,
   locationValue,
 }) => {
   // const { getByValue } = useCountries();
@@ -53,7 +58,8 @@ const RentalInfo: React.FC<any> = ({
             gap-2
           "
         >
-          <div>Hosted by {user?.name}</div>
+          {/* <div>اجاره دهنده {user?.name}</div> */}
+          <div>اجاره دهنده {user}</div>
           {/* <Avatar src={user?.image} /> */}
         </div>
         <div className="
@@ -77,20 +83,25 @@ const RentalInfo: React.FC<any> = ({
         </div>
       </div>
       <hr />
-      {/* {category && (
-        <ListingCategory
-          icon={category.icon} 
-          label={category?.label}
-          description={category?.description} 
+      {category && (
+        <CategoryView
+        icon={FaBeer} 
+        label={'hukh'}
+        description={'fchhfc'}
+          // icon={category.icon} 
+          // label={category?.label}
+          // description={category?.description} 
         />
-      )} */}
+      )}
       <hr />
       <div className="
       text-lg font-light text-neutral-500">
         {description}
       </div>
       <hr />
-      {/* <Map center={coordinates} /> */}
+      <Map
+      // center={coordinates} 
+      />
     </div>
    );
 }

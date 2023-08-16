@@ -1,5 +1,6 @@
 'use client';
 import { Calendar } from 'react-multi-date-picker';
+import persian from "react-date-object/calendars/persian"
 import persian_fa from "react-date-object/locales/persian_fa"
 
 
@@ -17,6 +18,7 @@ const CustomDatePicker: React.FC<any> = ({
     <Calendar 
       value={value}
       onChange={()=>{}}
+      calendar={persian}
       locale={persian_fa}
       numberOfMonths={2}
       range

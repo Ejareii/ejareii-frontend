@@ -102,10 +102,10 @@ const UserMenu: React.FC<UserMenuProps> = ({
           <div className="flex flex-col cursor-pointer">
             <>
             <MenuItem
-            onClick={()=>{}}
+            onClick={()=>{router.push("/login")}}
             label="ورود"/>
               <MenuItem
-            onClick={()=>{}}
+            onClick={()=>{router.push('/signup')}}
             label="ثبت نام "/>
             </>
          

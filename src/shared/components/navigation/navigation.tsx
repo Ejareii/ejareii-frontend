@@ -5,6 +5,7 @@ import Logo from "./Logo";
 import Search from "./Search";
 import UserMenu from "./UserMenu";
 import Container from "../common/Container";
+import Categories from "./Categories";
 
 const Navigation:FC = () =>{
 
@@ -31,7 +32,8 @@ const Navigation:FC = () =>{
 		<UserMenu/>
 		</div>
 		</Container>
-	  		</div>
+	  	</div>
+		<Categories/>
 
 		</div>
     )

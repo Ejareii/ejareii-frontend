@@ -23,46 +23,40 @@ const RentalHead: React.FC<RentalHeadProps> = ({
   // id,
   // currentUser
 }) => {
-//   const { getByValue } = useCountries();
+  //   const { getByValue } = useCountries();
 
-//   const location = getByValue(locationValue);
+  //   const location = getByValue(locationValue);
 
-  return ( 
+  return (
     <>
       <Heading
         title={title}
         //subtitle={`${location?.region}, ${location?.label}`}
         subtitle={locationValue}
       />
-      <div className="
-          w-full
-          h-[60vh]
+      <div className="grid w-full grid-cols-4 grid-rows-2 grid-flow-dense h-[60vh]
           overflow-hidden 
           rounded-xl
-          relative
-        "
-      >
-        <Image
-          src={imageSrc}
-          fill
-          className="object-cover w-full"
-          alt="Image"
-        />
-        <div
-          className="
-            absolute
-            top-5
-            right-5
-          "
-        >
-          {/* <HeartButton 
-            listingId={id}
-            currentUser={currentUser}
-          /> */}
+          gap-1
+          ">
+        <div className="col-span-2 row-span-2 relative">
+          <Image fill className="w-full h-full object-cover" src={imageSrc} alt="Image 1" />
+        </div>
+        <div className="col-span-1 row-span-1 relative">
+          <Image fill className="w-full h-full object-cover" src={'/pics/mock2.webp'} alt="Image 2" />
+        </div>
+        <div className="col-span-1 row-span-1 relative">
+          <Image fill className="w-full h-full object-cover" src={'/pics/mock3.webp'} alt="Image 2" />
+        </div>
+        <div className="col-span-1 row-span-1 relative">
+          <Image fill className="w-full h-full object-cover" src={'/pics/mock4.webp'} alt="Image 2" />
+        </div>
+        <div className="col-span-1 row-span-1 relative">
+          <Image fill className="w-full h-full object-cover" src={'/pics/mock5.webp'} alt="Image 2" />
         </div>
       </div>
     </>
-   );
+  );
 }
- 
+
 export default RentalHead;

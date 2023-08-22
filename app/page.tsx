@@ -1,4 +1,4 @@
-'use client'
+
 
 // import getListings, { IListingsParams } from "@/app/common/actions/getListings";
 // import getCurrentUser from "@/app/common/actions/getCurrentUser";
@@ -11,10 +11,10 @@ import Map from "@/src/shared/components/common/Map";
 //   searchParams: IListingsParams
 // };
 
-const Home = async ({ searchParams }:any) => {
+const Home = async ({ searchParams }: any) => {
   // const listings = await getListings(searchParams);
   // const currentUser = await getCurrentUser();
-  const listings =[
+  const listings = [
     {
       "id": "6152b8ee11e2e40a362cd4a1",
       "title": "Luxurious Beach House",
@@ -64,11 +64,13 @@ const Home = async ({ searchParams }:any) => {
   }
 
   return (
-    <Container>
+    false ?
       <Map
-      
       />
-      {/* <div 
+      :
+      <Container>
+
+        <div 
         className="
           pt-8
           pb-20
@@ -89,8 +91,9 @@ const Home = async ({ searchParams }:any) => {
             data={listing}
           />
         ))}
-      </div> */}
-    </Container>
+      </div>
+      </Container>
+
   )
 }
 

@@ -14,7 +14,7 @@ export default function RootLayout({
       <body className={myFont.className}>
         <MainLayout>
         </MainLayout>
-        <div className='pb-20 pt-28'>
+        <div >
         {children}
         </div>
       </body>

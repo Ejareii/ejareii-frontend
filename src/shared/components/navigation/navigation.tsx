@@ -10,7 +10,7 @@ import Categories from "./Categories";
 const Navigation:FC = () =>{
 
     return(
-		<div className="sticky w-full bg-white z-10 shadow-sm">
+		<div className="sticky w-full bg-white z-10 shadow-sm top-0 z-[10000]">
 			<div
 				className="
 				py-4 

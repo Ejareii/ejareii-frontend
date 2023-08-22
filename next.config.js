@@ -16,6 +16,9 @@ const nextConfig = {
     publicRuntimeConfig: {
         API_URL,
     },
+    images: {
+      domains: ['images.unsplash.com'], // Add other allowed domains if needed
+    },
     
 }
 

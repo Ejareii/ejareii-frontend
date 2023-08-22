@@ -1,10 +1,11 @@
-
+'use client'
 
 // import getListings, { IListingsParams } from "@/app/common/actions/getListings";
 // import getCurrentUser from "@/app/common/actions/getCurrentUser";
 import Container from "@/src/shared/components/common/Container";
 import EmptyState from "@/src/shared/components/common/EmptyState";
 import ListingCard from "@/src/shared/components/listing/ListingCard";
+import Map from "@/src/shared/components/common/Map";
 
 // interface HomeProps {
 //   searchParams: IListingsParams
@@ -64,7 +65,10 @@ const Home = async ({ searchParams }:any) => {
 
   return (
     <Container>
-      <div 
+      <Map
+      
+      />
+      {/* <div 
         className="
           pt-8
           pb-20
@@ -85,7 +89,7 @@ const Home = async ({ searchParams }:any) => {
             data={listing}
           />
         ))}
-      </div>
+      </div> */}
     </Container>
   )
 }

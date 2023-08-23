@@ -64,7 +64,7 @@ const Home = async ({ searchParams }: any) => {
   }
 
   return (
-    false ?
+    true ?
       <Map
       />
       :

@@ -1,5 +1,5 @@
 import { MainLayout } from '@/src/shared/components/layouts/main-layout'
-import localFont from '@next/font/local'
+import localFont from "next/font/local"
 import './globals.css'
 import "swiper/css";
 

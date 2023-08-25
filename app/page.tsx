@@ -1,11 +1,12 @@
-
-
 // import getListings, { IListingsParams } from "@/app/common/actions/getListings";
 // import getCurrentUser from "@/app/common/actions/getCurrentUser";
 import Container from "@/src/shared/components/common/Container";
 import EmptyState from "@/src/shared/components/common/EmptyState";
 import ListingCard from "@/src/shared/components/listing/ListingCard";
 import Map from "@/src/shared/components/common/Map";
+import ClientOnly from "@/src/shared/components/common/ClientOnly";
+import MapToggleBtn from "@/src/modules/landing/components/MapToggleBtn";
+import { useState } from "react";
 
 // interface HomeProps {
 //   searchParams: IListingsParams
@@ -14,6 +15,9 @@ import Map from "@/src/shared/components/common/Map";
 const Home = async ({ searchParams }: any) => {
   // const listings = await getListings(searchParams);
   // const currentUser = await getCurrentUser();
+
+  //const [mapTabIsActive , setMapTabIsActive] = useState<boolean>(false)
+
   const listings = [
     {
       "id": "6152b8ee11e2e40a362cd4a1",
@@ -64,14 +68,14 @@ const Home = async ({ searchParams }: any) => {
   }
 
   return (
-    true ?
-      <Map
-      />
-      :
-      <Container>
+    <ClientOnly>
+        {true ? <Map
+        />
+        :
+        <Container>
 
-        <div 
-        className="
+          <div
+            className="
           pt-8
           pb-20
           grid 
@@ -83,17 +87,21 @@ const Home = async ({ searchParams }: any) => {
           2xl:grid-cols-6
           gap-8
         "
-      >
-        {listings.map((listing: any) => (
-          <ListingCard
-            // currentUser={currentUser}
-            key={listing.id}
-            data={listing}
-          />
-        ))}
-      </div>
-      </Container>
-
+          >
+            {listings.map((listing: any) => (
+              <ListingCard
+                // currentUser={currentUser}
+                key={listing.id}
+                data={listing}
+              />
+            ))}
+          </div>
+        </Container>}
+        <MapToggleBtn
+        // mapTabIsActive = {mapTabIsActive}
+        // setMapTabIsActive = {setMapTabIsActive}
+        />
+    </ClientOnly>
   )
 }
 

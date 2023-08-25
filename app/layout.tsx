@@ -14,10 +14,10 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">      
       <body className={myFont.className}>
         <MainLayout>
-        </MainLayout>
         <div >
         {children}
         </div>
+        </MainLayout>
       </body>
     </html>
   )

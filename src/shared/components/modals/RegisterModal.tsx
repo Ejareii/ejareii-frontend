@@ -120,7 +120,7 @@ const RegisterModal= () => {
       >
         <p> یک حساب کاربری دارید؟
           <span 
-            onClick={onToggle} 
+            onClick={registerModal.onClose} 
             className="
               text-neutral-800
               cursor-pointer 
@@ -135,7 +135,7 @@ const RegisterModal= () => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={true}
+      isOpen={registerModal.isOpen}
       title="ثبت نام"
       actionLabel="Continue"
       onClose={registerModal.onClose}

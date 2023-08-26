@@ -83,6 +83,7 @@ const Modal: React.FC<ModalProps> = ({
           outline-none 
           focus:outline-none
           bg-neutral-800/70
+          z-[500000]
         "
       >
         <div className="

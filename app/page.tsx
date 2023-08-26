@@ -69,7 +69,7 @@ const Home = async ({ searchParams }: any) => {
 
   return (
     <ClientOnly>
-        {true ? <Map
+        {false ? <Map
         />
         :
         <Container>

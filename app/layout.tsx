@@ -1,5 +1,5 @@
 import { MainLayout } from '@/src/shared/components/layouts/main-layout'
-import localFont from '@next/font/local'
+import localFont from "next/font/local"
 import './globals.css'
 import "swiper/css";
 
@@ -14,10 +14,10 @@ export default function RootLayout({
     <html lang="fa" dir="rtl">      
       <body className={myFont.className}>
         <MainLayout>
-        </MainLayout>
         <div >
         {children}
         </div>
+        </MainLayout>
       </body>
     </html>
   )

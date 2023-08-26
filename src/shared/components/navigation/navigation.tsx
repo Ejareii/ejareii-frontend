@@ -7,18 +7,18 @@ import UserMenu from "./UserMenu";
 import Container from "../common/Container";
 import Categories from "./Categories";
 
-const Navigation:FC = () =>{
+const Navigation: FC = () => {
 
-    return(
+	return (
 		<div className="sticky w-full bg-white z-10 shadow-sm top-0 z-[10000]">
 			<div
 				className="
 				py-4 
 				border-b-[1px]">
 
-		<Container>
-		<div 
-          className="
+				<Container>
+					<div
+						className="
             flex 
             flex-row 
             items-center 
@@ -26,17 +26,17 @@ const Navigation:FC = () =>{
             gap-3
             md:gap-0
           "
-        >
-		<Logo/>
-		<Search />
-		<UserMenu/>
-		</div>
-		</Container>
-	  	</div>
-		<Categories/>
+					>
+						<Logo />
+						<Search />
+						<UserMenu />
+					</div>
+				</Container>
+			</div>
+			<Categories />
 
 		</div>
-    )
+	)
 }
 
 export default Navigation;

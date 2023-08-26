@@ -12,7 +12,7 @@ import { useState } from "react";
 //   searchParams: IListingsParams
 // };
 
-const Home = async ({ searchParams }: any) => {
+const SearchPage = async ({ searchParams }: any) => {
   // const listings = await getListings(searchParams);
   // const currentUser = await getCurrentUser();
 
@@ -68,24 +68,24 @@ const Home = async ({ searchParams }: any) => {
   }
 
   return (
-    <ClientOnly>
-        {true ? <Map
-        />
-        :
-        <Container>
+  <>
+        <div
+        className="grid 
+        grid-cols-1
+        sm:grid-cols-3
+        "
+        >
+        <Map/>
 
           <div
             className="
           pt-8
-          pb-20
+          px-2
           grid 
           grid-cols-1 
-          sm:grid-cols-2 
-          md:grid-cols-3 
-          lg:grid-cols-4
-          xl:grid-cols-5
-          2xl:grid-cols-6
-          gap-8
+          sm:grid-cols-3
+          gap-2
+          col-span-2
         "
           >
             {listings.map((listing: any) => (
@@ -96,13 +96,9 @@ const Home = async ({ searchParams }: any) => {
               />
             ))}
           </div>
-        </Container>}
-        <MapToggleBtn
-        // mapTabIsActive = {mapTabIsActive}
-        // setMapTabIsActive = {setMapTabIsActive}
-        />
-    </ClientOnly>
+        </div>
+        </>
   )
 }
 
-export default Home;
+export default SearchPage;

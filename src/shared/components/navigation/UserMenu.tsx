@@ -6,15 +6,16 @@ import { AiOutlineMenu } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 
 // import useLoginModal from "@/app/hooks/useLoginModal";
-// import useRegisterModal from "@/app/hooks/useRegisterModal";
 // import useRentModal from "@/app/hooks/useRentModal";
-import { SafeUser } from "@/app/types";
+// import { SafeUser } from "@/app/types";
 
-import MenuItem from "./MenuItem";
+// import MenuItem from "./MenuItem";
 import Avatar from "../Avatar";
+import useRegisterModal from "@/src/hooks/useRegisterModal";
+import MenuItem from "./Menuitem";
 
 interface UserMenuProps {
-  currentUser?: SafeUser | null
+  currentUser?: any
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({
@@ -23,7 +24,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
   const router = useRouter();
 
 //   const loginModal = useLoginModal();
-//   const registerModal = useRegisterModal();
+  const registerModal = useRegisterModal();
 //   const rentModal = useRentModal();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -105,7 +106,9 @@ const UserMenu: React.FC<UserMenuProps> = ({
             onClick={()=>{router.push("/login")}}
             label="ورود"/>
               <MenuItem
-            onClick={()=>{router.push('/signup')}}
+            onClick={()=>{
+              registerModal.onOpen
+            }}
             label="ثبت نام "/>
             </>
          

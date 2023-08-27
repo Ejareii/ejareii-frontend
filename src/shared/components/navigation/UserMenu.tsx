@@ -107,7 +107,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
             label="ورود"/>
               <MenuItem
             onClick={()=>{
-              registerModal.onOpen
+              registerModal.onOpen()
             }}
             label="ثبت نام "/>
             </>

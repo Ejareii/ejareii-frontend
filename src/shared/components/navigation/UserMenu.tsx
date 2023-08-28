@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import Avatar from "../Avatar";
 import useRegisterModal from "@/src/hooks/useRegisterModal";
 import MenuItem from "./Menuitem";
+import useLoginModal from "@/src/hooks/useLoginModal";
 
 interface UserMenuProps {
   currentUser?: any
@@ -23,7 +24,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
 }) => {
   const router = useRouter();
 
-//   const loginModal = useLoginModal();
+  const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
 //   const rentModal = useRentModal();
 
@@ -103,7 +104,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
           <div className="flex flex-col cursor-pointer">
             <>
             <MenuItem
-            onClick={()=>{router.push("/login")}}
+            onClick={()=>{loginModal.onOpen()}}
             label="ورود"/>
               <MenuItem
             onClick={()=>{

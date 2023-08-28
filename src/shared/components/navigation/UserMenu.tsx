@@ -14,6 +14,7 @@ import Avatar from "../Avatar";
 import useRegisterModal from "@/src/hooks/useRegisterModal";
 import MenuItem from "./Menuitem";
 import useLoginModal from "@/src/hooks/useLoginModal";
+import useRentModal from "@/src/hooks/useRentModal";
 
 interface UserMenuProps {
   currentUser?: any
@@ -26,7 +27,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
 
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
-//   const rentModal = useRentModal();
+  const rentModal = useRentModal();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -34,19 +35,19 @@ const UserMenu: React.FC<UserMenuProps> = ({
     setIsOpen((value) => !value);
   }, []);
 
-//   const onRent = useCallback(() => {
-//     if (!currentUser) {
-//       return loginModal.onOpen();
-//     }
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
 
-//     rentModal.onOpen();
-//   }, [loginModal, rentModal, currentUser]);
+    rentModal.onOpen();
+  }, [loginModal, currentUser]);
 
   return ( 
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
         <div 
-          onClick={()=>{}}
+          onClick={onRent}
           className="
             hidden
             md:block

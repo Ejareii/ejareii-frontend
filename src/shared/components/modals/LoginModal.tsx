@@ -1,28 +1,28 @@
 'use client';
 
-import axios from "axios";
-import { AiFillGithub } from "react-icons/ai";
-// import { signIn } from "next-auth/react";
-import { FcGoogle } from "react-icons/fc";
 import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
+// import { signIn } from 'next-auth/react';
 import { 
   FieldValues, 
-  SubmitHandler,
+  SubmitHandler, 
   useForm
 } from "react-hook-form";
-
+import { FcGoogle } from "react-icons/fc";
+import { AiFillGithub } from "react-icons/ai";
+import { useRouter } from "next/navigation";
 
 import Modal from "./Modal";
 import Input from "../inputs/Input";
+import useLoginModal from "@/src/hooks/useLoginModal";
+import useRegisterModal from "@/src/hooks/useRegisterModal";
 import Heading from "../common/Heading";
 import Button from "../common/Button";
-import useRegisterModal from "@/src/hooks/useRegisterModal";
-import useLoginModal from "@/src/hooks/useLoginModal";
 
-const RegisterModal= () => {
-  const registerModal = useRegisterModal();
+const LoginModal = () => {
+  const router = useRouter();
   const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
   const [isLoading, setIsLoading] = useState(false);
 
   const { 
@@ -33,53 +33,51 @@ const RegisterModal= () => {
     },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: '',
       email: '',
       password: ''
     },
   });
+  
+  const onSubmit: SubmitHandler<FieldValues> = 
+  (data) => {
+    console.log(data)
+    // setIsLoading(true);
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    setIsLoading(true);
+    // signIn('credentials', { 
+    //   ...data, 
+    //   redirect: false,
+    // })
+    // .then((callback) => {
+    //   setIsLoading(false);
 
-    axios.post('/api/register', data)
-    .then(() => {
-      toast.success('Registered!');
-      registerModal.onClose();
-      loginModal.onOpen();
-    })
-    .catch((error) => {
-      toast.error("errror");
-    })
-    .finally(() => {
-      setIsLoading(false);
-    })
+    //   if (callback?.ok) {
+    //     toast.success('Logged in');
+    //     router.refresh();
+    //     loginModal.onClose();
+    //   }
+      
+    //   if (callback?.error) {
+    //     toast.error(callback.error);
+    //   }
+    // });
   }
 
   const onToggle = useCallback(() => {
-    registerModal.onClose();
-    loginModal.onOpen();
-  }, [registerModal, loginModal])
+    loginModal.onClose();
+    registerModal.onOpen();
+  }, [loginModal, registerModal])
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
       <Heading
         title="به اجاره ای خوش آمدید"
-        subtitle="ساختن اکانت!"
+        subtitle="وارد حساب کاربری خود شوید!"
       />
       <Input
         id="email"
         label="ایمیل"
         disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id="name"
-        label="نام"
-        disabled={isLoading}
-        register={register}
+        register={register}  
         errors={errors}
         required
       />
@@ -102,23 +100,17 @@ const RegisterModal= () => {
         outline 
         label="ادامه دادن با گوگل"
         icon={FcGoogle}
-        onClick={() => console.log('google')} 
+        onClick={() => console.log("google")}
       />
       <Button 
         outline 
         label="ادامه دادن با گیت هاب"
         icon={AiFillGithub}
-        onClick={() => console.log('github')}
+        onClick={() => console.log("github")}
       />
-      <div 
-        className="
-          text-neutral-500 
-          text-center 
-          mt-4 
-          font-light
-        "
-      >
-        <p> یک حساب کاربری دارید؟
+      <div className="
+      text-neutral-500 text-center mt-4 font-light">
+        <p>اولین باری که از اجاره ای استفاده می کنید؟
           <span 
             onClick={onToggle} 
             className="
@@ -126,7 +118,7 @@ const RegisterModal= () => {
               cursor-pointer 
               hover:underline
             "
-            >ورود</span>
+            > ساختن اکانت </span>
         </p>
       </div>
     </div>
@@ -135,10 +127,10 @@ const RegisterModal= () => {
   return (
     <Modal
       disabled={isLoading}
-      isOpen={registerModal.isOpen}
-      title="ثبت نام"
+      isOpen={loginModal.isOpen}
+      title="ورود"
       actionLabel="Continue"
-      onClose={registerModal.onClose}
+      onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
@@ -146,4 +138,4 @@ const RegisterModal= () => {
   );
 }
 
-export default RegisterModal;
+export default LoginModal;

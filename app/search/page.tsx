@@ -75,7 +75,7 @@ const SearchPage = async ({ searchParams }: any) => {
         sm:grid-cols-3
         "
         >
-        <Map/>
+        
 
           <div
             className="
@@ -96,6 +96,7 @@ const SearchPage = async ({ searchParams }: any) => {
               />
             ))}
           </div>
+          <Map/>
         </div>
         </>
   )

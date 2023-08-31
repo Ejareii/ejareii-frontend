@@ -16,6 +16,8 @@ import useRentModal from '@/src/hooks/useRentModal';
 import Heading from '../common/Heading';
 import CountrySelect from '../inputs/CountrySelect';
 import Counter from '../inputs/Counter';
+import ImageUpload from '../inputs/ImageUpload';
+import Input from '../inputs/Input';
 
 enum STEPS {
   CATEGORY = 0,
@@ -50,7 +52,7 @@ const RentModal = () => {
       roomCount: 1,
       bathroomCount: 1,
       imageSrc: '',
-      price: 1,
+      price: 100000,
       title: '',
       description: '',
     }
@@ -90,7 +92,7 @@ const RentModal = () => {
     }
     
     setIsLoading(true);
-
+    console.log(data)
     axios.post('/api/listings', data)
     .then(() => {
       toast.success('Listing created!');
@@ -201,69 +203,68 @@ const RentModal = () => {
     )
   }
 
-//   if (step === STEPS.IMAGES) {
-//     bodyContent = (
-//       <div className="flex flex-col gap-8">
-//         <Heading
-//           title="Add a photo of your place"
-//           subtitle="Show guests what your place looks like!"
-//         />
-//         <ImageUpload
-//           onChange={(value) => setCustomValue('imageSrc', value)}
-//           value={imageSrc}
-//         />
-//       </div>
-//     )
-//   }
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="یک عکس از کالای  خود اضافه کنید"
+          subtitle="به کاربران نشان دهید که کالای شما چگونه است!"
+        />
+        <ImageUpload
+          onChange={(value) => setCustomValue('imageSrc', value)}
+          value={imageSrc}
+        />
+      </div>
+    )
+  }
 
-//   if (step === STEPS.DESCRIPTION) {
-//     bodyContent = (
-//       <div className="flex flex-col gap-8">
-//         <Heading
-//           title="How would you describe your place?"
-//           subtitle="Short and sweet works best!"
-//         />
-//         <Input
-//           id="title"
-//           label="Title"
-//           disabled={isLoading}
-//           register={register}
-//           errors={errors}
-//           required
-//         />
-//         <hr />
-//         <Input
-//           id="description"
-//           label="Description"
-//           disabled={isLoading}
-//           register={register}
-//           errors={errors}
-//           required
-//         />
-//       </div>
-//     )
-//   }
+  if (step === STEPS.DESCRIPTION) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="کالای  خود را چگونه توصیف می کنید؟?"
+          subtitle="توصیف کوتاه  بهترین کار را می کند!"
+        />
+        <Input
+          id="title"
+          label="عنوان"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+        <hr />
+        <Input
+          id="description"
+          label="توضیحات "
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </div>
+    )
+  }
 
-//   if (step === STEPS.PRICE) {
-//     bodyContent = (
-//       <div className="flex flex-col gap-8">
-//         <Heading
-//           title="Now, set your price"
-//           subtitle="How much do you charge per night?"
-//         />
-//         <Input
-//           id="price"
-//           label="Price"
-//           formatPrice 
-//           type="number" 
-//           disabled={isLoading}
-//           register={register}
-//           errors={errors}
-//           required
-//         />
-//       </div>
-//     )
-//   }
+  if (step === STEPS.PRICE) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="حالا، قیمت خود را تعیین کنید"
+          subtitle="هر شب چقدر هزینه میگیرید؟"
+        />
+        <Input
+          id="price"
+          label="قیمت"
+          type="number" 
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+      </div>
+    )
+  }
 
   return (
     <Modal

@@ -29,11 +29,15 @@ const attribution2 = '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, 
 const JwagSunnyAtribution = '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 
 const Map: React.FC<MapProps> = ({ center }) => {
+  center = [35.715298, 51.404343];
   return (
       <MapContainer 
-        center={center as L.LatLngExpression || [51, -0.09]} 
-        zoom={center ? 4 : 2} 
+        // center={center as L.LatLngExpression || [35.715298, 51.404343]} 
+        center={center as L.LatLngExpression || [35.715298, 51.404343]} 
+        zoom={40} 
         scrollWheelZoom={true} 
+        //maxZoom={50}
+        minZoom={10}
         className="h-[100vh] rounded-lg"
       >
         <TileLayer

@@ -14,6 +14,7 @@ import { format } from 'date-fns';
 
 import HeartButton from "../common/HeartButton";
 import Button from "../common/Button";
+import Carousel from "../common/Carousel";
 
 
 interface ListingCardProps {
@@ -85,7 +86,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             rounded-xl
           "
         >
-          <Image
+          {/* <Image
             fill
             className="
               object-cover 
@@ -96,7 +97,8 @@ const ListingCard: React.FC<ListingCardProps> = ({
             "
             src={data.imageSrc}
             alt="Listing"
-          />
+          /> */}
+          <Carousel/>
           <div className="
             absolute
             top-3

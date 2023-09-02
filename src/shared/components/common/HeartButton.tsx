@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 
@@ -13,12 +14,16 @@ const HeartButton: React.FC<HeartButtonProps> = ({
   listingId,
   currentUser
 }) => {
+  //for api call
   // const { hasFavorited, toggleFavorite } = useFavorite({
   //   listingId,
   //   currentUser
   // });
-  const hasFavorited=false;
-  const toggleFavorite=()=>{}
+  const[hasFavorited,sethasFavorited]=useState(false)
+  // const hasFavorited=false;
+  const toggleFavorite=()=>{
+    sethasFavorited(!hasFavorited)
+  }
 
   return (
     <div 

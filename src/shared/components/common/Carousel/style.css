@@ -38,4 +38,8 @@
     height: 100%;
     object-fit: cover;
   }
-  
+div[class*='swiper-button']{
+  transform: scale(0.5);
+  color: rgb(219, 219, 219);
+}
+

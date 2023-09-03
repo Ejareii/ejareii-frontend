@@ -37,25 +37,29 @@
 
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Scrollbar } from 'swiper/modules';
+import { Navigation, Pagination } from 'swiper/modules';
+import Image from 'next/image';
+
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import Image from 'next/image';
+import './style.css'
 
 const Carousel =  () => {
   return (
     <Swiper
-      spaceBetween={50}
+      spaceBetween={5}
       slidesPerView={1}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
+      onSlideChange={(e) => 
+        console.log('slide change')}
+      onSwiper={(swiper) => 
+        console.log(swiper)}
       navigation={true}
       pagination={{
-        dynamicBullets: true,
+        dynamicBullets: false,
       }}
-      modules={[Navigation]}
+      modules={[Navigation , Pagination]}
       className="mySwiper h-[100%]"
     >
       <SwiperSlide>

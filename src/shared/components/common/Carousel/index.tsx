@@ -49,7 +49,7 @@ import './style.css'
 const Carousel =  () => {
   return (
     <Swiper
-      spaceBetween={5}
+      spaceBetween={20}
       slidesPerView={1}
       onSlideChange={(e) => 
         console.log('slide change')}

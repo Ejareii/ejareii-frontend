@@ -5,6 +5,7 @@ import RegisterModal from '@/src/shared/components/modals/RegisterModal'
 import ToasterProvider from '@/src/providers/ToasterProvider'
 import LoginModal from '@/src/shared/components/modals/LoginModal'
 import RentModal from '@/src/shared/components/modals/RentModal'
+import SearchModal from '@/src/shared/components/modals/SearchModal'
 // import "swiper/css";
 
 const myFont = localFont({ src: '../fonts/IRANYekanBold.ttf' })
@@ -19,6 +20,7 @@ export default function RootLayout({
       <body className={myFont.className}>
         
         <RentModal/>
+        <SearchModal/>
         <ToasterProvider />
         <LoginModal/>
         <RegisterModal/>

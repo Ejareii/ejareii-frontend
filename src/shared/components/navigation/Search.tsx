@@ -48,7 +48,7 @@ const Search = () => {
       return ` میزان سختی :${guestCount} `;
     }
 
-    return 'پیدا کردن میزبان';
+    return 'یپیدا کردن میزبان';
   }, [guestCount]);
 
   return ( 

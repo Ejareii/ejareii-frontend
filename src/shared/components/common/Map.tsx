@@ -38,7 +38,7 @@ const Map: React.FC<MapProps> = ({ center }) => {
         scrollWheelZoom={true} 
         //maxZoom={50}
         minZoom={10}
-        className="h-[100vh] rounded-lg"
+        className="h-[100%] rounded-lg"
       >
         <TileLayer
           url={JwagSunnyURL}

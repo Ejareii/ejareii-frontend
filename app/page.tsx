@@ -69,8 +69,7 @@ const Home = async ({ searchParams }: any) => {
 
   return (
     <ClientOnly>
-        {false ? <Map
-        />
+      {false ? <div className={'h-[100vh] '}><Map /></div>
         :
         <Container>
 
@@ -97,10 +96,10 @@ const Home = async ({ searchParams }: any) => {
             ))}
           </div>
         </Container>}
-        <MapToggleBtn
-        // mapTabIsActive = {mapTabIsActive}
-        // setMapTabIsActive = {setMapTabIsActive}
-        />
+      <MapToggleBtn
+      // mapTabIsActive = {mapTabIsActive}
+      // setMapTabIsActive = {setMapTabIsActive}
+      />
     </ClientOnly>
   )
 }

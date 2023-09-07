@@ -130,6 +130,7 @@ const RentModal = () => {
       <Heading
         title="کدام یک از اینها دسته بندی کالای شما را بهتر توصیف می کند؟"
         subtitle="یک دسته را انتخاب کنید"
+        size='lg'
       />
       <div 
         className="
@@ -137,7 +138,7 @@ const RentModal = () => {
           grid-cols-1 
           md:grid-cols-2 
           gap-3
-          max-h-[50vh]
+          max-h-[40vh]
           overflow-y-auto
         "
       >
@@ -162,6 +163,7 @@ const RentModal = () => {
         <Heading
           title="مکان شما در کجا قرار دارد؟"
           subtitle="به مهمانان کمک کنید شما را پیدا کنند!"
+          size="lg"
         />
         <CountrySelect 
           value={location} 
@@ -178,6 +180,7 @@ const RentModal = () => {
         <Heading
           title="Share some basics about your place"
           subtitle="What amenitis do you have?"
+          size='lg'
         />
         <Counter 
           onChange={(value) => setCustomValue('guestCount', value)}
@@ -209,6 +212,7 @@ const RentModal = () => {
         <Heading
           title="یک عکس از کالای  خود اضافه کنید"
           subtitle="به کاربران نشان دهید که کالای شما چگونه است!"
+          size='lg'
         />
         <ImageUpload
           onChange={(value) => setCustomValue('imageSrc', value)}
@@ -224,6 +228,7 @@ const RentModal = () => {
         <Heading
           title="کالای  خود را چگونه توصیف می کنید؟?"
           subtitle="توصیف کوتاه  بهترین کار را می کند!"
+          size='lg'
         />
         <Input
           id="title"
@@ -252,6 +257,7 @@ const RentModal = () => {
         <Heading
           title="حالا، قیمت خود را تعیین کنید"
           subtitle="هر شب چقدر هزینه میگیرید؟"
+          size='lg'
         />
         <Input
           id="price"

@@ -76,7 +76,7 @@ const Modal: React.FC<ModalProps> = ({
           items-center 
           flex 
           overflow-x-hidden 
-          overflow-y-auto 
+          overflow-y-hidden 
           fixed 
           inset-0 
           z-50 
@@ -104,11 +104,13 @@ const Modal: React.FC<ModalProps> = ({
             translate
             duration-300
             h-full
+            
             ${showModal ? 'translate-y-0' : 'translate-y-full'}
             ${showModal ? 'opacity-100' : 'opacity-0'}
           `}>
             <div className="
               translate
+              max-h-screen
               h-full
               lg:h-auto
               md:h-auto
@@ -122,13 +124,14 @@ const Modal: React.FC<ModalProps> = ({
               bg-white 
               outline-none 
               focus:outline-none
+              overflow-y-auto
             "
             >
               {/*header*/}
               <div className="
                 flex 
                 items-center 
-                p-6
+                p-3
                 rounded-t
                 justify-center
                 relative
@@ -153,11 +156,11 @@ const Modal: React.FC<ModalProps> = ({
                 </div>
               </div>
               {/*body*/}
-              <div className="relative p-6 flex-auto">
+              <div className="relative p-3 flex-auto">
                 {body}
               </div>
               {/*footer*/}
-              <div className="flex flex-col gap-2 p-6">
+              <div className="flex flex-col gap-2 p-3">
                 <div 
                   className="
                     flex 

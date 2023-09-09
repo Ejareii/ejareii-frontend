@@ -45,10 +45,10 @@ const RentalInfo: React.FC<any> = ({
 
   // const coordinates = getByValue(locationValue)?.latlng
 
-  return ( 
+  return (
     <div className="col-span-4 flex flex-col gap-8">
       <div className="flex flex-col gap-2">
-        <div 
+        <div
           className="
             text-xl 
             font-semibold 
@@ -85,12 +85,12 @@ const RentalInfo: React.FC<any> = ({
       <hr />
       {category && (
         <CategoryView
-        icon={FaBeer} 
-        label={'hukh'}
-        description={'fchhfc'}
-          // icon={category.icon} 
-          // label={category?.label}
-          // description={category?.description} 
+          icon={FaBeer}
+          label={'hukh'}
+          description={'fchhfc'}
+        // icon={category.icon} 
+        // label={category?.label}
+        // description={category?.description} 
         />
       )}
       <hr />
@@ -99,12 +99,14 @@ const RentalInfo: React.FC<any> = ({
         {description}
       </div>
       <hr />
-      <Map
-      center={[51, -0.09]}
-      // center={coordinates} 
-      />
+      <div className="h-[50vh]">
+        <Map
+          center={[51, -0.09]}
+        // center={coordinates} 
+        />
+      </div>
     </div>
-   );
+  );
 }
- 
+
 export default RentalInfo;

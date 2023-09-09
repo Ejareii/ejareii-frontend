@@ -11,6 +11,9 @@ import {
   SubmitHandler,
   useForm
 } from "react-hook-form";
+import Cookies from 'js-cookie';
+
+
 
 
 import Modal from "./Modal";
@@ -34,26 +37,29 @@ const RegisterModal= () => {
   } = useForm<FieldValues>({
     defaultValues: {
       name: '',
+      lastName:'',
       email: '',
       password: ''
     },
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    // console.log(data)
     setIsLoading(true);
 
-    axios.post('/api/register', data)
-    .then(() => {
+    axios.post('http://localhost:9000/v1/auth/signup', data)
+    .then((callback) => {
+      Cookies.set("token",callback?.data?.access_token,{ expires: 1 })
       toast.success('Registered!');
+      setIsLoading(true);
       registerModal.onClose();
       loginModal.onOpen();
     })
     .catch((error) => {
-      toast.error("errror");
+      toast.error(error?.response?.data?.message);
+      setIsLoading(false)
     })
-    .finally(() => {
-      setIsLoading(false);
-    })
+   
   }
 
   const onToggle = useCallback(() => {
@@ -67,17 +73,25 @@ const RegisterModal= () => {
         title="به اجاره ای خوش آمدید"
         subtitle="ساختن اکانت!"
       />
+        <Input
+          id="name"
+          label="نام"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
+        <Input
+          id="lastName"
+          label="نام خانوادگی"
+          disabled={isLoading}
+          register={register}
+          errors={errors}
+          required
+        />
       <Input
         id="email"
         label="ایمیل"
-        disabled={isLoading}
-        register={register}
-        errors={errors}
-        required
-      />
-      <Input
-        id="name"
-        label="نام"
         disabled={isLoading}
         register={register}
         errors={errors}
@@ -137,7 +151,7 @@ const RegisterModal= () => {
       disabled={isLoading}
       isOpen={registerModal.isOpen}
       title="ثبت نام"
-      actionLabel="Continue"
+      actionLabel="ادامه دادن "
       onClose={registerModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}

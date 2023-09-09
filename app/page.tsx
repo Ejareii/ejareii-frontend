@@ -7,6 +7,7 @@ import Map from "@/src/shared/components/common/Map";
 import ClientOnly from "@/src/shared/components/common/ClientOnly";
 import MapToggleBtn from "@/src/modules/landing/components/MapToggleBtn";
 import { useState } from "react";
+import { tr } from "date-fns/locale";
 
 // interface HomeProps {
 //   searchParams: IListingsParams

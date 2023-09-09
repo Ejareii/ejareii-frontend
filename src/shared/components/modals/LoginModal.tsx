@@ -2,6 +2,7 @@
 
 import { useCallback, useState } from "react";
 import { toast } from "react-hot-toast";
+import Cookies from 'js-cookie';
 // import { signIn } from 'next-auth/react';
 import { 
   FieldValues, 
@@ -18,6 +19,7 @@ import useLoginModal from "@/src/hooks/useLoginModal";
 import useRegisterModal from "@/src/hooks/useRegisterModal";
 import Heading from "../common/Heading";
 import Button from "../common/Button";
+import axios from "axios";
 
 const LoginModal = () => {
   const router = useRouter();
@@ -41,25 +43,23 @@ const LoginModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = 
   (data) => {
     console.log(data)
-    // setIsLoading(true);
+    setIsLoading(true);
+    
+    axios.post('http://localhost:9000/v1/auth/login', data)
+    .then((callback) =>{
+      Cookies.set("token",callback?.data?.access_token,{ expires: 1 })
+      toast.success('Logged in');
+      setIsLoading(false)
+      router.refresh();
+      loginModal.onClose();
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.message);
+      setIsLoading(false)
+      console.log(error?.response?.data?.message)
+    });
 
-    // signIn('credentials', { 
-    //   ...data, 
-    //   redirect: false,
-    // })
-    // .then((callback) => {
-    //   setIsLoading(false);
-
-    //   if (callback?.ok) {
-    //     toast.success('Logged in');
-    //     router.refresh();
-    //     loginModal.onClose();
-    //   }
-      
-    //   if (callback?.error) {
-    //     toast.error(callback.error);
-    //   }
-    // });
+    
   }
 
   const onToggle = useCallback(() => {
@@ -129,7 +129,7 @@ const LoginModal = () => {
       disabled={isLoading}
       isOpen={loginModal.isOpen}
       title="ورود"
-      actionLabel="Continue"
+      actionLabel="ادامه دادن"
       onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}

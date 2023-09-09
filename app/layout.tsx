@@ -6,22 +6,25 @@ import ToasterProvider from '@/src/providers/ToasterProvider'
 import LoginModal from '@/src/shared/components/modals/LoginModal'
 import RentModal from '@/src/shared/components/modals/RentModal'
 import SearchModal from '@/src/shared/components/modals/SearchModal'
+import getCurrentUser from './actions/getCurrentUser'
 // import "swiper/css";
 
 const myFont = localFont({ src: '../fonts/IRANYekanBold.ttf' })
 
-export default function RootLayout({
+export default  function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const currentUser = getCurrentUser();
+  console.log(currentUser," currentUser ")
   return (
     <html lang="fa" dir="rtl">      
       <body className={myFont.className}>
-        
+  
+        <ToasterProvider />
         <RentModal/>
         <SearchModal/>
-        <ToasterProvider />
         <LoginModal/>
         <RegisterModal/>
         <MainLayout>

@@ -70,7 +70,7 @@ const Home = async ({ searchParams }: any) => {
 
   return (
     <ClientOnly>
-      {false ? <div className={'h-[100vh] '}><Map /></div>
+      {true ? <div className={'h-[100vh] '}><Map /></div>
         :
         <Container>
 

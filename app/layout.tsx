@@ -11,26 +11,30 @@ import getCurrentUser from './actions/getCurrentUser'
 
 const myFont = localFont({ src: '../fonts/IRANYekanBold.ttf' })
 
-export default  function RootLayout({
+export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   const currentUser = getCurrentUser();
-  console.log(currentUser," currentUser ")
+  console.log(currentUser, " currentUser ")
   return (
-    <html lang="fa" dir="rtl">      
+    <html lang="fa" dir="rtl">
+      <head>
+        {/* <link rel="stylesheet" href="../node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.css"/>
+        <script src="../node_modules/leaflet.awesome-markers/dist/leaflet.awesome-markers.css"></script> */}
+      </head>
       <body className={myFont.className}>
-  
+
         <ToasterProvider />
-        <RentModal/>
-        <SearchModal/>
-        <LoginModal/>
-        <RegisterModal/>
+        <RentModal />
+        <SearchModal />
+        <LoginModal />
+        <RegisterModal />
         <MainLayout>
-        <div >
-        {children}
-        </div>
+          <div >
+            {children}
+          </div>
         </MainLayout>
       </body>
     </html>

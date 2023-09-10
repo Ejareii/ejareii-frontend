@@ -54,11 +54,32 @@ const Map: React.FC<MapProps> = ({ center }) => {
         accessToken='PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
       />
       {center && (
-          <Marker  position={center as L.LatLngExpression} icon={customIcon}/>
-        )}
-        <Marker  position={[35.6, 51.3] as L.LatLngExpression} icon={customIcon}/>
-        <Marker  position={[35.8, 51.5] as L.LatLngExpression} icon={customIcon}/>
-      </MapContainer>
+        <Marker position={center as L.LatLngExpression} icon={customIcon} />
+      )}
+      <Marker position={[35.6, 51.3] as L.LatLngExpression} icon={customIcon} />
+      <Marker position={[35.8, 51.5] as L.LatLngExpression} icon={customIcon} />
+      {/* <LayerGroup>
+        <Circle center={center} pathOptions={fillBlueOptions} radius={200} />
+        <Circle
+          center={center}
+          pathOptions={fillRedOptions}
+          radius={100}
+          stroke={false}
+        />
+        <LayerGroup>
+          <Circle
+            center={[51.51, -0.08]}
+            pathOptions={greenOptions}
+            radius={100}
+          />
+        </LayerGroup>
+      </LayerGroup>
+      <FeatureGroup pathOptions={purpleOptions}>
+        <Popup>Popup in FeatureGroup</Popup>
+        <Circle center={[51.51, -0.06]} radius={200} />
+        <Rectangle bounds={rectangle} />
+      </FeatureGroup> */}
+    </MapContainer>
   )
 }
 

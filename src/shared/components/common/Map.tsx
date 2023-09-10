@@ -10,11 +10,11 @@ import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import PointerMarker from "public/pics/pointer.svg"
 
 // @ts-ignore
-delete L.Icon.Default.prototype._getIconUrl; 
+delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-    iconUrl: markerIcon.src,
-    iconRetinaUrl: markerIcon2x.src,
-    shadowUrl: markerShadow.src,
+  iconUrl: markerIcon.src,
+  iconRetinaUrl: markerIcon2x.src,
+  shadowUrl: markerShadow.src,
 });
 
 interface MapProps {
@@ -39,23 +39,25 @@ const customIcon = new L.Icon({
 const Map: React.FC<MapProps> = ({ center }) => {
   center = [35.715298, 51.404343];
   return (
-      <MapContainer 
-        // center={center as L.LatLngExpression || [35.715298, 51.404343]} 
-        center={center as L.LatLngExpression || [35.715298, 51.404343]} 
-        zoom={40} 
-        scrollWheelZoom={true} 
-        //maxZoom={50}
-        minZoom={10}
-        className="h-[100%] rounded-lg"
-      >
-        <TileLayer
-          url={JwagSunnyURL}
-          attribution={JwagSunnyAtribution}
-          accessToken='PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
-        />
-        {center && (
+    <MapContainer
+      // center={center as L.LatLngExpression || [35.715298, 51.404343]} 
+      center={center as L.LatLngExpression || [35.715298, 51.404343]}
+      zoom={40}
+      scrollWheelZoom={true}
+      //maxZoom={50}
+      minZoom={10}
+      className="h-[100%] rounded-lg"
+    >
+      <TileLayer
+        url={JwagSunnyURL}
+        attribution={JwagSunnyAtribution}
+        accessToken='PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
+      />
+      {center && (
           <Marker  position={center as L.LatLngExpression} icon={customIcon}/>
         )}
+        <Marker  position={[35.6, 51.3] as L.LatLngExpression} icon={customIcon}/>
+        <Marker  position={[35.8, 51.5] as L.LatLngExpression} icon={customIcon}/>
       </MapContainer>
   )
 }

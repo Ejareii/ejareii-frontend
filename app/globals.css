@@ -76,6 +76,29 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f3f3f3;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .leaflet-bottom,
 .leaflet-control,
 .leaflet-pane,
@@ -91,3 +114,5 @@
   font-size: 16px !important;
   width: 100% !important;
 }
+
+

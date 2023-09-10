@@ -53,8 +53,7 @@ const Carousel =  () => {
       slidesPerView={1}
       onSlideChange={(e) => 
         console.log('slide change')}
-      onSwiper={(swiper) => 
-        console.log(swiper)}
+      onSwiper={()=>{}}
       navigation={true}
       pagination={{
         dynamicBullets: false,

@@ -9,6 +9,8 @@ import LoginModal from '@/src/shared/components/modals/LoginModal'
 import RentModal from '@/src/shared/components/modals/RentModal'
 import SearchModal from '@/src/shared/components/modals/SearchModal'
 import Cookies from 'js-cookie';
+import getCurrentUser from '@/app/actions/getCurrentUser';
+import  { useEffect, useState } from 'react';
 // import "swiper/css";
 
 const myFont = localFont({ src: '../../../../fonts/IRANYekanBold.ttf' })
@@ -18,10 +20,25 @@ const LandingLayout = ({
   }: {
     children: React.ReactNode
   }) => {
+    const [currentUser, setCurrentUser] = useState(null);
 
-  console.log("CSR" , Cookies.get("token"));
+    useEffect(() => {
+      const token = Cookies.get('token');
   
-
+      if (token) {
+        getCurrentUser(token)
+          .then((userData) => {
+            // Handle the user data
+            setCurrentUser(userData);
+          })
+          .catch((error) => {
+            // Handle errors
+            console.error('Error fetching current user:', error);
+          });
+      }
+    }, []); // Empty dependency array ensures this runs only once
+  
+   
   return (
     <html lang="fa" dir="rtl">
       <body className={myFont.className}>
@@ -30,7 +47,7 @@ const LandingLayout = ({
         <SearchModal />
         <LoginModal />
         <RegisterModal />
-        <MainLayout>
+        <MainLayout currentUser={currentUser} >
           <div>{children}</div>
         </MainLayout>
       </body>

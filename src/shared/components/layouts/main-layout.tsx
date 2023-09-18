@@ -4,12 +4,13 @@ import Navigation from "../navigation/navigation"
 
 
 interface IMainLayout{
-    children : JsxElement | ReactNode
+    children : JsxElement | ReactNode,
+    currentUser:any
 }
 export const MainLayout:FC<IMainLayout> = (props) => {
     return (
         <>
-        <Navigation/>
+        <Navigation currentUser={props.currentUser}/>
         {props.children}
         
         </>

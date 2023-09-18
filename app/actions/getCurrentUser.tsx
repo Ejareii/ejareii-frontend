@@ -1,32 +1,22 @@
-import Cookies from 'js-cookie';
+import axios from "axios";
 
-export default  function getCurrentUser() {
-    const token =  Cookies.get("token")
-    console.log(token,"ss")
-    // if (!token) {
-    //   return null;
-    // }
-    return token;
+export default async function getCurrentUser(token:string) {
+  const url = 'http://localhost:9000/v1/auth/currentUser';  
 
-//     const currentUser = await prisma.user.findUnique({
-//       where: {
-//         email: session.user.email as string,
-//       }
-//     });
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        'Authorization': `Bearer ${token}`, 
+      }
 
-//     if (!currentUser) {
-//       return null;
-//     }
+    });
 
-//     return {
-//       ...currentUser,
-//       createdAt: currentUser.createdAt.toISOString(),
-//       updatedAt: currentUser.updatedAt.toISOString(),
-//       emailVerified: 
-//         currentUser.emailVerified?.toISOString() || null,
-//     };
-//   } catch (error: any) {
-//     return null;
-//   }}
+    return response.data;
+  } catch (error) {
+   
+    console.error('Error fetching current user:', error);
+  
+  }
+    
   }
 

@@ -11,8 +11,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const currentUser = getCurrentUser();
-  console.log(currentUser, " currentUser ")
+
   return (
     <LandingLayout>
       {children}

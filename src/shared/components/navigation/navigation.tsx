@@ -7,7 +7,12 @@ import UserMenu from "./UserMenu";
 import Container from "../common/Container";
 import Categories from "./Categories";
 
-const Navigation: FC = () => {
+interface NavigationProps {
+	currentUser: any; // Adjust the type according to your data structure
+  }
+  
+
+const Navigation: FC<NavigationProps> = ({currentUser}) => {
 
 	return (
 		<div className="sticky w-full bg-white z-10 shadow-sm top-0 z-[10000]">
@@ -29,7 +34,7 @@ const Navigation: FC = () => {
 					>
 						<Logo />
 						<Search />
-						<UserMenu />
+						<UserMenu currentUser={currentUser} />
 					</div>
 				</Container>
 			</div>

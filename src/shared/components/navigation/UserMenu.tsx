@@ -2,19 +2,17 @@
 
 import { useCallback, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-// import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-// import useLoginModal from "@/app/hooks/useLoginModal";
-// import useRentModal from "@/app/hooks/useRentModal";
-// import { SafeUser } from "@/app/types";
 
-// import MenuItem from "./MenuItem";
+
+
 import Avatar from "../Avatar";
-import useRegisterModal from "@/src/hooks/useRegisterModal";
-import MenuItem from "./Menuitem";
 import useLoginModal from "@/src/hooks/useLoginModal";
+import useRegisterModal from "@/src/hooks/useRegisterModal";
 import useRentModal from "@/src/hooks/useRentModal";
+import MenuItem from "./Menuitem";
+import Cookies from "js-cookie";
 
 interface UserMenuProps {
   currentUser?: any
@@ -36,12 +34,12 @@ const UserMenu: React.FC<UserMenuProps> = ({
   }, []);
 
   const onRent = useCallback(() => {
-    // if (!currentUser) {
-    //   return loginModal.onOpen();
-    // }
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
 
     rentModal.onOpen();
-  }, [loginModal, currentUser]);
+  }, [loginModal, rentModal, currentUser]);
 
   return ( 
     <div className="relative">
@@ -83,7 +81,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar/>
+            <Avatar  />
           </div>
         </div>
       </div>
@@ -103,17 +101,51 @@ const UserMenu: React.FC<UserMenuProps> = ({
           "
         >
           <div className="flex flex-col cursor-pointer">
-            <>
-            <MenuItem
-            onClick={()=>{loginModal.onOpen()}}
-            label="ورود"/>
+            {currentUser ? (
+             <>
+             <MenuItem 
+               label="اگهی های زرو شده من " 
+               onClick={() => router.push('/trips')}
+             />
+             <MenuItem 
+               label="مورد علاقه های من " 
+               onClick={() => router.push('/favorites')}
+             />
+             <MenuItem 
+               label="اگهی های زرو شده توسط بقیه" 
+               onClick={() => router.push('/reservations')}
+             />
+             <MenuItem 
+               label="آگهی های من" 
+               onClick={() => router.push('/properties')}
+             />
+             <MenuItem 
+               label="اجاره دادن کالایتان" 
+               onClick={rentModal.onOpen}
+             />
+             <hr />
+             <MenuItem 
+               label="خروج" 
+               onClick={()=>{
+                Cookies.remove('token');
+                router.push("/");
+              }
+              }
+             />
+           </>
+
+            ) : (
+              <>
               <MenuItem
-            onClick={()=>{
-              registerModal.onOpen()
-            }}
-            label="ثبت نام "/>
-            </>
-         
+              onClick={()=>{loginModal.onOpen()}}
+              label="ورود"/>
+                <MenuItem
+              onClick={()=>{
+                registerModal.onOpen()
+              }}
+              label="ثبت نام "/>
+              </>
+            )}
           </div>
         </div>
       )}

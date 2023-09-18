@@ -128,7 +128,8 @@ const UserMenu: React.FC<UserMenuProps> = ({
                label="خروج" 
                onClick={()=>{
                 Cookies.remove('token');
-                router.push("/");
+                window.location.reload();
+                // // toggleOpen();
               }
               }
              />
@@ -137,7 +138,10 @@ const UserMenu: React.FC<UserMenuProps> = ({
             ) : (
               <>
               <MenuItem
-              onClick={()=>{loginModal.onOpen()}}
+              onClick={()=>{
+                loginModal.onOpen();
+                toggleOpen()
+              }}
               label="ورود"/>
                 <MenuItem
               onClick={()=>{

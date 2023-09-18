@@ -21,10 +21,14 @@ const LandingLayout = ({
     children: React.ReactNode
   }) => {
     const [currentUser, setCurrentUser] = useState(null);
+ 
 
+ 
+
+
+    const token = Cookies.get('token');
     useEffect(() => {
-      const token = Cookies.get('token');
-  
+      console.log("useEffect called")
       if (token) {
         getCurrentUser(token)
           .then((userData) => {
@@ -36,7 +40,7 @@ const LandingLayout = ({
             console.error('Error fetching current user:', error);
           });
       }
-    }, []); // Empty dependency array ensures this runs only once
+    }, [token]); 
   
    
   return (

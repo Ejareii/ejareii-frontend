@@ -3,18 +3,20 @@
 import qs from 'query-string';
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCallback } from "react";
-// import { IconType } from "react-icons";
+import { IconType } from "react-icons";
 
 interface CategoryBoxProps {
-  icon: any,
+  Icon: IconType,
   label: string;
   selected?: boolean;
+  query:string
 }
 
 const CategoryBox: React.FC<CategoryBoxProps> = ({
-  icon: Icon,
+  Icon,
   label,
   selected,
+  query
 }) => {
   const router = useRouter();
   const params = useSearchParams();
@@ -28,10 +30,10 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
 
     const updatedQuery: any = {
       ...currentQuery,
-      category: label
+      category: query
     }
 
-    if (params?.get('category') === label) {
+    if (params?.get('category') === query) {
       delete updatedQuery.category;
     }
 
@@ -41,7 +43,7 @@ const CategoryBox: React.FC<CategoryBoxProps> = ({
     }, { skipNull: true });
 
     router.push(url);
-  }, [label, router, params]);
+  }, [query, router, params]);
 
   return ( 
     <div

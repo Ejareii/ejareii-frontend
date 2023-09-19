@@ -26,6 +26,10 @@ interface ListingCardProps {
   actionId?: string;
   currentUser?: any | null
 };
+const categoryDic={
+  "1":"ماشین",
+  "2":"موتورسیکلت"
+}
 
 const ListingCard: React.FC<ListingCardProps> = ({
   data,
@@ -73,7 +77,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
   return (
     <div 
-      onClick={() => router.push(`/rentals/${data.id}`)} 
+      onClick={() => router.push(`/rentals/${data.rental_id}`)} 
       className="col-span-1 cursor-pointer group"
     >
       <div className="flex flex-col gap-2 w-full">
@@ -98,14 +102,14 @@ const ListingCard: React.FC<ListingCardProps> = ({
             src={data.imageSrc}
             alt="Listing"
           /> */}
-          <Carousel/>
+          <Carousel imageLink={data.images}/>
           <div className="
             absolute
             top-3
             right-3
           ">
             <HeartButton 
-              listingId={data.id} 
+              listingId={data.rental_id} 
               currentUser={currentUser}
             />
           </div>
@@ -114,7 +118,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
           {"تهران"}, {"نازی آباد"}
         </div>
         <div className="font-light text-neutral-500">
-          {reservationDate || data.category}
+          {reservationDate || categoryDic[data.category_id] as string }
         </div>
         <div className="flex flex-row items-center gap-1">
         {!reservation && (

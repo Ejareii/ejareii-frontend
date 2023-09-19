@@ -11,13 +11,13 @@ interface ErrorStateProps {
 
 const ErrorState: React.FC<ErrorStateProps> = ({ error }) => {
   useEffect(() => {
-    console.error(error);
+    console.error(error,"dfdfdfdfd");
   }, [error]);
 
   return ( 
     <EmptyState
-      title="Uh Oh"
-      subtitle="Something went wrong!"
+      title="اوه اوه"
+      subtitle="مشکلی پیش آمد!"
     />
    );
 }

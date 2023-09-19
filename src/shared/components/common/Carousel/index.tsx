@@ -45,8 +45,17 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './style.css'
+import { FC } from 'react';
+interface CarouselProps {
+  imageLink: {image_data:string}[];
+}
 
-const Carousel =  () => {
+
+const Carousel : FC<CarouselProps> =  ({imageLink}) => {
+  let srcCustom;
+  if(imageLink.length>0){
+    srcCustom =imageLink[0]["image_data"]
+  }
   return (
     <Swiper
       spaceBetween={20}
@@ -71,7 +80,7 @@ const Carousel =  () => {
               group-hover:scale-110 
               transition
             "
-          src={"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
+          src={srcCustom||"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
           alt="Listing"
         />
       </SwiperSlide>
@@ -85,7 +94,7 @@ const Carousel =  () => {
               group-hover:scale-110 
               transition
             "
-          src={"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
+            src={srcCustom||"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
           alt="Listing"
         />
       </SwiperSlide>
@@ -98,7 +107,7 @@ const Carousel =  () => {
               group-hover:scale-110 
               transition
             "
-        src={"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
+            src={srcCustom||"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
         alt="Listing"
       /></SwiperSlide>
       <SwiperSlide><Image
@@ -110,7 +119,8 @@ const Carousel =  () => {
               group-hover:scale-110 
               transition
             "
-        src={"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
+          src={srcCustom||"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
+           
         alt="Listing"
       /></SwiperSlide>
     </Swiper>

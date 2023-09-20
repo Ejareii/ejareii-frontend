@@ -3,17 +3,6 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import Container from '../common/Container';
 import CategoryBox from '../common/CategoryBox';
-import { TbBeach, TbMountain, TbPool } from 'react-icons/tb';
-import { 
-    GiBarn, 
-    GiBoatFishing, 
-    GiCactus, 
-    GiCastle, 
-    GiCaveEntrance, 
-    GiForestCamp, 
-    GiIsland,
-    GiWindmill
-  } from 'react-icons/gi';
 import {AiFillCar,AiOutlineMobile} from "react-icons/ai"
 import {FaMotorcycle} from "react-icons/fa"
 import { MdOutlineSportsKabaddi,MdMusicNote } from 'react-icons/md';
@@ -24,11 +13,9 @@ import { BsTools } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { IconType } from 'react-icons';
+import useCategoriesStore from '@/src/hooks/useCategoriesStore';
 
 interface CategoryInfo {
-  // constructor(partial : Partial<CategoryInfo>){
-  //   Object.assign(this,partial)
-  // }
   category_id: number;
   name: string;
   query_name: string;
@@ -45,7 +32,7 @@ interface IconDic {
  
 
 
-const iconDic:IconDic={
+export const iconDic:IconDic={
   "AiFillCar":AiFillCar,
   "FaMotorcycle":FaMotorcycle,
     "GiDutchBike":GiDutchBike,
@@ -151,7 +138,7 @@ const Categories = () => {
     const params = useSearchParams();
     const category = params?.get('category');
     const pathname = usePathname();
-    // console.log(pathname,"pathname")
+    const CategoriesStore=useCategoriesStore()
     const isMainPage = pathname === '/' || pathname === '/search';
 
     const [categoriess, setCategories] = useState<CategoryInfo[]>([]);
@@ -162,6 +149,8 @@ const Categories = () => {
           const response = await axios.get<CategoryInfo[]>('http://localhost:9000/v1/rentals/categories');
           if (response.status === 200) {
             setCategories(response.data);
+            CategoriesStore.setCategories(response.data)
+            
           } else {
             console.error('Failed to fetch categories');
           }

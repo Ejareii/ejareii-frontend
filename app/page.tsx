@@ -10,8 +10,6 @@ import getListings from "./actions/getListing";
 
 const Home = async ({ searchParams }: any) => {
   const listings = await getListings(searchParams);
-  console.log(listings)
-  
   return(<LandingComponent listings={listings}/>)
 }
 

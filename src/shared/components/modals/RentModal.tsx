@@ -11,13 +11,15 @@ import { useRouter } from 'next/navigation';
 import { useMemo, useState } from "react";
 import Modal from "./Modal";
 import CategoryInput from '../inputs/CategoryInput';
-import { categories } from '../navigation/Categories';
+import { categories, iconDic } from '../navigation/Categories';
 import useRentModal from '@/src/hooks/useRentModal';
 import Heading from '../common/Heading';
 import CountrySelect from '../inputs/CountrySelect';
 import Counter from '../inputs/Counter';
 import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
+import useCategoriesStore from '@/src/hooks/useCategoriesStore';
+
 
 enum STEPS {
   CATEGORY = 0,
@@ -31,6 +33,7 @@ enum STEPS {
 const RentModal = () => {
   const router = useRouter();
   const rentModal = useRentModal();
+  const CategoriesStore=useCategoriesStore()
 
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CATEGORY);
@@ -142,14 +145,14 @@ const RentModal = () => {
           overflow-y-auto
         "
       >
-        {categories.map((item) => (
-          <div key={item.label} className="col-span-1">
+        {CategoriesStore.categories.map((item) => (
+          <div key={item.name} className="col-span-1">
             <CategoryInput
               onClick={(category) => 
-                setCustomValue('category', category)}
-              selected={category === item.label}
-              label={item.label}
-              icon={item.icon}
+              setCustomValue('category', category)}
+              selected={category === item.name}
+              label={item.name}
+              icon={iconDic[item.icon_name]}
             />
           </div>
         ))}

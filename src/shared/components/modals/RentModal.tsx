@@ -51,9 +51,7 @@ const RentModal = () => {
     defaultValues: {
       category: '',
       location: null,
-      guestCount: 1,
-      roomCount: 1,
-      bathroomCount: 1,
+      strictnessNumber: 1,
       imageSrc: '',
       price: 100000,
       title: '',
@@ -63,9 +61,8 @@ const RentModal = () => {
 
   const location = watch('location');
   const category = watch('category');
-  const guestCount = watch('guestCount');
-  const roomCount = watch('roomCount');
-  const bathroomCount = watch('bathroomCount');
+  const strictnessNumber = watch('strictnessNumber');
+
   const imageSrc = watch('imageSrc');
 
   const Map = useMemo(() => dynamic(() => import('../common/Map'), { 
@@ -181,30 +178,17 @@ const RentModal = () => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="Share some basics about your place"
-          subtitle="What amenitis do you have?"
+          title="برخی از اصول اولیه مکان خود را به اشتراک بگذارید"
+          subtitle="چه ویژگی هایی دارید؟"
           size='lg'
         />
         <Counter 
-          onChange={(value) => setCustomValue('guestCount', value)}
-          value={guestCount}
-          title="Guests" 
-          subtitle="How many guests do you allow?"
+          onChange={(value) => setCustomValue('strictnessNumber', value)}
+          value={strictnessNumber}
+          title="" 
+          subtitle="مقدار میزان سخت گیری شما چقدر است؟"
         />
-        <hr />
-        <Counter 
-          onChange={(value) => setCustomValue('roomCount', value)}
-          value={roomCount}
-          title="Rooms" 
-          subtitle="How many rooms do you have?"
-        />
-        <hr />
-        <Counter 
-          onChange={(value) => setCustomValue('bathroomCount', value)}
-          value={bathroomCount}
-          title="Bathrooms" 
-          subtitle="How many bathrooms do you have?"
-        />
+       
       </div>
     )
   }

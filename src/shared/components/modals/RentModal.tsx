@@ -19,6 +19,22 @@ import Counter from '../inputs/Counter';
 import ImageUpload from '../inputs/ImageUpload';
 import Input from '../inputs/Input';
 import useCategoriesStore from '@/src/hooks/useCategoriesStore';
+import Cookies from 'js-cookie';
+
+let category_Dic:any={
+  "دوچرخه":3,
+  "موبایل و تبلت ":4,
+  "دوربین":7,
+  "لوازم ورزشی":9,
+  "آلات موسیقی":10,
+  "ماشین":1,
+  "موتورسیکلت":2,
+  "رایانه":5,
+  "ابزارآلات":8,
+  "کنسول بازی":6,
+  "کتونی و کفش":12,
+  "لباس":11,
+}
 
 
 enum STEPS {
@@ -49,19 +65,19 @@ const RentModal = () => {
     reset,
   } = useForm<FieldValues>({
     defaultValues: {
-      category: '',
+      category_id: '',
       location: null,
-      strictnessNumber: 1,
+      Strictness_number: 1,
       imageSrc: '',
       price: 100000,
-      title: '',
+      name: '',
       description: '',
     }
   });
 
   const location = watch('location');
-  const category = watch('category');
-  const strictnessNumber = watch('strictnessNumber');
+  const category_id = watch('category_id');
+  const Strictness_number = watch('Strictness_number');
 
   const imageSrc = watch('imageSrc');
 
@@ -92,21 +108,32 @@ const RentModal = () => {
     }
     
     setIsLoading(true);
+
+    //overwrite data for sumit
+    data.category_id=category_Dic[data.category_id] //for finde id for category
+    
     console.log(data)
-    axios.post('/api/listings', data)
+    const token=Cookies.get("token");
+
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': `Bearer ${token}`
+    };
+
+    axios.post('http://localhost:9000/v1/rentals/create', data, { headers })
     .then(() => {
       toast.success('Listing created!');
       router.refresh();
       reset();
       setStep(STEPS.CATEGORY)
       rentModal.onClose();
+      setIsLoading(false);
     })
     .catch(() => {
       toast.error('Something went wrong.');
-    })
-    .finally(() => {
       setIsLoading(false);
     })
+ 
   }
 
   const actionLabel = useMemo(() => {
@@ -145,9 +172,9 @@ const RentModal = () => {
         {CategoriesStore.categories.map((item) => (
           <div key={item.name} className="col-span-1">
             <CategoryInput
-              onClick={(category) => 
-              setCustomValue('category', category)}
-              selected={category === item.name}
+              onClick={(category_id) => 
+              setCustomValue('category_id', category_id)}
+              selected={category_id === item.name}
               label={item.name}
               icon={iconDic[item.icon_name]}
             />
@@ -183,8 +210,8 @@ const RentModal = () => {
           size='lg'
         />
         <Counter 
-          onChange={(value) => setCustomValue('strictnessNumber', value)}
-          value={strictnessNumber}
+          onChange={(value) => setCustomValue('Strictness_number', value)}
+          value={Strictness_number}
           title="" 
           subtitle="مقدار میزان سخت گیری شما چقدر است؟"
         />
@@ -216,7 +243,7 @@ const RentModal = () => {
           size='lg'
         />
         <Input
-          id="title"
+          id="name"
           label="عنوان"
           disabled={isLoading}
           register={register}

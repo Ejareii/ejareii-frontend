@@ -9,6 +9,7 @@ import Container from "@/src/shared/components/common/Container";
 import RentalHead from "./RentalHead";
 import RentalReservation from "./RentalReservation";
 import RentalInfo from "./RentalInfo";
+import useCategoriesStore from "@/src/hooks/useCategoriesStore";
 // import { differenceInDays, eachDayOfInterval } from 'date-fns';
 
 //import useLoginModal from "@/app/hooks/useLoginModal";
@@ -36,8 +37,11 @@ const initialDateRange = {
 const RentalMainComp: React.FC<any> = ({
   listing,
   reservations = [],
-  currentUser = "zzz"
+  currentUser
 }) => {
+  const CategoriesStore=useCategoriesStore()
+  console.log(CategoriesStore.categories,"category")
+
   //   const loginModal = useLoginModal();
   //   const router = useRouter();
 
@@ -56,10 +60,10 @@ const RentalMainComp: React.FC<any> = ({
   //     return dates;
   //   }, [reservations]);
 
-  //   const category = useMemo(() => {
-  //      return categories.find((items) => 
-  //       items.label === listing.category);
-  //   }, [listing.category]);
+    const category = useMemo(() => {
+       return CategoriesStore.categories.find((items) => 
+        items.category_id === listing.category_id);
+    }, [listing.category_id]);
 
   //   const [isLoading, setIsLoading] = useState(false);
   //   const [totalPrice, setTotalPrice] = useState(listing.price);
@@ -124,9 +128,9 @@ const RentalMainComp: React.FC<any> = ({
         <div className="flex flex-col gap-6">
           <RentalHead
             title={listing.name}
-            locationValue={'لورم ایپسوم متن ساختگی با تولید سادگی '}
+            locationValue={'تهران ,نازی آباد'}
             imageSrc={'/pics/mock1.webp'}
-          // title={listing.title}
+
           // imageSrc={listing.imageSrc}
           // locationValue={listing.locationValue}
           // id={listing.id}
@@ -142,14 +146,10 @@ const RentalMainComp: React.FC<any> = ({
             "
           >
             <RentalInfo
-              user={`${listing.user.name}${listing.user.lastName}`}
+              user={`${listing.user.name}  ${listing.user.lastName}`}
               description={listing.description}
-            // user={listing.user}
-            // category={category}
-            // description={listing.description}
-            // roomCount={listing.roomCount}
-            // guestCount={listing.guestCount}
-            // bathroomCount={listing.bathroomCount}
+              category={category}
+              Strictness_number={listing.Strictness_number}
             // locationValue={listing.locationValue}
             />
             <div

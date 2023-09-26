@@ -1,6 +1,10 @@
 import axios from "axios";
 
 export default async function getCurrentUser(token:string) {
+if(!token){
+  return null
+}
+
   const url = 'http://localhost:9000/v1/auth/currentUser';  
 
   try {

@@ -20,6 +20,7 @@ L.Icon.Default.mergeOptions({
 });
 
 interface MapProps {
+  listings: any[]
   center?: number[]
 }
 
@@ -54,8 +55,8 @@ const customIcon = new L.Icon({
   popupAnchor: [0, -32],
 });
 
-const Map: React.FC<MapProps> = ({ center }) => {
-  center = [35.715298, 51.404343];
+const Map: React.FC<MapProps> = ({ listings }) => {
+  let center = [35.715298, 51.404343];
   return (
     <MapContainer
       // center={center as L.LatLngExpression || [35.715298, 51.404343]} 
@@ -71,11 +72,12 @@ const Map: React.FC<MapProps> = ({ center }) => {
         attribution={JwagSunnyAtribution}
         accessToken='PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps'
       />
-      {center && (
-        <Marker position={center as L.LatLngExpression} icon={customIcon} />
-      )}
-      <Marker position={[35.6, 51.3] as L.LatLngExpression} icon={customIcon} />
-      <Marker position={[35.8, 51.5] as L.LatLngExpression} icon={customIcon} />
+      {
+        listings.map((_list , _i)=>{
+          console.log({_list});
+          return <Marker key={_i} position={[_list?.latitude, _list?.longitude] as L.LatLngExpression} icon={customIcon} />
+        })
+      }
       {/* <LayerGroup>
         <Circle center={center} pathOptions={fillBlueOptions} radius={200} />
         <Circle

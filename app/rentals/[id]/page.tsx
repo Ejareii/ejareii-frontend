@@ -8,6 +8,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 //import EmptyState from "@/app/components/EmptyState";
 
 import getListingById from "@/app/actions/getListingById";
+import getReservations from "@/app/actions/getReservations";
 import RentalMainComp from "@/src/modules/rentals/components/RentalMainComp";
 import ClientOnly from "@/src/shared/components/common/ClientOnly";
 import EmptyState from "@/src/shared/components/common/EmptyState";
@@ -22,9 +23,23 @@ const ListingPage = async ({ params }: { params: IParams }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [listing, setListing] = useState(null);
+  const [reservations, setReservations] = useState(null);
   const token = Cookies.get('token');
+  
+  
 
- 
+  useEffect(() => {
+    const fetchReservations = async () => {
+      try {
+        const fetchedReservations = await getReservations(params);
+        setReservations(fetchedReservations);
+      } catch (error) {
+        console.error('Error fetching reservations:', error);
+      }
+    };
+
+    fetchReservations();
+  }, [params]);
   useEffect(() => {
     const fetchListing = async () => {
       try {
@@ -60,9 +75,9 @@ const ListingPage = async ({ params }: { params: IParams }) => {
 
 
 //todo:
-  console.log(listing,"sss")
-  console.log(currentUser,"aaa")
-  // const reservations = await getReservations(params);
+  // console.log(listing,"sss")
+  // console.log(currentUser,"aaa")
+ 
 
 
 
@@ -88,7 +103,7 @@ const ListingPage = async ({ params }: { params: IParams }) => {
       <RentalMainComp
         listing={listing}
         currentUser={currentUser}
-        // reservations={reservations}
+        reservations={reservations}
       />
     // </ClientOnly>
   );

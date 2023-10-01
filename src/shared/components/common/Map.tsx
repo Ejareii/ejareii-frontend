@@ -10,6 +10,9 @@ import markerIcon from 'leaflet/dist/images/marker-icon.png';
 import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 import PointerMarker from "public/pics/pointer.svg";
 import { GrGamepad } from 'react-icons/gr';
+import { useSearchParams } from 'next/navigation';
+import { iconDic } from '../navigation/Categories';
+import { IconType } from 'react-icons';
 
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl;
@@ -32,8 +35,8 @@ const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">Op
 const attribution2 = '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 const JwagSunnyAtribution = '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 
-const generateAndReturnIconURL = () : string =>{
-  let iconSvg = ReactDOMServer.renderToStaticMarkup(<GrGamepad  size={26}/>);
+const generateAndReturnIconURL = (iconComponent:React.JSX.Element) : string =>{
+  let iconSvg = ReactDOMServer.renderToStaticMarkup(iconComponent);
   console.log(iconSvg);
 
   var data = new Blob([iconSvg], {type:'image/svg+xml'});
@@ -47,15 +50,9 @@ const generateAndReturnIconURL = () : string =>{
   
 }
 
-const customIcon = new L.Icon({
-  // iconUrl: "https://images.techhive.com/images/article/2017/01/google-android-apps-100705848-large.jpg?auto=webp&quality=85,70",
-  iconUrl:generateAndReturnIconURL(),
-  iconSize: [32, 32],
-  iconAnchor: [16, 32],
-  popupAnchor: [0, -32],
-});
-
 const Map: React.FC<MapProps> = ({ listings }) => {
+
+
   let center = [35.715298, 51.404343];
   return (
     <MapContainer
@@ -75,6 +72,14 @@ const Map: React.FC<MapProps> = ({ listings }) => {
       {
         listings.map((_list , _i)=>{
           console.log({_list});
+          let IconComponent = iconDic[_list.category.icon_name];
+          const customIcon = new L.Icon({
+            // iconUrl: "https://images.techhive.com/images/article/2017/01/google-android-apps-100705848-large.jpg?auto=webp&quality=85,70",
+            iconUrl:generateAndReturnIconURL(<IconComponent/>),
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32],
+          });
           return <Marker key={_i} position={[_list?.latitude, _list?.longitude] as L.LatLngExpression} icon={customIcon} />
         })
       }

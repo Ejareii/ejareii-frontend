@@ -15,7 +15,7 @@ const LandingComponent = ({ listings }: { listings: Array<any> }) => {
 
   
 
-  if (!listings) {
+  if (!listings && !mapTabIsActive) {
     return <EmptyState showReset />;
   }
 

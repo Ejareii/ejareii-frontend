@@ -23,7 +23,7 @@ const LandingComponent = ({ listings }: { listings: Array<any> }) => {
     <ClientOnly>
       {mapTabIsActive ? (
         <div className={"h-[100vh] "}>
-          <Map />
+          <Map listings={listings}/>
         </div>
       ) : (
         <Container>

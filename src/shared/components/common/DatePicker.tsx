@@ -17,11 +17,10 @@ const CustomDatePicker: React.FC<any> = ({
 
     <Calendar 
       value={value}
-      onChange={()=>{}}
+      // onChange={onChange}
       calendar={persian}
       locale={persian_fa}
-      numberOfMonths={2}
-      range
+      numberOfMonths={1}
     />
   );
 }

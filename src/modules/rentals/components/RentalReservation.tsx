@@ -1,5 +1,6 @@
 'use client';
 
+import Button from "@/src/shared/components/common/Button";
 import DatePicker from "@/src/shared/components/common/DatePicker";
 
 // import { Range } from "react-date-range";
@@ -20,7 +21,7 @@ interface RentalReservationProps {
 const RentalReservation: React.FC<
   any
 > = ({
-  price = 777,
+  price,
   dateRange,
   totalPrice,
   onChangeDate,
@@ -38,14 +39,15 @@ const RentalReservation: React.FC<
         overflow-hidden
       "
     >
-      <div className="
+      <div className=" 
       flex flex-row items-center gap-1 p-4">
+          <div className="font-light text-neutral-600">
+          قیمت روزانه :
+        </div>
         <div className="text-2xl font-semibold">
-          $ {price}
+         {price} تومان 
         </div>
-        <div className="font-light text-neutral-600">
-          قیمت
-        </div>
+      
       </div>
       <hr />
       <DatePicker
@@ -55,12 +57,12 @@ const RentalReservation: React.FC<
         //   onChangeDate(value.selection)}
       />
       <hr />
-      <div className="p-4">
-        {/* <Button 
+          <div className="p-4">
+        <Button 
           disabled={disabled} 
-          label="Reserve" 
+          label="رزرو کردن" 
           onClick={onSubmit}
-        /> */}
+        />
       </div>
       <hr />
       <div 
@@ -74,12 +76,13 @@ const RentalReservation: React.FC<
           text-lg
         "
       >
-        <div>
-          Total
+      <div>
+          قیمت کل :
         </div>
         <div>
-          $ {totalPrice}
+         {totalPrice} تومان
         </div>
+      
       </div>
     </div>
    );

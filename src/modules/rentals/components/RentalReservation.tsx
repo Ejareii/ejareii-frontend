@@ -51,10 +51,10 @@ const RentalReservation: React.FC<
       </div>
       <hr />
       <DatePicker
-        //value={dateRange}
-        //disabledDates={disabledDates}
-        // onChange={(value) => 
-        //   onChangeDate(value.selection)}
+        value={dateRange}
+        disabledDates={disabledDates}
+        onChange={(value:any) => 
+          onChangeDate(value)}
       />
       <hr />
           <div className="p-4">

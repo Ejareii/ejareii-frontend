@@ -51,7 +51,7 @@ const RentalMainComp: React.FC<any> = ({
 
       return dates;
     }, [reservations]);
-    console.log(disabledDates,"disabledDates")
+
 
     const category = useMemo(() => {
        return CategoriesStore.categories.find((items) => 
@@ -144,6 +144,7 @@ const RentalMainComp: React.FC<any> = ({
               category={category}
               Strictness_number={listing.Strictness_number}
             // locationValue={listing.locationValue}
+              listing={listing}
             />
             <div
               className="

@@ -7,9 +7,10 @@ import EmptyState from "@/src/shared/components/common/EmptyState";
 import ListingCard from "@/src/shared/components/listing/ListingCard";
 import MapToggleBtn from "@/src/modules/landing/components/MapToggleBtn";
 import ClientOnly from "@/src/shared/components/common/ClientOnly";
+import { RentalEntity } from "@/src/shared/dtos/rental.dto";
 
 
-const LandingComponent = ({ listings }: { listings: Array<any> }) => {
+const LandingComponent = ({ listings }: { listings: Array<RentalEntity> }) => {
 
   const [mapTabIsActive , setMapTabIsActive] = useState<boolean>(false)
 

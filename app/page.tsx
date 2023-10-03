@@ -3,6 +3,7 @@
 
 import LandingComponent from "@/src/modules/landing";
 import getListings from "./actions/getListing";
+import { RentalEntity } from "@/src/shared/dtos/rental.dto";
 
 // interface HomeProps {
 //   searchParams: IListingsParams
@@ -10,7 +11,7 @@ import getListings from "./actions/getListing";
 
 const Home = async ({ searchParams }: any) => {
   const listings = await getListings(searchParams);
-  return(<LandingComponent listings={listings}/>)
+  return(<LandingComponent listings={listings.map((list:any)=>new RentalEntity(list))}/>)
 }
 
 export default Home;

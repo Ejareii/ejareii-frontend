@@ -13,6 +13,7 @@ import { GrGamepad } from 'react-icons/gr';
 import { useSearchParams } from 'next/navigation';
 import { iconDic } from '../navigation/Categories';
 import { IconType } from 'react-icons';
+import { RentalEntity } from '../../dtos/rental.dto';
 
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl;
@@ -23,7 +24,7 @@ L.Icon.Default.mergeOptions({
 });
 
 interface MapProps {
-  listings: any[]
+  listings: RentalEntity[]
   center?: number[]
 }
 

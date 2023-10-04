@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react";
-// import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 // import { Range } from "react-date-range";
 import { useRouter } from "next/navigation";
 import Container from "@/src/shared/components/common/Container";
@@ -12,12 +12,18 @@ import RentalInfo from "./RentalInfo";
 import useCategoriesStore from "@/src/hooks/useCategoriesStore";
 import useLoginModal from "@/src/hooks/useLoginModal";
 import { differenceInCalendarDays, differenceInDays, eachDayOfInterval } from "date-fns";
+import { cookies } from "next/dist/client/components/headers";
+import Cookies from "js-cookie";
 
 
 const initialDateRange = {
   startDate: new Date(),
   endDate: new Date(),
   key: 'selection'
+};
+type Reservation = {
+  startDate: Date;
+  endDate: Date;
 };
 
 // interface RentalMainCompProps {
@@ -38,15 +44,13 @@ const RentalMainComp: React.FC<any> = ({
   const router = useRouter();
 
    const disabledDates = useMemo(() => {
-      let dates: Date[] = [];
-
-      reservations.forEach((reservation: any) => {
-        const range = eachDayOfInterval({
-          start: new Date(reservation.startDate),
-          end: new Date(reservation.endDate)
-        });
-
-        dates = [...dates, ...range];
+    let dates: [Date, Date][] = [];
+      reservations.forEach((reservation: Reservation) => {
+        const range: [Date, Date] =[
+        reservation.startDate,
+        reservation.endDate
+        ]
+        dates.push(range)
       });
 
       return dates;
@@ -63,28 +67,40 @@ const RentalMainComp: React.FC<any> = ({
     const [dateRange, setDateRange] = useState(initialDateRange);
 
     const onCreateReservation = useCallback(() => {
+      const token=Cookies.get("token")
         if (!currentUser) {
           return loginModal.onOpen();
         }
-        setIsLoading(true);
+        console.log({
+          totalPrice,
+          startDate: dateRange.startDate,
+          endDate: dateRange.endDate,
+          rental_id: listing?.rental_id
+        })
+        // setIsLoading(true);
 
-        // axios.post('/api/reservations', {
-        //   totalPrice,
-        //   startDate: dateRange.startDate,
-        //   endDate: dateRange.endDate,
-        //   listingId: listing?.id
-        // })
-        // .then(() => {
-        //   toast.success('Listing reserved!');
-        //   setDateRange(initialDateRange);
-        //   router.push('/trips');
-        // })
-        // .catch(() => {
-        //   toast.error('Something went wrong.');
-        // })
-        // .finally(() => {
-        //   setIsLoading(false);
-        // })
+        axios.post('http://localhost:9000/v1/reserv/create', {
+          totalPrice,
+          startDate: dateRange.startDate,
+          endDate: dateRange.endDate,
+          rental_id: String(listing?.rental_id)
+        },{
+          headers:{
+            'authorization': `Bearer ${token}`
+          }
+        })
+        .then(() => {
+          toast.success('Listing reserved!');
+          setDateRange(initialDateRange);
+          router.push('/');
+        })
+        .catch((error) => {
+          toast.error('Something went wrong.');
+          console.log(error)
+        })
+        .finally(() => {
+          setIsLoading(false);
+        })
     },
     [
       totalPrice, 

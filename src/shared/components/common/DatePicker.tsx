@@ -14,36 +14,50 @@ const CustomDatePicker: React.FC<any> = ({
   
   
   
-  const inService = [
-    [new DateObject( disabledDates[0]).convert(persian, persian_fa).format(),new DateObject( disabledDates[(disabledDates.length)-1]).convert(persian, persian_fa).format()]
+  const inService:any = [];
+  disabledDates.forEach((dateRange:any) => {
+    let startDate = new DateObject(dateRange[0]).convert(persian, persian_fa).format();
+    let endDate = new DateObject(dateRange[dateRange.length - 1]).convert(persian, persian_fa).format();
+    inService.push([startDate, endDate]);
+});
+
+  const reserved = [
+    []
   ];
-  const [values, setValues] = useState(inService.flat());
+  const initialValue = [...reserved, ...inService];
+  const [values, setValues] = useState(initialValue);
 
 function isInService(strDate:any) {
   return inService.some(([start, end]) => strDate >= start && strDate <= end);
 }
-
-  console.log(inService)
+  console.log(inService,"inservice")
   return (
 
     <Calendar 
       value={values}
       minDate={new Date()}
       onChange={(ranges:any)=>{
-        const isClickedOutsideUnAvailbleDates = inService.every(
-          ([start, end]) => ranges.some((range:any) => range[0]?.format?.() === start && range[1]?.format?.() === end)
-        );
-        console.log(isClickedOutsideUnAvailbleDates)
-        if (!isClickedOutsideUnAvailbleDates) return false;
+        console.log(ranges,"ranges")
+         
+          
+          const isClickedOutsideUnAvailbleDates = inService.every(
+            ([start, end]) => ranges.some((range:any) => range[0]?.format?.() === start && range[1]?.format?.() === end)
+          );
+         
+          if (!isClickedOutsideUnAvailbleDates) return false;
 
-        // if(value.length>1){
-        //  let obj:any={};
-        // obj.startDate=value[0].toDate();
-        // obj.endDate=value[1].toDate();
-        // obj.key="selection"
-        // console.log(obj)
-        // onChange(obj)
-       
+          setValues(ranges)
+      
+    
+
+        if(ranges[(inService.length)].length>1){
+         let obj:any={};
+        obj.startDate=ranges[inService.length][0].toDate();
+        obj.endDate=ranges[inService.length][1].toDate();
+        obj.key="selection"
+        console.log(obj)
+        onChange(obj)
+        }
    
         
       }}
@@ -52,6 +66,7 @@ function isInService(strDate:any) {
       locale={persian_fa}
       numberOfMonths={1}
       range
+      multiple
       rangeHover
        mapDays={({ date }) => {
         let className;
@@ -59,7 +74,7 @@ function isInService(strDate:any) {
         if (isInService(strDate)) className = "in-service";
         if (className) return { className };
       }}
-      // multiple
+     
       
     />
   );

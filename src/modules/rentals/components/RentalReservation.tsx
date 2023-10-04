@@ -47,14 +47,21 @@ const RentalReservation: React.FC<
         <div className="text-2xl font-semibold">
          {price} تومان 
         </div>
+        <div className="text-1xl font-semibold">
+        <div className="un-availble">
+          <div className="reserved" />
+          <p>قبلا رزرو شده است</p>
+        </div>
+      </div>
       
       </div>
       <hr />
+  
       <DatePicker
-        //value={dateRange}
-        //disabledDates={disabledDates}
-        // onChange={(value) => 
-        //   onChangeDate(value.selection)}
+        value={dateRange}
+        disabledDates={disabledDates}
+        onChange={(value:any) => 
+          onChangeDate(value)}
       />
       <hr />
           <div className="p-4">

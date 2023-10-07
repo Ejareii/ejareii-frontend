@@ -1,16 +1,11 @@
 'use client';
 
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
-import { format } from 'date-fns';
+import {DateObject  } from 'react-multi-date-picker';
+import persian from "react-date-object/calendars/persian"
+import persian_fa from "react-date-object/locales/persian_fa"
 
-// import useCountries from "@/app/hooks/useCountries";
-// import { 
-//   SafeListing, 
-//   SafeReservation, 
-//   SafeUser 
-// } from "@/app/types";
 
 import HeartButton from "../common/HeartButton";
 import Button from "../common/Button";
@@ -40,6 +35,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   actionId = '',
   currentUser,
 }) => {
+
   const router = useRouter();
   // const { getByValue } = useCountries();
 
@@ -69,10 +65,10 @@ const ListingCard: React.FC<ListingCardProps> = ({
       return null;
     }
   
-    const start = new Date(reservation.startDate);
-    const end = new Date(reservation.endDate);
+    const start =  new DateObject(reservation.startDate).convert(persian, persian_fa).format();
+    const end = new DateObject(reservation.endDate).convert(persian, persian_fa).format();
 
-    return `${format(start, 'PP')} - ${format(end, 'PP')}`;
+    return `${end} - ${start}` ;
   }, [reservation]);
 
   return (
@@ -102,7 +98,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             src={data.imageSrc}
             alt="Listing"
           /> */}
-          <Carousel imageLink={data.images}/>
+          <Carousel imageLink={data?.images}/>
           <div className="
             absolute
             top-3
@@ -125,7 +121,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             <div className="font-light">روزانه</div>
           )}
           <div className="font-semibold">
-            {price} تومان 
+            {price.toLocaleString()} تومان 
           </div>
         
         </div>

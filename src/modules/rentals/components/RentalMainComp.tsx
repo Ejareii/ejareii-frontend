@@ -12,7 +12,6 @@ import RentalInfo from "./RentalInfo";
 import useCategoriesStore from "@/src/hooks/useCategoriesStore";
 import useLoginModal from "@/src/hooks/useLoginModal";
 import { differenceInCalendarDays, differenceInDays, eachDayOfInterval } from "date-fns";
-import { cookies } from "next/dist/client/components/headers";
 import Cookies from "js-cookie";
 
 

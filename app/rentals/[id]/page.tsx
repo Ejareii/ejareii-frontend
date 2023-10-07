@@ -9,6 +9,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 
 import getListingById from "@/app/actions/getListingById";
 import getReservations from "@/app/actions/getReservations";
+import { useLocation } from "@/src/hooks/useLocation";
 import RentalMainComp from "@/src/modules/rentals/components/RentalMainComp";
 import ClientOnly from "@/src/shared/components/common/ClientOnly";
 import EmptyState from "@/src/shared/components/common/EmptyState";
@@ -25,7 +26,7 @@ const ListingPage = async ({ params }: { params: IParams }) => {
   const [listing, setListing] = useState(null);
   const [reservations, setReservations] = useState(null);
   const token = Cookies.get('token');
-  
+  let a = useLocation()
   
 
   useEffect(() => {

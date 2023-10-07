@@ -29,6 +29,7 @@ interface RentalInfoProps {
     description: string;
   } | undefined
   locationValue: string;
+  listing:any
 }
 
 const   RentalInfo: React.FC<any> = ({
@@ -37,6 +38,7 @@ const   RentalInfo: React.FC<any> = ({
   Strictness_number=2,
   category = true,
   locationValue,
+  listing
 }) => {
   // const { getByValue } = useCountries();
 
@@ -94,7 +96,7 @@ const   RentalInfo: React.FC<any> = ({
       <div className="h-[50vh]">
         <Map
           center={[51, -0.09]}
-    
+          listings={[listing]}
         />
       </div>
     </div>

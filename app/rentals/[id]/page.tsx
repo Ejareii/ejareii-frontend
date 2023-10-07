@@ -20,7 +20,7 @@ interface IParams {
   listingId?: string;
 }
 
-const ListingPage = async ({ params }: { params: IParams }) => {
+const ListingPage =  ({ params }: { params: IParams }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [listing, setListing] = useState(null);

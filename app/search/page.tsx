@@ -66,6 +66,7 @@ const SearchPage = async ({ searchParams }: any) => {
   if (listings.length === 0) {
     return <EmptyState showReset />
   }
+  console.log(listings)
 
   return (
   <>
@@ -88,6 +89,7 @@ const SearchPage = async ({ searchParams }: any) => {
           col-span-2
         "
           >
+            
             {listings.map((listing: any) => (
               <ListingCard
                 // currentUser={currentUser}

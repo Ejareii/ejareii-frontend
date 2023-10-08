@@ -105,7 +105,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
              <>
              <MenuItem 
                label="اگهی های زرو شده من " 
-               onClick={() => router.push('/trips')}
+               onClick={() => router.push('/myResrv')}
              />
              <MenuItem 
                label="مورد علاقه های من " 

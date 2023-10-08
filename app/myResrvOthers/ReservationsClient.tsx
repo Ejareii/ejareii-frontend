@@ -10,15 +10,18 @@ import { useRouter } from "next/navigation";
 import Heading from "@/src/shared/components/common/Heading";
 import Container from "@/src/shared/components/common/Container";
 import ListingCard from "@/src/shared/components/listing/ListingCard";
+import { RentalEntity } from "@/src/shared/dtos/rental.dto";
 
 interface ReservationsClientProps {
   reservations:[],
   currentUser?: any,
+  token:string,
 }
 
 const ReservationsClient: React.FC<ReservationsClientProps> = ({
   reservations,
-  currentUser
+  currentUser,
+  token
 }) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState('');
@@ -26,24 +29,31 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
   const onCancel = useCallback((id: string) => {
     setDeletingId(id);
 
-    axios.delete(`/api/reservations/${id}`)
-    .then(() => {
-      toast.success('Reservation cancelled');
-      router.refresh();
+    console.log(id)
+    axios.delete(`http://localhost:9000/v1/reserv/${id}`,{
+      headers: {
+        'authorization': `Bearer ${token}`, 
+      }
     })
-    .catch(() => {
-      toast.error('Something went wrong.')
+    .then(() => {
+      console.log("ssss")
+      router.refresh();
+      toast.success('Reservation cancelled');
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.error)
     })
     .finally(() => {
       setDeletingId('');
     })
   }, [router]);
 
+
   return (
     <Container>
       <Heading
-        title="Reservations"
-        subtitle="Bookings on your properties"
+        title="کالاهای من رزرو شده توسط مشتریان"
+        subtitle="چه تاریخ هایی رزو کرده اند!"
       />
       <div 
         className="
@@ -60,13 +70,13 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
       >
         {reservations.map((reservation: any) => (
           <ListingCard
-            key={reservation.id}
-            data={reservation.listing}
+            key={reservation.reservations_id}
+            data={new RentalEntity (reservation.rental)}
             reservation={reservation}
-            actionId={reservation.id}
+            actionId={reservation.reservations_id}
             onAction={onCancel}
-            disabled={deletingId === reservation.id}
-            actionLabel="Cancel guest reservation"
+            disabled={deletingId === reservation.reservations_id}
+            actionLabel="لغو کردن میزبانی"
             currentUser={currentUser}
           />
         ))}

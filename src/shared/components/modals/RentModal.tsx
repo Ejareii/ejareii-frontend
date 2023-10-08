@@ -117,7 +117,7 @@ const RentModal = () => {
 
     const headers = {
       'Content-Type': 'multipart/form-data',
-      'Authorization': `Bearer ${token}`
+      'authorization': `Bearer ${token}`
     };
 
     axios.post('http://localhost:9000/v1/rentals/create', data, { headers })

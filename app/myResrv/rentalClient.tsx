@@ -39,7 +39,6 @@ const TripsClient: React.FC<TripsClientProps> = ({
     })
     .then(() => {
       router.refresh();
-      console.log("shodeshhhh")
       toast.success('Reservation cancelled');
     })
     .catch((error) => {

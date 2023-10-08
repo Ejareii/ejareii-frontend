@@ -15,6 +15,9 @@ import { iconDic } from '../navigation/Categories';
 import { IconType } from 'react-icons';
 import { RentalEntity } from '../../dtos/rental.dto';
 import { useEffect, useState } from 'react';
+import qs from 'query-string';
+import { useRouter } from 'next/navigation';
+import debounce from "lodash/debounce";
 
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl;
@@ -37,22 +40,27 @@ const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">Op
 const attribution2 = '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
 const JwagSunnyAtribution = '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 
-const generateAndReturnIconURL = (iconComponent:React.JSX.Element) : string =>{
+const generateAndReturnIconURL = (iconComponent: React.JSX.Element): string => {
   let iconSvg = ReactDOMServer.renderToStaticMarkup(iconComponent);
   console.log(iconSvg);
 
-  var data = new Blob([iconSvg], {type:'image/svg+xml'});
+  var data = new Blob([iconSvg], { type: 'image/svg+xml' });
 
-    let svgFileURL = window.URL.createObjectURL(data);
+  let svgFileURL = window.URL.createObjectURL(data);
 
-    console.log({svgFileURL});
-    
-    // returns a URL you can use as a href
-    return svgFileURL;
-  
+  console.log({ svgFileURL });
+
+  // returns a URL you can use as a href
+  return svgFileURL;
+
 }
 
 const Map: React.FC<MapProps> = ({ listings }) => {
+
+  const router = useRouter();
+  const params = useSearchParams();
+
+  let center = [35.715298, 51.404343];
 
   // const handleMapMove = (e) => {
   //   console.log('Map moved to:', e.target.getCenter());
@@ -64,9 +72,34 @@ const Map: React.FC<MapProps> = ({ listings }) => {
   //   // Add your custom logic here
   // };
 
-  function LocationMarker() : any{
-    const [position, setPosition] = useState(null);
-    const [currentZoom , setCurrentZom] = useState(null)
+  function LocationMarker(): any {
+
+
+    const [lat, setLat] = useState<number>(center[0]);
+    const [lng, setLng] = useState<number>(center[1]);
+    const [currentZoom, setCurrentZom] = useState<number>(10);
+
+    useEffect(() => {
+      let currentQuery = {};
+      if (params) {
+        currentQuery = qs.parse(params.toString())
+      }
+
+      const updatedQuery: any = {
+        ...currentQuery,
+        zoom: currentZoom,
+        lat,
+        lng
+      }
+
+      const url = qs.stringifyUrl({
+        url: '/',
+        query: updatedQuery
+      }, { skipNull: true });
+
+      router.push(url);
+    }, [currentZoom , lat , lng])
+
     const map = useMapEvents({
       // click() {
       //   map.locate()
@@ -75,18 +108,21 @@ const Map: React.FC<MapProps> = ({ listings }) => {
       //   setPosition(e.latlng)
       //   map.flyTo(e.latlng, map.getZoom())
       // },
-      drag(e){
-        console.log('draged',e);
+      drag(e) {
+        debounce((q) => ()=>{
+          setLat(map.getCenter().lat)
+          setLng(map.getCenter().lng)
+        }, 600)
       },
-      zoom(e){
-        console.log('zoom' , e);
+      zoom(e) {
+        debounce((q) => setCurrentZom(10), 600)
+        console.log('zoom', e);
       }
     })
-  
+
     return null
   }
 
-  let center = [35.715298, 51.404343];
   return (
     <MapContainer
       // center={center as L.LatLngExpression || [35.715298, 51.404343]} 
@@ -137,7 +173,7 @@ const Map: React.FC<MapProps> = ({ listings }) => {
         <Circle center={[51.51, -0.06]} radius={200} />
         <Rectangle bounds={rectangle} />
       </FeatureGroup> */}
-      <LocationMarker /> 
+      <LocationMarker />
     </MapContainer>
   )
 }

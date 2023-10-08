@@ -1,7 +1,7 @@
 'use client';
 
 import L from 'leaflet';
-import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, TileLayer, useMap, useMapEvents } from 'react-leaflet';
 import * as ReactDOMServer from 'react-dom/server';
 
 import 'leaflet/dist/leaflet.css'
@@ -14,6 +14,7 @@ import { useSearchParams } from 'next/navigation';
 import { iconDic } from '../navigation/Categories';
 import { IconType } from 'react-icons';
 import { RentalEntity } from '../../dtos/rental.dto';
+import { useEffect, useState } from 'react';
 
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl;
@@ -53,6 +54,37 @@ const generateAndReturnIconURL = (iconComponent:React.JSX.Element) : string =>{
 
 const Map: React.FC<MapProps> = ({ listings }) => {
 
+  // const handleMapMove = (e) => {
+  //   console.log('Map moved to:', e.target.getCenter());
+  //   // Add your custom logic here
+  // };
+
+  // const handleMapZoom = (e) => {
+  //   console.log('Map zoomed to:', e.target.getZoom());
+  //   // Add your custom logic here
+  // };
+
+  function LocationMarker() : any{
+    const [position, setPosition] = useState(null);
+    const [currentZoom , setCurrentZom] = useState(null)
+    const map = useMapEvents({
+      // click() {
+      //   map.locate()
+      // },
+      // locationfound(e) {
+      //   setPosition(e.latlng)
+      //   map.flyTo(e.latlng, map.getZoom())
+      // },
+      drag(e){
+        console.log('draged',e);
+      },
+      zoom(e){
+        console.log('zoom' , e);
+      }
+    })
+  
+    return null
+  }
 
   let center = [35.715298, 51.404343];
   return (
@@ -105,6 +137,7 @@ const Map: React.FC<MapProps> = ({ listings }) => {
         <Circle center={[51.51, -0.06]} radius={200} />
         <Rectangle bounds={rectangle} />
       </FeatureGroup> */}
+      <LocationMarker /> 
     </MapContainer>
   )
 }

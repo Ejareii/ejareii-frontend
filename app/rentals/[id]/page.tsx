@@ -97,7 +97,7 @@ const ListingPage =  ({ params }: { params: IParams }) => {
       </ClientOnly>
     );
   }
-
+  console.log(currentUser)
   return (
    
     // <ClientOnly>

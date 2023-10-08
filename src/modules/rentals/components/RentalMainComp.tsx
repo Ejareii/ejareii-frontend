@@ -44,7 +44,7 @@ const RentalMainComp: React.FC<any> = ({
 
    const disabledDates = useMemo(() => {
     let dates: [Date, Date][] = [];
-      reservations.forEach((reservation: Reservation) => {
+      reservations?.forEach((reservation: Reservation) => {
         const range: [Date, Date] =[
         reservation.startDate,
         reservation.endDate
@@ -91,7 +91,7 @@ const RentalMainComp: React.FC<any> = ({
         .then(() => {
           toast.success('Listing reserved!');
           setDateRange(initialDateRange);
-          router.push('/');
+          router.push('/myResrv');
         })
         .catch((error) => {
           toast.error('Something went wrong.');
@@ -103,7 +103,7 @@ const RentalMainComp: React.FC<any> = ({
     },
     [
       totalPrice, 
-      // dateRange, 
+      dateRange, 
       listing?.id,
       router,
       currentUser,

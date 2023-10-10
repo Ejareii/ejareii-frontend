@@ -29,56 +29,47 @@ const ListingPage =  ({ params }: { params: IParams }) => {
   
 
   useEffect(() => {
-    const fetchReservations = async () => {
-      try {
-        const fetchedReservations = await getReservations(params);
-        setReservations(fetchedReservations);
-      } catch (error) {
-        console.error('Error fetching reservations:', error);
-      }
-    };
-
-    fetchReservations();
-  }, [params]);
-  useEffect(() => {
-    const fetchListing = async () => {
-      try {
-        const fetchedListing = await getListingById(params);
-        setListing(fetchedListing);
-      } catch (error) {
-        console.error('Error fetching listing:', error);
-      }finally {
-        setLoading(false);  // Set loading to false once data is fetched or there's an error
-      }
-    };
-
-    fetchListing();
-  }, [params]);
-
- 
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
+    const fetchData = async () => {
       if (token) {
         try {
-          const userData = await getCurrentUser(token);
+          const [fetchedReservations, fetchedListing, userData] = await Promise.all([
+            getReservations(params),
+            getListingById(params),
+            getCurrentUser(token)
+          ]);
+  
+          setReservations(fetchedReservations);
+          setListing(fetchedListing);
           setCurrentUser(userData);
         } catch (error) {
-          console.error('Error fetching current user:', error);
+          console.error('Error fetching data:', error);
+        } finally {
+          setLoading(false);
+        }
+      } else {
+        try {
+          const [fetchedReservations, fetchedListing] = await Promise.all([
+            getReservations(params),
+            getListingById(params)
+          ]);
+  
+          setReservations(fetchedReservations);
+          setListing(fetchedListing);
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        } finally {
+          setLoading(false);
         }
       }
     };
-
-    fetchCurrentUser();
-  }, [token]);
-
-
+  
+    fetchData();
+  }, [params, token]);
 
 
-//todo:
-  // console.log(listing,"sss")
-  // console.log(currentUser,"aaa")
+
  
-
+console.log("testt")
 
 
   if(loading){
@@ -96,9 +87,8 @@ const ListingPage =  ({ params }: { params: IParams }) => {
       </ClientOnly>
     );
   }
-  console.log(currentUser)
+ 
   return (
-   
     // <ClientOnly>
       <RentalMainComp
         listing={listing}

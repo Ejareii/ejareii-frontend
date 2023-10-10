@@ -109,7 +109,7 @@ const Map: React.FC<MapProps> = ({ listings }) => {
         { skipNull: true }
       );
 
-      router.push(url);
+      // router.push(url);
     }, [currentZoom, lat, lng]);
 
     const map = useMapEvents({
@@ -159,16 +159,16 @@ const Map: React.FC<MapProps> = ({ listings }) => {
       />
       {
         listings.map((_list , _i)=>{
-          console.log({_list});
-          let IconComponent = iconDic[_list.category.icon_name];
-          const customIcon = new L.Icon({
-            // iconUrl: "https://images.techhive.com/images/article/2017/01/google-android-apps-100705848-large.jpg?auto=webp&quality=85,70",
-            iconUrl:generateAndReturnIconURL(<IconComponent/>),
-            iconSize: [32, 32],
-            iconAnchor: [16, 32],
-            popupAnchor: [0, -32],
-          });
-          return <Marker key={_i} position={[_list?.latitude, _list?.longitude] as L.LatLngExpression} icon={customIcon} />
+          // console.log({_list});
+          // let IconComponent = iconDic[_list.category.icon_name];
+          // const customIcon = new L.Icon({
+          //   // iconUrl: "https://images.techhive.com/images/article/2017/01/google-android-apps-100705848-large.jpg?auto=webp&quality=85,70",
+          //   iconUrl:generateAndReturnIconURL(<IconComponent/>),
+          //   iconSize: [32, 32],
+          //   iconAnchor: [16, 32],
+          //   popupAnchor: [0, -32],
+          // });
+          return <Marker key={_i} position={[_list?.latitude, _list?.longitude] as L.LatLngExpression}  />
         })
       }
       {/* <LayerGroup>

@@ -21,13 +21,14 @@ const HeartButton: React.FC<HeartButtonProps> = ({
   // });
   const[hasFavorited,sethasFavorited]=useState(false)
   // const hasFavorited=false;
-  const toggleFavorite=()=>{
+  const toggleFavorite=(event:any)=>{
+    event.stopPropagation();
     sethasFavorited(!hasFavorited)
   }
 
   return (
     <div 
-      onClick={toggleFavorite}
+      onClick={(e)=>toggleFavorite(e)}
       className="
         relative
         hover:opacity-80
@@ -35,6 +36,7 @@ const HeartButton: React.FC<HeartButtonProps> = ({
         cursor-pointer
       "
     >
+     
       <AiOutlineHeart
         size={28}
         className="

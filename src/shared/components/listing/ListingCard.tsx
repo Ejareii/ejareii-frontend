@@ -25,7 +25,7 @@ const categoryDic={
   "1":"ماشین",
   "2":"موتورسیکلت"
 }
-
+ 
 const ListingCard: React.FC<ListingCardProps> = ({
   data,
   reservation,
@@ -103,6 +103,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
             absolute
             top-3
             right-3
+            z-10
           ">
             <HeartButton 
               listingId={data.rental_id} 

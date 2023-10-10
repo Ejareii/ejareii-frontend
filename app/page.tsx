@@ -9,9 +9,16 @@ import { RentalEntity } from "@/src/shared/dtos/rental.dto";
 //   searchParams: IListingsParams
 // };
 
-const Home = async ({ searchParams }: any) => {
+interface ISearchRentlas {
+  category?: string;
+  lat?:number;
+  lng?:number;
+  zoom?:number;
+}
+
+const Home = async ({ searchParams }: { searchParams: ISearchRentlas }) => {
   const listings = await getListings(searchParams);
-  return(<LandingComponent listings={listings.map((list:any)=>new RentalEntity(list))}/>)
+  return (<LandingComponent listings={listings.map((list: any) => new RentalEntity(list))} />)
 }
 
 export default Home;

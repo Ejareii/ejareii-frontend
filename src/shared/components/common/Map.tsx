@@ -109,7 +109,7 @@ const Map: React.FC<MapProps> = ({ listings }) => {
         { skipNull: true }
       );
 
-      // router.push(url);
+      router.push(url);
     }, [currentZoom, lat, lng]);
 
     const map = useMapEvents({

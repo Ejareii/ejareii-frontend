@@ -1,5 +1,6 @@
 'use client';
 
+import useFavorite from "@/src/hooks/useFavorite";
 import { useState } from "react";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
@@ -15,20 +16,21 @@ const HeartButton: React.FC<HeartButtonProps> = ({
   currentUser
 }) => {
   //for api call
-  // const { hasFavorited, toggleFavorite } = useFavorite({
-  //   listingId,
-  //   currentUser
-  // });
-  const[hasFavorited,sethasFavorited]=useState(false)
+  const { hasFavorited, toggleFavorite } = useFavorite({
+    listingId,
+    currentUser
+  });
+  // const[hasFavorited,sethasFavorited]=useState(false)
   // const hasFavorited=false;
-  const toggleFavorite=(event:any)=>{
-    event.stopPropagation();
-    sethasFavorited(!hasFavorited)
-  }
+  // const toggleFavorite=(event:any)=>{
+  //   event.stopPropagation();
+  //   sethasFavorited(!hasFavorited)
+  // }
+  // console.log()
 
   return (
     <div 
-      onClick={(e)=>toggleFavorite(e)}
+      onClick={toggleFavorite}
       className="
         relative
         hover:opacity-80

@@ -8,11 +8,14 @@ import ListingCard from "@/src/shared/components/listing/ListingCard";
 import MapToggleBtn from "@/src/modules/landing/components/MapToggleBtn";
 import ClientOnly from "@/src/shared/components/common/ClientOnly";
 import { RentalEntity } from "@/src/shared/dtos/rental.dto";
+import Cookies from "js-cookie";
+import getCurrentUser from "@/app/actions/getCurrentUser";
 
 
-const LandingComponent = ({ listings }: { listings: Array<RentalEntity> }) => {
-
-  const [mapTabIsActive , setMapTabIsActive] = useState<boolean>(false)
+const LandingComponent = async ({ listings }: { listings: Array<RentalEntity> }) => {
+  const [mapTabIsActive , setMapTabIsActive] = useState<boolean>(false);
+  const token=Cookies.get("token");
+  const currentUser=await getCurrentUser(token)
 
   
 
@@ -45,7 +48,7 @@ const LandingComponent = ({ listings }: { listings: Array<RentalEntity> }) => {
           >
             {listings.map((listing: any) => (
               <ListingCard
-                // currentUser={currentUser}
+                currentUser={currentUser}
                 key={listing.id}
                 data={listing}
               />

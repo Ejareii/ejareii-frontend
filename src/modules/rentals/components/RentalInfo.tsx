@@ -7,6 +7,7 @@ import CategoryView from "./CategoryView";
 import { FaBeer } from 'react-icons/fa';
 import Map from "@/src/shared/components/common/Map";
 import { iconDic } from "@/src/shared/components/navigation/Categories";
+import SimpleMap from "./SimpleMap";
 
 // import useCountries from "@/app/hooks/useCountries";
 // import { SafeUser } from "@/app/types";
@@ -94,9 +95,9 @@ const   RentalInfo: React.FC<any> = ({
       </div>
       <hr />
       <div className="h-[50vh]">
-        <Map
+        <SimpleMap
           center={[51, -0.09]}
-          listings={[listing]}
+          listing={listing}
         />
       </div>
     </div>

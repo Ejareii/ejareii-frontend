@@ -13,6 +13,7 @@ import useCategoriesStore from "@/src/hooks/useCategoriesStore";
 import useLoginModal from "@/src/hooks/useLoginModal";
 import { differenceInCalendarDays, differenceInDays, eachDayOfInterval } from "date-fns";
 import Cookies from "js-cookie";
+import { RentalEntity } from "@/src/shared/dtos/rental.dto";
 
 
 const initialDateRange = {
@@ -159,7 +160,7 @@ const RentalMainComp: React.FC<any> = ({
               category={category}
               Strictness_number={listing.Strictness_number}
             // locationValue={listing.locationValue}
-              listing={listing}
+              listing={listing as RentalEntity}
             />
             <div
               className="

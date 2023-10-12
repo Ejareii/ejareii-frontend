@@ -13,6 +13,7 @@ import { useLocation } from "@/src/hooks/useLocation";
 import RentalMainComp from "@/src/modules/rentals/components/RentalMainComp";
 import ClientOnly from "@/src/shared/components/common/ClientOnly";
 import EmptyState from "@/src/shared/components/common/EmptyState";
+import { RentalEntity } from "@/src/shared/dtos/rental.dto";
 import Cookies from "js-cookie";
 import { useEffect, useState } from "react";
 
@@ -23,7 +24,7 @@ interface IParams {
 const ListingPage =  ({ params }: { params: IParams }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [listing, setListing] = useState(null);
+  const [listing, setListing] = useState<RentalEntity | null>(null);
   const [reservations, setReservations] = useState(null);
   const token = Cookies.get('token');
   let a = useLocation()

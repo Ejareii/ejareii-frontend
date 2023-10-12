@@ -158,7 +158,7 @@ const Map: React.FC<MapProps> = ({ listings }) => {
         accessToken="PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps"
       />
       {
-        listings.map((_list , _i)=>{
+        listings.length && listings.map((_list , _i)=>{
           // console.log({_list});
           // let IconComponent = iconDic[_list.category.icon_name];
           // const customIcon = new L.Icon({

@@ -72,7 +72,7 @@ const Map: React.FC<MapProps> = ({ listings }) => {
 
   const [lat, setLat] = useState<number>(center[0]);
   const [lng, setLng] = useState<number>(center[1]);
-  const [currentZoom, setCurrentZom] = useState<number>(10);
+  const [currentZoom, setCurrentZom] = useState<number>(14);
 
 
   // const handleMapMove = (e) => {
@@ -120,20 +120,20 @@ const Map: React.FC<MapProps> = ({ listings }) => {
       //   setPosition(e.latlng)
       //   map.flyTo(e.latlng, map.getZoom())
       // },
-      drag(e) {
+      dragend(e) {
         const handleDrag = debounce(
           () => {
             setLat(map.getCenter().lat);
             setLng(map.getCenter().lng);
           },
-          400
+          50
         );
         handleDrag();
       },
-      zoom(e) {
+      zoomend(e) {
         const handleZoom = debounce(
           () => setCurrentZom(e?.sourceTarget?._zoom),
-          400
+          50
         );
         handleZoom();
       },
@@ -146,7 +146,7 @@ const Map: React.FC<MapProps> = ({ listings }) => {
     <MapContainer
       // center={center as L.LatLngExpression || [35.715298, 51.404343]}
       center={(center as L.LatLngExpression) || [35.715298, 51.404343]}
-      zoom={40}
+      zoom={currentZoom}
       scrollWheelZoom={true}
       //maxZoom={50}
       minZoom={10}
@@ -158,7 +158,7 @@ const Map: React.FC<MapProps> = ({ listings }) => {
         accessToken="PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps"
       />
       {
-        listings.length && listings.map((_list , _i)=>{
+        listings?.length && listings.map((_list , _i)=>{
           // console.log({_list});
           // let IconComponent = iconDic[_list.category.icon_name];
           // const customIcon = new L.Icon({

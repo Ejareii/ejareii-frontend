@@ -13,7 +13,7 @@ export default async function getListings(params:any){
     })
 console.log({queryString});
 
-    if(category){
+    if(queryString !== "?"){
      url = `http://localhost:9000/v1/rentals/${queryString}`
     }else{
      url = `http://localhost:9000/v1/rentals/`

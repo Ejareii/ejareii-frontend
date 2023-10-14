@@ -2,7 +2,7 @@ import axios from "axios";
 
 export default async function getListings(params:any){
     let url:string;
-    console.log({params});
+    
     
     const {category}=params
 

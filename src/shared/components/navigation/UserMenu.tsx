@@ -109,7 +109,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
              />
              <MenuItem 
                label="مورد علاقه های من " 
-               onClick={() => router.push('/favorites')}
+               onClick={() => router.push('/myFavorites')}
              />
              <MenuItem 
                label="اگهی های من زرو شده توسط بقیه" 
@@ -117,7 +117,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
              />
              <MenuItem 
                label="آگهی های من" 
-               onClick={() => router.push('/properties')}
+               onClick={() => router.push('/myRentAds')}
              />
              <MenuItem 
                label="اجاره دادن کالایتان" 

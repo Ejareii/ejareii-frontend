@@ -8,13 +8,10 @@ import Container from "@/src/shared/components/common/Container";
 import Heading from "@/src/shared/components/common/Heading";
 import ListingCard from "@/src/shared/components/listing/ListingCard";
 
-// import { SafeListing, SafeUser } from "@/app/types";
-
-
 
 interface PropertiesClientProps {
-  listings: any
-  currentUser?: any
+  listings: any[],
+  currentUser?: any | null,
 }
 
 const PropertiesClient: React.FC<PropertiesClientProps> = ({

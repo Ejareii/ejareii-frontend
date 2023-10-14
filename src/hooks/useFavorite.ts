@@ -10,6 +10,11 @@ interface IUseFavorite {
 }
 
 const useFavorite = ({ listingId, currentUser }: IUseFavorite) => {
+  // console.log("testt")
+  const router = useRouter();
+
+  const loginModal = useLoginModal();
+
 
   const [hasFavorited, setHasFavorited] = useState<boolean>(false);
 
@@ -27,32 +32,38 @@ useEffect(() => {
   }
 }, [currentUser, listingId]);
 
-  const toggleFavorite = async (e: React.MouseEvent<HTMLDivElement>) => {
-    e.stopPropagation();
+const toggleFavorite = useCallback(async (e: React.MouseEvent<HTMLDivElement>) => {
+  e.stopPropagation();
 
-    if (!currentUser) {
-      return loginModal.onOpen();
-    }
-
-    try {
-      let request;
-
-      if (hasFavorited) {
-        console.log(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`)
-        request = () => axios.delete(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`);
-      } else {
-        console.log(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`)
-        request = () => axios.post(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`);
-      }
-
-      await request();
-      router.refresh();
-      toast.success('Success');
-    } catch (error) {
-        console.log(error)
-      toast.error('Something went wrong.');
-    }
+  if (!currentUser) {
+    return loginModal.onOpen();
   }
+
+  try {
+    let request;
+
+    if (hasFavorited) {
+      console.log(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`)
+      request = () => axios.delete(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`);
+    } else {
+      console.log(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`)
+      request = () => axios.post(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`);
+    }
+
+    await request();
+    router.refresh();
+    toast.success('Success');
+  } catch (error) {
+    toast.error('Something went wrong.');
+  }
+}, 
+[
+  currentUser, 
+  hasFavorited, 
+  listingId, 
+  loginModal,
+  router
+]);
 
 
 

@@ -23,6 +23,7 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
   currentUser,
   token
 }) => {
+  console.log(reservations)
   const router = useRouter();
   const [deletingId, setDeletingId] = useState('');
 
@@ -69,6 +70,7 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
         "
       >
         {reservations.map((reservation: any) => (
+
           <ListingCard
             key={reservation.reservations_id}
             data={new RentalEntity (reservation.rental)}
@@ -78,6 +80,7 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
             disabled={deletingId === reservation.reservations_id}
             actionLabel="لغو کردن میزبانی"
             currentUser={currentUser}
+            author_id={reservation.user_id}
           />
         ))}
       </div>

@@ -10,6 +10,8 @@ import persian_fa from "react-date-object/locales/persian_fa"
 import HeartButton from "../common/HeartButton";
 import Button from "../common/Button";
 import Carousel from "../common/Carousel";
+import useUserInfoModal from "@/src/hooks/useUserInfoModal";
+import getUserInfo from "@/app/actions/getUserInfo";
 
 
 interface ListingCardProps {
@@ -20,6 +22,7 @@ interface ListingCardProps {
   actionLabel?: string;
   actionId?: string;
   currentUser?: any | null
+  author_id?:string
 };
 const categoryDic={
   "1":"ماشین",
@@ -34,9 +37,11 @@ const ListingCard: React.FC<ListingCardProps> = ({
   actionLabel,
   actionId = '',
   currentUser,
+  author_id
 }) => {
 
   const router = useRouter();
+  const userInfoModal=useUserInfoModal()
   // const { getByValue } = useCountries();
 
   // const location = getByValue(data.locationValue);
@@ -51,6 +56,26 @@ const ListingCard: React.FC<ListingCardProps> = ({
 
     onAction?.(actionId)
   }, [disabled, onAction, actionId]);
+
+  const handleInfo = useCallback (
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
+    if (disabled) {
+      return;
+    }
+    const fetchData = async () => {
+      const data = await getUserInfo(author_id);
+      console.log(data)
+      userInfoModal.setName(data?.name);
+      userInfoModal.setLname(data?.lastName);
+      userInfoModal.setEmail(data?.email)
+      userInfoModal.onOpen();
+
+    };
+    fetchData();
+  }, [disabled, onAction, author_id]);
+
 
   const price = useMemo(() => {
     if (reservation) {
@@ -133,7 +158,16 @@ const ListingCard: React.FC<ListingCardProps> = ({
             label={actionLabel} 
             onClick={handleCancel}
           />
+          
+          
+
         )}
+        <Button
+            disabled={disabled}
+            small
+            label={"مشخصات رزرو کننده"} 
+            onClick={handleInfo}
+          />
       </div>
     </div>
    );

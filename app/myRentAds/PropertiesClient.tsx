@@ -12,19 +12,24 @@ import ListingCard from "@/src/shared/components/listing/ListingCard";
 interface PropertiesClientProps {
   listings: any[],
   currentUser?: any | null,
+  token:string
 }
 
 const PropertiesClient: React.FC<PropertiesClientProps> = ({
   listings,
-  currentUser
+  currentUser,
+  token
 }) => {
   const router = useRouter();
   const [deletingId, setDeletingId] = useState('');
 
   const onDelete = useCallback((id: string) => {
     setDeletingId(id);
-
-    axios.delete(`/api/listings/${id}`)
+    axios.delete(`http://localhost:9000/v1/rentals/${id}`,{
+      headers: {
+        'authorization': `Bearer ${token}`, 
+      }
+    })
     .then(() => {
       toast.success('Listing deleted');
       router.refresh();
@@ -41,8 +46,8 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
   return ( 
     <Container>
       <Heading
-        title="Properties"
-        subtitle="List of your properties"
+        title="آگهی های من"
+        subtitle="لیست آگهی های شما"
       />
       <div 
         className="
@@ -59,12 +64,12 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
       >
         {listings.map((listing: any) => (
           <ListingCard
-            key={listing.id}
+            key={listing.rental_id}
             data={listing}
-            actionId={listing.id}
+            actionId={listing.rental_id}
             onAction={onDelete}
-            disabled={deletingId === listing.id}
-            actionLabel="Delete property"
+            disabled={deletingId === listing.rental_id}
+            actionLabel="حذف کردن آگهی"
             currentUser={currentUser}
           />
         ))}

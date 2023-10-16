@@ -18,11 +18,14 @@ interface ListingCardProps {
   data: any;
   reservation?: any;
   onAction?: (id: string) => void;
+  onActionConfirm?: (id: string) => void;
   disabled?:boolean ;
   actionLabel?: string;
   actionId?: string;
   currentUser?: any | null
   author_id?:string
+  actionLabelInfo?:string
+  actionLabelConfirm?:string
 };
 const categoryDic={
   "1":"ماشین",
@@ -37,9 +40,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
   actionLabel,
   actionId = '',
   currentUser,
-  author_id
+  author_id,
+  actionLabelInfo,
+  actionLabelConfirm,
+  onActionConfirm
 }) => {
-
+console.log(reservation)
   const router = useRouter();
   const userInfoModal=useUserInfoModal()
   // const { getByValue } = useCountries();
@@ -55,6 +61,17 @@ const ListingCard: React.FC<ListingCardProps> = ({
     }
 
     onAction?.(actionId)
+  }, [disabled, onAction, actionId]);
+
+  const handleConfrim = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
+    if (disabled) {
+      return;
+    }
+
+    onActionConfirm?.(actionId)
   }, [disabled, onAction, actionId]);
 
   const handleInfo = useCallback (
@@ -151,23 +168,45 @@ const ListingCard: React.FC<ListingCardProps> = ({
           </div>
         
         </div>
-        {onAction && actionLabel && (
-          <Button
-            disabled={disabled}
-            small
-            label={actionLabel} 
-            onClick={handleCancel}
-          />
-          
-          
+        <div className="flex flex-row gap-2">
+  {/* Small Button */}
+  {!reservation?.approve && actionLabelConfirm && (
+  <Button
+  disabled={disabled}
+  label={actionLabelConfirm}
+  onClick={handleConfrim}
+    />
+  ) }
 
-        )}
-        <Button
-            disabled={disabled}
-            small
-            label={"مشخصات رزرو کننده"} 
-            onClick={handleInfo}
-          />
+  {!reservation?.approve && onAction && actionLabel && (
+    <Button
+      disabled={disabled}
+      small
+      label={"لغو کردن"}
+      onClick={handleCancel}
+    />
+  )}
+
+{reservation?.approve && onAction && actionLabel && (
+    <Button
+      disabled={disabled}
+      small
+      label={actionLabel}
+      onClick={handleCancel}
+    />
+  )}
+  
+
+</div>
+    {actionLabelInfo && (
+       <Button
+       disabled={disabled}
+       small
+       label={actionLabelInfo} 
+       onClick={handleInfo}
+     />
+    )}
+       
       </div>
     </div>
    );

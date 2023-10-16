@@ -24,6 +24,7 @@ const initialDateRange = {
 type Reservation = {
   startDate: Date;
   endDate: Date;
+  approve:boolean
 };
 
 // interface RentalMainCompProps {
@@ -46,11 +47,14 @@ const RentalMainComp: React.FC<any> = ({
    const disabledDates = useMemo(() => {
     let dates: [Date, Date][] = [];
       reservations?.forEach((reservation: Reservation) => {
-        const range: [Date, Date] =[
-        reservation.startDate,
-        reservation.endDate
-        ]
-        dates.push(range)
+        if(reservation.approve){
+          const range: [Date, Date] =[
+          reservation.startDate,
+          reservation.endDate
+          ]
+          dates.push(range)
+
+        }
       });
 
       return dates;

@@ -49,6 +49,28 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
     })
   }, [router]);
 
+  const onConfirm = useCallback((id: string) => {
+    // setDeletingId(id);
+
+    console.log(id)
+    axios.put(`http://localhost:9000/v1/reserv/${id}`,{
+      headers: {
+        'authorization': `Bearer ${token}`, 
+      }
+    })
+    .then(() => {
+      console.log("ssss")
+      router.refresh();
+      toast.success('Reservation cancelled');
+    })
+    .catch((error) => {
+      toast.error(error?.response?.data?.error)
+    })
+    .finally(() => {
+      setDeletingId('');
+    })
+  }, [router]);
+
 
   return (
     <Container>
@@ -81,6 +103,9 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
             actionLabel="لغو کردن میزبانی"
             currentUser={currentUser}
             author_id={reservation.user_id}
+            actionLabelInfo="مشخصات رزرو کننده"
+            actionLabelConfirm="تایید کردن"
+            onActionConfirm={onConfirm}
           />
         ))}
       </div>

@@ -78,6 +78,10 @@ const TripsClient: React.FC<TripsClientProps> = ({
             disabled={deletingId === reservation.reservations_id}
             actionLabel="لغو کردن اجاره"
             currentUser={currentUser}
+            actionLabelInfo="مشخصات میزبان"
+            author_id={reservation?.author_id}
+            myreservpage={true}
+
           />
         ))}
       </div>

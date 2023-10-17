@@ -11,7 +11,10 @@ import SearchModal from '@/src/shared/components/modals/SearchModal'
 import Cookies from 'js-cookie';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import  { useEffect, useState } from 'react';
-import UserInfoModal from '@/src/shared/components/modals/UserInfoModal';
+import GuestInfoModal from '@/src/shared/components/modals/guestInfoModal';
+import HostInfoModal from '@/src/shared/components/modals/HostInfoModal';
+
+
 // import "swiper/css";
 
 const myFont = localFont({ src: '../../../../fonts/IRANYekanBold.ttf' })
@@ -49,7 +52,8 @@ const LandingLayout = ({
       <body className={myFont.className}>
         <ToasterProvider />
         <RentModal />
-        <UserInfoModal/>
+       <GuestInfoModal/>
+       <HostInfoModal/>
         <SearchModal />
         <LoginModal />
         <RegisterModal />

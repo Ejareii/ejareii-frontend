@@ -58,8 +58,7 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
         'authorization': `Bearer ${token}`, 
       }
     })
-    .then(() => {
-      console.log("ssss")
+    .then(() => { 
       router.refresh();
       toast.success('Reservation cancelled');
     })

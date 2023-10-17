@@ -12,6 +12,7 @@ import Button from "../common/Button";
 import Carousel from "../common/Carousel";
 import useUserInfoModal from "@/src/hooks/useUserInfoModal";
 import getUserInfo from "@/app/actions/getUserInfo";
+import useHostInfoModal from "@/src/hooks/useHostInfoModal";
 
 
 interface ListingCardProps {
@@ -26,6 +27,7 @@ interface ListingCardProps {
   author_id?:string
   actionLabelInfo?:string
   actionLabelConfirm?:string
+  myreservpage?:boolean
 };
 const categoryDic={
   "1":"ماشین",
@@ -43,11 +45,13 @@ const ListingCard: React.FC<ListingCardProps> = ({
   author_id,
   actionLabelInfo,
   actionLabelConfirm,
-  onActionConfirm
+  onActionConfirm,
+  myreservpage
 }) => {
 console.log(reservation)
   const router = useRouter();
   const userInfoModal=useUserInfoModal()
+  const hostInFoModal=useHostInfoModal()
   // const { getByValue } = useCountries();
 
   // const location = getByValue(data.locationValue);
@@ -74,7 +78,7 @@ console.log(reservation)
     onActionConfirm?.(actionId)
   }, [disabled, onAction, actionId]);
 
-  const handleInfo = useCallback (
+  const handleInfoGuest = useCallback (
     (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
 
@@ -93,6 +97,24 @@ console.log(reservation)
     fetchData();
   }, [disabled, onAction, author_id]);
 
+  const handleInfoHost = useCallback (
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
+    if (disabled) {
+      return;
+    }
+    const fetchData = async () => {
+      const data = await getUserInfo(author_id);
+      console.log(data)
+      hostInFoModal.setName(data?.name);
+      hostInFoModal.setLname(data?.lastName);
+      hostInFoModal.setEmail(data?.email)
+      hostInFoModal.onOpen();
+
+    };
+    fetchData();
+  }, [disabled, onAction, author_id]);
 
   const price = useMemo(() => {
     if (reservation) {
@@ -166,8 +188,15 @@ console.log(reservation)
           <div className="font-semibold">
             {price.toLocaleString()} تومان 
           </div>
+          
         
         </div>
+        {!reservation?.approve  && myreservpage && (
+            <div className="bg-red-100 p-2 rounded-md shadow-sm">
+                <p className="text-red-600 font-semibold">در حال بررسی میزبان ...</p>
+              </div>
+        )}
+      
         <div className="flex flex-row gap-2">
   {/* Small Button */}
   {!reservation?.approve && actionLabelConfirm && (
@@ -198,12 +227,12 @@ console.log(reservation)
   
 
 </div>
-    {actionLabelInfo && (
+    {reservation?.approve && actionLabelInfo && (
        <Button
        disabled={disabled}
        small
        label={actionLabelInfo} 
-       onClick={handleInfo}
+       onClick={myreservpage?handleInfoHost:handleInfoGuest}
      />
     )}
        

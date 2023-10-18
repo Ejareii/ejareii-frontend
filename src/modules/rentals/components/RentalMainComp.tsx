@@ -60,6 +60,21 @@ const RentalMainComp: React.FC<any> = ({
       return dates;
     }, [reservations]);
 
+    const pendingDates = useMemo(() => {
+      let dates: [Date, Date][] = [];
+        reservations?.forEach((reservation: Reservation) => {
+          if(!reservation.approve){
+            const range: [Date, Date] =[
+            reservation.startDate,
+            reservation.endDate
+            ]
+            dates.push(range)
+  
+          }
+        });
+  
+        return dates;
+      }, [reservations]);
 
     const category = useMemo(() => {
        return CategoriesStore.categories.find((items) => 
@@ -182,6 +197,7 @@ const RentalMainComp: React.FC<any> = ({
                 onSubmit={onCreateReservation}
                 disabled={isLoading}
                 disabledDates={disabledDates}
+                pendingDates={pendingDates}
               />
             </div>
           </div>

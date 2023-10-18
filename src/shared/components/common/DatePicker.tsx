@@ -9,11 +9,20 @@ import React, { useState } from "react";
 const CustomDatePicker: React.FC<any> = ({
   value,
   onChange,
-  disabledDates
+  disabledDates,
+  pendingDates
 }) => {
   
   
-  
+  //
+  const inPending:any=[];
+  pendingDates.forEach((dateRange:any) => {
+    let startDate = new DateObject(dateRange[0]).convert(persian, persian_fa).format();
+    let endDate = new DateObject(dateRange[dateRange.length - 1]).convert(persian, persian_fa).format();
+    inPending.push([startDate, endDate]);
+});
+
+  //
   const inService:any = [];
   disabledDates.forEach((dateRange:any) => {
     let startDate = new DateObject(dateRange[0]).convert(persian, persian_fa).format();
@@ -21,30 +30,44 @@ const CustomDatePicker: React.FC<any> = ({
     inService.push([startDate, endDate]);
 });
 
-  const reserved = [
-    []
-  ];
-  const initialValue = [...reserved, ...inService];
+ 
+  const initialValue = [...inPending, ...inService];
   const [values, setValues] = useState(initialValue);
 
 function isInService(strDate:any) {
   return inService.some(([start, end]) => strDate >= start && strDate <= end);
 }
-  console.log(inService,"inservice")
+function isinPending(strDate:any) {
+  return inPending.some(([start, end]) => strDate >= start && strDate <= end);
+}
+  // console.log(inService,"inservice");
+  // console.log(inPending,"inpending")
   return (
 
     <Calendar 
       value={values}
       minDate={new Date()}
       onChange={(ranges:any)=>{
-        console.log(ranges,"ranges")
-         
+        
+         console.log(ranges)
           
-          const isClickedOutsideUnAvailbleDates = inService.every(
+        
+        const isClickedOutsideUnAvailbleDatesPending = inPending.every(
             ([start, end]) => ranges.some((range:any) => range[0]?.format?.() === start && range[1]?.format?.() === end)
           );
-         
+          const isClickedOutsideUnAvailbleDates = inService.every(([start, end]) => {
+            const isRangeAvailable = ranges.some((range) => {
+              return range[0]?.format?.() === start && range[1]?.format?.() === end
+            }
+            );
+            return isRangeAvailable;
+          });
+
+          console.log(isClickedOutsideUnAvailbleDates,isClickedOutsideUnAvailbleDatesPending)
           if (!isClickedOutsideUnAvailbleDates) return false;
+          if (!isClickedOutsideUnAvailbleDatesPending) return false;
+
+
 
           setValues(ranges)
       
@@ -55,7 +78,7 @@ function isInService(strDate:any) {
         obj.startDate=ranges[inService.length][0].toDate();
         obj.endDate=ranges[inService.length][1].toDate();
         obj.key="selection"
-        console.log(obj)
+        // console.log(obj)
         onChange(obj)
         }
    
@@ -67,12 +90,26 @@ function isInService(strDate:any) {
       numberOfMonths={1}
       range
       multiple
-      rangeHover
+      // rangeHover
        mapDays={({ date }) => {
-        let className;
         const strDate = date.format();
-        if (isInService(strDate)) className = "in-service";
-        if (className) return { className };
+
+        if (isInService(strDate))return  {
+          disabled: true,
+          style: {  color:"white", backgroundColor: "#cc0303"
+          , fontWeight: "bold",
+          border: "1px solid #777"},
+          onClick: () => alert("روز های زررو شده غیرفعال هستند.")
+
+        } 
+        if(isinPending(strDate)) return{
+          disabled: true,
+          style: {  color:"white", backgroundColor: "blue"
+          , fontWeight: "bold",
+          border: "1px solid #777"},
+          onClick: () => alert("روز های در حال بررسی غیرفعال هستند.")
+        }
+        // if (className) return { className,  disabled: true, };
       }}
      
       

@@ -16,6 +16,7 @@ interface RentalReservationProps {
   onSubmit: () => void;
   disabled?: boolean;
   disabledDates: Date[];
+  pendingDates:Date[];
 }
 
 const RentalReservation: React.FC<
@@ -27,7 +28,8 @@ const RentalReservation: React.FC<
   onChangeDate,
   onSubmit,
   disabled,
-  disabledDates
+  disabledDates,
+  pendingDates
 }) => {
   return ( 
     <div 
@@ -52,6 +54,10 @@ const RentalReservation: React.FC<
           <div className="reserved" />
           <p>قبلا رزرو شده است</p>
         </div>
+        <div className="un-availble">
+          <div className="pending" />
+          <p>در حال بررسی است</p>
+        </div>
       </div>
       
       </div>
@@ -60,6 +66,7 @@ const RentalReservation: React.FC<
       <DatePicker
         value={dateRange}
         disabledDates={disabledDates}
+        pendingDates={pendingDates}
         onChange={(value:any) => 
           onChangeDate(value)}
       />

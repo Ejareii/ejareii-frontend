@@ -131,10 +131,17 @@ div.reserved {
   border-radius: 50%;
 }
 
+div.pending {
+  background-color:  blue;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
 .un-availble {
   display: flex;
   align-items: center;
-  column-gap: 10px;
+  column-gap: 9px;
 }
 
 .un-availble p {

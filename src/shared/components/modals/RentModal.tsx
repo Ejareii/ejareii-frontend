@@ -119,8 +119,9 @@ const RentModal = () => {
       'Content-Type': 'multipart/form-data',
       'authorization': `Bearer ${token}`
     };
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-    axios.post('http://localhost:9000/v1/rentals/create', data, { headers })
+    axios.post(`${apiUrl}/v1/rentals/create`, data, { headers })
     .then(() => {
       toast.success('Listing created!');
       router.refresh();

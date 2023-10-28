@@ -1,6 +1,8 @@
 import axios from "axios";
 
 export default async function getListings(params:any){
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  console.log(apiUrl,"apiUrl")
     let url:string;
     
     
@@ -14,9 +16,9 @@ export default async function getListings(params:any){
 console.log({queryString});
 
     if(queryString !== "?"){
-     url = `http://localhost:9000/v1/rentals/${queryString}`
+     url = `${apiUrl}/v1/rentals/${queryString}`
     }else{
-     url = `http://localhost:9000/v1/rentals/`
+     url = `${apiUrl}/v1/rentals/`
     }
 
     try {

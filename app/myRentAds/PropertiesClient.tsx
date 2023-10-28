@@ -24,8 +24,9 @@ const PropertiesClient: React.FC<PropertiesClientProps> = ({
   const [deletingId, setDeletingId] = useState('');
 
   const onDelete = useCallback((id: string) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     setDeletingId(id);
-    axios.delete(`http://localhost:9000/v1/rentals/${id}`,{
+    axios.delete(`${apiUrl}/v1/rentals/${id}`,{
       headers: {
         'authorization': `Bearer ${token}`, 
       }

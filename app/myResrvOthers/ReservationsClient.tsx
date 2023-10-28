@@ -28,10 +28,11 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
   const [deletingId, setDeletingId] = useState('');
 
   const onCancel = useCallback((id: string) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     setDeletingId(id);
 
     console.log(id)
-    axios.delete(`http://localhost:9000/v1/reserv/${id}`,{
+    axios.delete(`${apiUrl}/v1/reserv/${id}`,{
       headers: {
         'authorization': `Bearer ${token}`, 
       }
@@ -50,10 +51,11 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({
   }, [router]);
 
   const onConfirm = useCallback((id: string) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     // setDeletingId(id);
 
     console.log(id)
-    axios.put(`http://localhost:9000/v1/reserv/${id}`,{
+    axios.put(`${apiUrl}/v1/reserv/${id}`,{
       headers: {
         'authorization': `Bearer ${token}`, 
       }

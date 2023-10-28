@@ -3,11 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev:local": "shx cp .env.development .env && next dev",
+    "dev:server": "shx cp .env.production .env && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
-  },
+},
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",

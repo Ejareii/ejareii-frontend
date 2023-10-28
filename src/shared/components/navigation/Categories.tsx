@@ -146,7 +146,8 @@ const Categories = () => {
     useEffect(() => {
       const fetchCategories = async () => {
         try {
-          const response = await axios.get<CategoryInfo[]>('http://localhost:9000/v1/rentals/categories');
+          const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+          const response = await axios.get<CategoryInfo[]>(`${apiUrl}/v1/rentals/categories`);
           if (response.status === 200) {
             setCategories(response.data);
             CategoriesStore.setCategories(response.data)

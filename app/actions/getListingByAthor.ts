@@ -1,9 +1,10 @@
 import axios from "axios";
 
 export default async function getListingByAthour (params:any){
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     const {userId}=params
     
-   let url = `http://localhost:9000/v1/rentals/?userId=${userId}`
+   let url = `${apiUrl}/v1/rentals/?userId=${userId}`
     console.log(url)
     try {
       const response = await axios.get(url);

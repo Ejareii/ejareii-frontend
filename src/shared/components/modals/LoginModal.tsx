@@ -42,10 +42,11 @@ const LoginModal = () => {
   
   const onSubmit: SubmitHandler<FieldValues> = 
   (data) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     console.log(data)
     setIsLoading(true);
     
-    axios.post('http://localhost:9000/v1/auth/login', data)
+    axios.post(`${apiUrl}/v1/auth/login`, data)
     .then((callback) =>{
       Cookies.set("token",callback?.data?.access_token,{ expires: 1 })
       toast.success('Logged in');

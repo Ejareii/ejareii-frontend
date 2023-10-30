@@ -54,7 +54,24 @@ const generateAndReturnIconURL = (iconComponent: React.JSX.Element): string => {
   let iconSvg = ReactDOMServer.renderToStaticMarkup(iconComponent);
   console.log(iconSvg);
 
-  var data = new Blob([iconSvg], { type: "image/svg+xml" });
+  const tempElement = document.createElement('div');
+  tempElement.innerHTML = iconSvg;
+
+// Find the path element within the SVG
+  const pathElement = tempElement.querySelector('path'); 
+  
+  let gpsShapeSVg='';
+  if(pathElement){
+  gpsShapeSVg = `<?xml version="1.0" encoding="utf-8"?>
+  <!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon -->
+  <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">
+  <g><g><path fill="#000000" d="M128,10c-48.9,0-88.5,39.6-88.5,88.5C39.5,147.4,128,246,128,246s88.5-98.6,88.5-147.5C216.5,49.6,176.9,10,128,10z M128,172.5c-41.1,0-74.5-33.4-74.5-74.5c0-41.1,33.4-74.5,74.5-74.5s74.5,33.4,74.5,74.5S169.1,172.5,128,172.5z"/>
+  ${new XMLSerializer().serializeToString(pathElement)}</g></g>
+  </svg>`;
+  }
+
+  var data = new Blob([gpsShapeSVg], { type: "image/svg+xml" });
 
   let svgFileURL = window.URL.createObjectURL(data);
 
@@ -67,13 +84,12 @@ const generateAndReturnIconURL = (iconComponent: React.JSX.Element): string => {
 const Map: React.FC<MapProps> = ({ listings }) => {
   const router = useRouter();
   const params = useSearchParams();
-  
+
   let center = [35.715298, 51.404343];
 
   const [lat, setLat] = useState<number>(center[0]);
   const [lng, setLng] = useState<number>(center[1]);
   const [currentZoom, setCurrentZom] = useState<number>(14);
-
 
   // const handleMapMove = (e) => {
   //   console.log('Map moved to:', e.target.getCenter());
@@ -121,13 +137,10 @@ const Map: React.FC<MapProps> = ({ listings }) => {
       //   map.flyTo(e.latlng, map.getZoom())
       // },
       dragend(e) {
-        const handleDrag = debounce(
-          () => {
-            setLat(map.getCenter().lat);
-            setLng(map.getCenter().lng);
-          },
-          50
-        );
+        const handleDrag = debounce(() => {
+          setLat(map.getCenter().lat);
+          setLng(map.getCenter().lng);
+        }, 50);
         handleDrag();
       },
       zoomend(e) {
@@ -157,20 +170,27 @@ const Map: React.FC<MapProps> = ({ listings }) => {
         attribution={JwagSunnyAtribution}
         accessToken="PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps"
       />
-      {
-        listings?.length && listings.map((_list , _i)=>{
-          // console.log({_list});
-          // let IconComponent = iconDic[_list.category.icon_name];
-          // const customIcon = new L.Icon({
-          //   // iconUrl: "https://images.techhive.com/images/article/2017/01/google-android-apps-100705848-large.jpg?auto=webp&quality=85,70",
-          //   iconUrl:generateAndReturnIconURL(<IconComponent/>),
-          //   iconSize: [32, 32],
-          //   iconAnchor: [16, 32],
-          //   popupAnchor: [0, -32],
-          // });
-          return <Marker key={_i} position={[_list?.latitude, _list?.longitude] as L.LatLngExpression}  />
-        })
-      }
+      {listings?.length &&
+        listings.map((_list, _i) => {
+          console.log({ _list });
+          let IconComponent = iconDic[_list.category.icon_name];
+          const customIcon = new L.Icon({
+            // iconUrl: "https://images.techhive.com/images/article/2017/01/google-android-apps-100705848-large.jpg?auto=webp&quality=85,70",
+            iconUrl: generateAndReturnIconURL(<IconComponent />),
+            iconSize: [32, 32],
+            iconAnchor: [16, 32],
+            popupAnchor: [0, -32],
+          });
+          return (
+            <Marker
+              key={_i}
+              position={
+                [_list?.latitude, _list?.longitude] as L.LatLngExpression
+              }
+              icon={customIcon}
+            />
+          );
+        })}
       {/* <LayerGroup>
         <Circle center={center} pathOptions={fillBlueOptions} radius={200} />
         <Circle

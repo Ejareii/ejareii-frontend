@@ -49,7 +49,6 @@ const JwagSunnyAtribution =
 const googleMapAttribution = "Google Maps";
 const generateAndReturnIconURL = (iconComponent: React.JSX.Element): string => {
   let iconSvg = ReactDOMServer.renderToStaticMarkup(iconComponent);
-  console.log(iconSvg);
 
   //   const tempElement = document.createElement('div');
   //   tempElement.innerHTML = iconSvg;
@@ -57,15 +56,7 @@ const generateAndReturnIconURL = (iconComponent: React.JSX.Element): string => {
   // // Find the path element within the SVG
   //   const pathElement = tempElement.querySelector('path');
 
-  var data = new Blob([iconSvg], { type: "image/svg+xml" });
-
-  let iconFileURL = window.URL.createObjectURL(data);
-
-  console.log({ iconFileURL });
-
   const base64Image = `data:image/svg+xml;base64,${btoa(iconSvg)}`;
-
-  console.log(base64Image);
 
   let gpsShapeSVg = "";
   gpsShapeSVg = `<?xml version="1.0" encoding="utf-8"?>
@@ -79,13 +70,10 @@ const generateAndReturnIconURL = (iconComponent: React.JSX.Element): string => {
   </g>
   </g>
   </svg>`;
-  console.log({ gpsShapeSVg });
 
-  var data = new Blob([gpsShapeSVg], { type: "image/svg+xml" });
+  let data = new Blob([gpsShapeSVg], { type: "image/svg+xml" });
 
   let svgFileURL = window.URL.createObjectURL(data);
-
-  console.log({ svgFileURL });
 
   // returns a URL you can use as a href
   return svgFileURL;
@@ -147,18 +135,25 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
       //   map.flyTo(e.latlng, map.getZoom())
       // },
       dragend(e) {
-        const handleDrag = debounce(() => {
-          setLat(map.getCenter().lat);
-          setLng(map.getCenter().lng);
-        }, 50);
-        handleDrag();
+        setLat(map.getCenter().lat);
+        setLng(map.getCenter().lng);
+        var south = map.getBounds().getSouth();
+        var East = map.getBounds().getEast();
+        var north = map.getBounds().getNorth();
+        var west = map.getBounds().getWest();
+        console.log(222,map);
+        
+        console.log({south , East , north , west});
+        
       },
       zoomend(e) {
-        const handleZoom = debounce(
-          () => setCurrentZom(e?.sourceTarget?._zoom),
-          50
-        );
-        handleZoom();
+        setCurrentZom(e?.sourceTarget?._zoom)
+        var southWest = map.getBounds().getSouthWest();
+        var northEast = map.getBounds().getNorthEast();
+        var northWest = map.getBounds().getNorthWest();
+        var southEast = map.getBounds().getSouthEast();
+        console.log({southWest , northEast , northWest , southEast});
+        
       },
     });
 
@@ -182,7 +177,7 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
       />
       {listings?.length &&
         listings.map((_list, _i) => {
-          console.log({ _list });
+          //console.log({ _list });
           let IconComponent = iconDic[_list.category.icon_name];
           const customIcon = new L.Icon({
             // iconUrl: "https://images.techhive.com/images/article/2017/01/google-android-apps-100705848-large.jpg?auto=webp&quality=85,70",

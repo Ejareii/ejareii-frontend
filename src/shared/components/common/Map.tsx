@@ -54,22 +54,35 @@ const generateAndReturnIconURL = (iconComponent: React.JSX.Element): string => {
   let iconSvg = ReactDOMServer.renderToStaticMarkup(iconComponent);
   console.log(iconSvg);
 
-  const tempElement = document.createElement('div');
-  tempElement.innerHTML = iconSvg;
+  //   const tempElement = document.createElement('div');
+  //   tempElement.innerHTML = iconSvg;
 
-// Find the path element within the SVG
-  const pathElement = tempElement.querySelector('path'); 
-  
-  let gpsShapeSVg='';
-  if(pathElement){
+  // // Find the path element within the SVG
+  //   const pathElement = tempElement.querySelector('path');
+
+  var data = new Blob([iconSvg], { type: "image/svg+xml" });
+
+  let iconFileURL = window.URL.createObjectURL(data);
+
+  console.log({ iconFileURL });
+
+  const base64Image = `data:image/svg+xml;base64,${btoa(iconSvg)}`;
+
+  console.log(base64Image);
+
+  let gpsShapeSVg = "";
   gpsShapeSVg = `<?xml version="1.0" encoding="utf-8"?>
   <!-- Svg Vector Icons : http://www.onlinewebfonts.com/icon -->
   <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 256 256" enable-background="new 0 0 256 256" xml:space="preserve">
-  <g><g><path fill="#000000" d="M128,10c-48.9,0-88.5,39.6-88.5,88.5C39.5,147.4,128,246,128,246s88.5-98.6,88.5-147.5C216.5,49.6,176.9,10,128,10z M128,172.5c-41.1,0-74.5-33.4-74.5-74.5c0-41.1,33.4-74.5,74.5-74.5s74.5,33.4,74.5,74.5S169.1,172.5,128,172.5z"/>
-  ${new XMLSerializer().serializeToString(pathElement)}</g></g>
+  <g>
+  <g>
+  <path fill="#000000" d="M128,10c-48.9,0-88.5,39.6-88.5,88.5C39.5,147.4,128,246,128,246s88.5-98.6,88.5-147.5C216.5,49.6,176.9,10,128,10z M128,172.5c-41.1,0-74.5-33.4-74.5-74.5c0-41.1,33.4-74.5,74.5-74.5s74.5,33.4,74.5,74.5S169.1,172.5,128,172.5z"/>
+  <image x="65" y="30" width="130" height="130" xlink:href="${base64Image}" />
+  </g>
+  </g>
   </svg>`;
-  }
+  console.log({ gpsShapeSVg });
 
   var data = new Blob([gpsShapeSVg], { type: "image/svg+xml" });
 

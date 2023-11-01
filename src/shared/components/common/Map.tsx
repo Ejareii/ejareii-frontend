@@ -89,6 +89,12 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
   const [lng, setLng] = useState<number>(center[1]);
   const [currentZoom, setCurrentZom] = useState<number>(14);
 
+  const [minLat, setMinLat] = useState<number>(center[0]);
+  const [maxLat, setMaxLat] = useState<number>(center[0]);
+
+  const [minLng, setMinLng] = useState<number>(center[1]);
+  const [maxLng, setMaxLng] = useState<number>(center[1]);
+
   // const handleMapMove = (e) => {
   //   console.log('Map moved to:', e.target.getCenter());
   //   // Add your custom logic here
@@ -113,6 +119,10 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
         zoom: currentZoom,
         lat,
         lng,
+        minLat,
+        maxLat,
+        minLng,
+        maxLng,
       };
 
       const url = qs.stringifyUrl(
@@ -124,7 +134,7 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
       );
 
       router.push(url);
-    }, [currentZoom, lat, lng]);
+    }, [currentZoom, lat, lng, minLng, maxLng, minLat, maxLat]);
 
     const map = useMapEvents({
       // click() {
@@ -137,23 +147,22 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
       dragend(e) {
         setLat(map.getCenter().lat);
         setLng(map.getCenter().lng);
-        var south = map.getBounds().getSouth();
-        var East = map.getBounds().getEast();
-        var north = map.getBounds().getNorth();
-        var west = map.getBounds().getWest();
-        console.log(222,map);
         
-        console.log({south , East , north , west});
-        
+        setMinLat(map.getBounds().getSouth())
+        setMaxLat(map.getBounds().getNorth())
+
+        setMaxLng(map.getBounds().getEast())
+        setMinLng(map.getBounds().getWest())
+
       },
       zoomend(e) {
-        setCurrentZom(e?.sourceTarget?._zoom)
-        var southWest = map.getBounds().getSouthWest();
-        var northEast = map.getBounds().getNorthEast();
-        var northWest = map.getBounds().getNorthWest();
-        var southEast = map.getBounds().getSouthEast();
-        console.log({southWest , northEast , northWest , southEast});
-        
+        setCurrentZom(e?.sourceTarget?._zoom);
+
+        setMinLat(map.getBounds().getSouth())
+        setMaxLat(map.getBounds().getNorth())
+
+        setMaxLng(map.getBounds().getEast())
+        setMinLng(map.getBounds().getWest())
       },
     });
 
@@ -182,7 +191,7 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
           const customIcon = new L.Icon({
             // iconUrl: "https://images.techhive.com/images/article/2017/01/google-android-apps-100705848-large.jpg?auto=webp&quality=85,70",
             iconUrl: generateAndReturnIconURL(<IconComponent />),
-            iconSize: [32, 32],
+            iconSize: [40, 40],
             iconAnchor: [16, 32],
             popupAnchor: [0, -32],
           });

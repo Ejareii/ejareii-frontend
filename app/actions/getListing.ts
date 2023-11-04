@@ -2,7 +2,6 @@ import axios from "axios";
 
 export default async function getListings(params:any){
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  console.log(apiUrl,"apiUrl")
     let url:string;
     
     

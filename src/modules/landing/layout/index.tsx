@@ -13,6 +13,7 @@ import getCurrentUser from '@/app/actions/getCurrentUser';
 import  { useEffect, useState } from 'react';
 import GuestInfoModal from '@/src/shared/components/modals/guestInfoModal';
 import HostInfoModal from '@/src/shared/components/modals/HostInfoModal';
+import ForgetPassModal from '@/src/shared/components/modals/ForgetPassModal';
 
 
 // import "swiper/css";
@@ -52,8 +53,9 @@ const LandingLayout = ({
       <body className={myFont.className}>
         <ToasterProvider />
         <RentModal />
-       <GuestInfoModal/>
-       <HostInfoModal/>
+        <GuestInfoModal/>
+        <HostInfoModal/>
+        <ForgetPassModal/>
         <SearchModal />
         <LoginModal />
         <RegisterModal />

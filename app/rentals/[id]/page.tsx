@@ -7,6 +7,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 //import ClientOnly from "@/app/components/ClientOnly";
 //import EmptyState from "@/app/components/EmptyState";
 
+import { useEffect, useState } from "react";
 import getListingById from "@/app/actions/getListingById";
 import getReservations from "@/app/actions/getReservations";
 import { useLocation } from "@/src/hooks/useLocation";
@@ -15,11 +16,20 @@ import ClientOnly from "@/src/shared/components/common/ClientOnly";
 import EmptyState from "@/src/shared/components/common/EmptyState";
 import { RentalEntity } from "@/src/shared/dtos/rental.dto";
 import Cookies from "js-cookie";
-import { useEffect, useState } from "react";
+import { WithContext, Product } from "schema-dts";
+import StructuredData from "@/src/shared/components/common/StructuredData";
+
 
 interface IParams {
   listingId?: string;
 }
+
+const schema: WithContext<Product> = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  color: "red",
+  description: "very good rental",
+};
 
 const ListingPage =  ({ params }: { params: IParams }) => {
   const [currentUser, setCurrentUser] = useState(null);
@@ -92,11 +102,14 @@ console.log("testt")
  
   return (
     // <ClientOnly>
+    <>
+    <StructuredData data={schema} />
       <RentalMainComp
         listing={listing}
         currentUser={currentUser}
         reservations={reservations}
       />
+    </>
     // </ClientOnly>
   );
 }

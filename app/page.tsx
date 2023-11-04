@@ -4,10 +4,23 @@
 import LandingComponent from "@/src/modules/landing";
 import getListings from "./actions/getListing";
 import { RentalEntity } from "@/src/shared/dtos/rental.dto";
+import { Metadata } from "next";
 
 // interface HomeProps {
 //   searchParams: IListingsParams
 // };
+
+
+export async function generateMetadata(params:any) : Promise<Metadata>{
+  return{
+    //metadataBase: new URL("https://ejareii.com/"),
+    title:"Ejareii",
+    description: "اجاره کالا ها در اسرع وقت",
+    alternates:{
+      canonical: "/index"
+    }
+  }
+}
 
 interface ISearchRentlas {
   category?: string;

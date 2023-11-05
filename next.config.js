@@ -17,7 +17,7 @@ const nextConfig = {
         API_URL,
     },
     images: {
-      domains: ['images.unsplash.com','media.istockphoto.com'], // Add other allowed domains if needed
+      domains: ['images.unsplash.com','media.istockphoto.com','localhost'], // Add other allowed domains if needed
     },
     
 }

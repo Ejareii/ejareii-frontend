@@ -48,7 +48,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   onActionConfirm,
   myreservpage
 }) => {
-console.log(reservation)
+console.log(data)
   const router = useRouter();
   const userInfoModal=useUserInfoModal()
   const hostInFoModal=useHostInfoModal()

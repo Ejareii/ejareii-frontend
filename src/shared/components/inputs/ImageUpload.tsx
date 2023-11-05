@@ -118,9 +118,9 @@ const ImageUpload :React.FC<ImageUploadProps>= ({ onFilesChange }) => {
                 alt={file.name}
                 width={100}
                 height={100}
-                onLoad={() => {
-                  URL.revokeObjectURL(file.preview)
-                }}
+                // onLoad={() => {
+                //   URL.revokeObjectURL(file.preview)
+                // }}
                 className='h-full w-full object-contain rounded-md'
               />
               <button

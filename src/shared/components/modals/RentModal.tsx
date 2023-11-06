@@ -73,9 +73,10 @@ const RentModal = () => {
     },
     reset,
   } = useForm<FieldValues>({
-    defaultValues: {
+       defaultValues: {
       category_id: '',
-      location: null,
+      Province: '',
+      subsetProvince:"",
       Strictness_number: 1,
       imageSrc: '',
       price: 100000,
@@ -122,6 +123,7 @@ const RentModal = () => {
     if (step !== STEPS.PRICE) {
       return onNext();
     }
+   console.log(data)
 
     // setIsLoading(true);
   
@@ -139,7 +141,7 @@ const RentModal = () => {
 
     
 
-    console.log(uploadedFiles)
+  
     for (const file of uploadedFiles) {
       try {
         const response = await fetch(file.preview);
@@ -239,9 +241,11 @@ const RentModal = () => {
         />
         <CountrySelect 
           value={location} 
-          onChange={(value) => setCustomValue('location', value)} 
+          onChangeProvince={(value) => setCustomValue('Province', value)} 
+          onChangesubsetProvince={(value) => setCustomValue('subsetProvince', value)} 
+
         />
-        {/* <Map center={location?.latlng} /> */}
+        {/* <Map  /> */}
       </div>
     );
   }

@@ -30,9 +30,20 @@ interface ListingCardProps {
   myreservpage?:boolean
 };
 const categoryDic={
-  "1":"ماشین",
-  "2":"موتورسیکلت"
+  1: "ماشین",
+  2: "موتورسیکلت",
+  3: "دوچرخه",
+  4: "موبایل و تبلت",
+  5: "رایانه",
+  6: "کنسول بازی",
+  7: "دوربین",
+  8: "ابزارآلات",
+  9: "لوازم ورزشی",
+  10: "آلات موسیقی",
+  11: "لباس",
+  12: "کتونی و کفش"
 }
+
  
 const ListingCard: React.FC<ListingCardProps> = ({
   data,

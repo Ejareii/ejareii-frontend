@@ -75,8 +75,8 @@ const RentModal = () => {
   } = useForm<FieldValues>({
        defaultValues: {
       category_id: '',
-      Province: '',
-      subsetProvince:"",
+      province: '',
+      subsetprovince:"",
       Strictness_number: 1,
       imageSrc: '',
       price: 100000,
@@ -241,8 +241,8 @@ const RentModal = () => {
         />
         <CountrySelect 
           value={location} 
-          onChangeProvince={(value) => setCustomValue('Province', value)} 
-          onChangesubsetProvince={(value) => setCustomValue('subsetProvince', value)} 
+          onChangeProvince={(value) => setCustomValue('province', value)} 
+          onChangesubsetProvince={(value) => setCustomValue('subsetprovince', value)} 
 
         />
         {/* <Map  /> */}

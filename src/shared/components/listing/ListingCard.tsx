@@ -187,7 +187,7 @@ console.log(data)
           </div>
         </div>
         <div className="font-semibold text-lg">
-          {"تهران"}, {"نازی آباد"}
+        {data?.province?data?.province:"تهران"} , {data?.subsetprovince?data?.subsetprovince:"تهران"}
         </div>
         <div className="font-light text-neutral-500">
           {reservationDate || categoryDic[data.category_id] as string }

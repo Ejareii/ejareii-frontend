@@ -4,6 +4,7 @@ import L from "leaflet";
 import {
   MapContainer,
   Marker,
+  Popup,
   TileLayer,
   useMap,
   useMapEvents,
@@ -24,6 +25,7 @@ import { useEffect, useState } from "react";
 import qs from "query-string";
 import { useRouter } from "next/navigation";
 import debounce from "lodash/debounce";
+import Carousel from "./Carousel";
 
 // @ts-ignore
 delete L.Icon.Default.prototype._getIconUrl;
@@ -147,7 +149,7 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
       dragend(e) {
         setLat(map.getCenter().lat);
         setLng(map.getCenter().lng);
-        
+
         setMinLat(map.getBounds().getSouth())
         setMaxLat(map.getBounds().getNorth())
 
@@ -168,6 +170,23 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
 
     return null;
   }
+
+  const CustomPopupContent = () => (
+    <div>
+      <h2>name</h2>
+      <p>description</p>
+      <div style={{height:"150px"}}>
+      <Carousel imageLink={[{
+        image_data: "	https://images.unsplash.com/photo-1699292760794-86…xMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8"
+      },
+
+      {
+        image_data: "	https://images.unsplash.com/photo-1699292760794-86…xMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8"
+      }]} />
+      </div>
+      {/* You can add more complex JSX or even other components here */}
+    </div>
+  );
 
   return (
     <MapContainer
@@ -202,7 +221,11 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
                 [_list?.latitude, _list?.longitude] as L.LatLngExpression
               }
               icon={customIcon}
-            />
+            >
+              <Popup>
+                <CustomPopupContent />
+              </Popup>
+            </Marker>
           );
         })}
       {/* <LayerGroup>

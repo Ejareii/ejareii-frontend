@@ -4,7 +4,7 @@ interface IParams {
   userID?: string;
 }
 
-const ProfilePage = async ({ userID }: IParams) => {
+const ProfilePage = async () => {
   return (
     <ProfileMainComp/>
   );

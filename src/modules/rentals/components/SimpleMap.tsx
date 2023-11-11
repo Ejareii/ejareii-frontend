@@ -34,17 +34,14 @@ interface SimpleMapProps {
     center?: number[];
 }
 
-const url = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
-const url2 = "https://tiles.stadiamaps.com/tiles/osm_bright/{z}/{x}/{y}{r}.png";
 const JwagSunnyURL =
-    "https://{s}.tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token={accessToken}";
+  "https://{s}.tile.jawg.io/jawg-sunny/{z}/{x}/{y}{r}.png?access-token={accessToken}";
+const googleMapURL =
+  "https://www.google.cn/maps/vt?lyrs=m@189&gl=cn&x={x}&y={y}&z={z}";
 
-const attribution =
-    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-const attribution2 =
-    '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a> &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
 const JwagSunnyAtribution =
-    '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+  '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+const googleMapAttribution = "Google Maps";
 
 const generateAndReturnIconURL = (iconComponent: React.JSX.Element): string => {
     let iconSvg = ReactDOMServer.renderToStaticMarkup(iconComponent);
@@ -88,8 +85,8 @@ const SimpleMap: React.FC<SimpleMapProps> = ({ listing }) => {
             className="h-[100%] rounded-lg"
         >
             <TileLayer
-                url={JwagSunnyURL}
-                attribution={JwagSunnyAtribution}
+                url={googleMapURL}
+                attribution={googleMapAttribution}
                 accessToken="PyTJUlEU1OPJwCJlW1k0NC8JIt2CALpyuj7uc066O7XbdZCjWEL3WYJIk6dnXtps"
             />
 

@@ -83,7 +83,9 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
   const router = useRouter();
   const params = useSearchParams();
 
-  let center = [35.715298, 51.404343];
+  let ttt = qs.parse(params.toString())
+
+  let center = [ttt?.lat as unknown as number || 35.715298, ttt?.lng as unknown as number || 51.404343];
 
   const [lat, setLat] = useState<number>(center[0]);
   const [lng, setLng] = useState<number>(center[1]);
@@ -173,14 +175,14 @@ const Map: React.FC<MapProps> = ({ listings, targetPath = "/" }) => {
     <div>
       <h2>name</h2>
       <p>description</p>
-      <div style={{height:"150px"}}>
-      <Carousel imageLink={[{
-        image_data: "	https://images.unsplash.com/photo-1699292760794-86…xMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8"
-      },
+      <div style={{ height: "150px" }}>
+        <Carousel imageLink={[{
+          image_data: "	https://images.unsplash.com/photo-1699292760794-86…xMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8"
+        },
 
-      {
-        image_data: "	https://images.unsplash.com/photo-1699292760794-86…xMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8"
-      }]} />
+        {
+          image_data: "	https://images.unsplash.com/photo-1699292760794-86…xMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHx8"
+        }]} />
       </div>
       {/* You can add more complex JSX or even other components here */}
     </div>

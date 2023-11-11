@@ -59,14 +59,8 @@ const RentModal = () => {
   //   setUploadedFiles(files);
   // };
   const handleFileChange = (event:any) => {
-    console.log(event,"e")
-    // const file = event.target.files[0];
-    // const fileObj = {
-    //     file: file,
-    //     path: file.name,
-    //     preview: URL.createObjectURL(file)
-    // };
-    // setUploadedFiles((prev:any) => [...prev, fileObj]);
+
+    setUploadedFiles(event);
 }
 
   const { 
@@ -79,9 +73,10 @@ const RentModal = () => {
     },
     reset,
   } = useForm<FieldValues>({
-    defaultValues: {
+       defaultValues: {
       category_id: '',
-      location: null,
+      province: '',
+      subsetprovince:"",
       Strictness_number: 1,
       imageSrc: '',
       price: 100000,
@@ -117,76 +112,52 @@ const RentModal = () => {
     setStep((value) => value + 1);
   }
 
-  // const onSubmit: SubmitHandler<FieldValues> = (data) => {
-  //   if (step !== STEPS.PRICE) {
-  //     return onNext();
-  //   }
 
+
+
+
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    data.images=uploadedFiles;
     
-  //   setIsLoading(true);
-
-  //   //overwrite data for sumit
-  //   data.category_id=category_Dic[data.category_id] //for finde id for category
     
-  //   console.log(data)
-  //   const token=Cookies.get("token");
-
-  //   const headers = {
-  //     'Content-Type': 'multipart/form-data',
-  //     'authorization': `Bearer ${token}`
-  //   };
-  //   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  //   //append image to data
-  //   data.images=uploadedFiles;
-  //   console.log(data)
-  //   ///
-
-  //   axios.post(`${apiUrl}/v1/rentals/create`, data, { headers })
-  //   .then(() => {
-  //     toast.success('Listing created!');
-  //     router.refresh();
-  //     reset();
-  //     setStep(STEPS.CATEGORY)
-  //     rentModal.onClose();
-  //     setIsLoading(false);
-  //   })
-  //   .catch((e) => {
-  //     console.log(e)
-  //     toast.error('Something went wrong.');
-  //     setIsLoading(false);
-  //   })
- 
-  // }
-
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
-    data.images=uploadedFiles
     if (step !== STEPS.PRICE) {
       return onNext();
     }
-  
-    setIsLoading(true);
+   console.log(data)
+
+    // setIsLoading(true);
   
     // Overwrite data for finding the category id
     data.category_id = category_Dic[data.category_id];
   
     // Create a new FormData instance
     const formData = new FormData();
-  
     for (const key in data) {
-      if (data.hasOwnProperty(key)) {
-        if (key === "images" && data[key] instanceof Array) {
-          data[key].forEach((image: any) => {
-              // If image.file is your actual file blob
-              formData.append("images", image.file);
-          });
-      
-        } else if (key !== "location" && key !== "imageSrc") {  // Exclude fields not in DTO
-          formData.append(key, data[key]);
-        }
+      if(key!=="images"){
+     
+        formData.append(key,data[key])
       }
     }
+
+    
+
   
-    //Authorization
+    for (const file of uploadedFiles) {
+      try {
+        const response = await fetch(file.preview);
+        const blob = await response.blob();
+        formData.append('images', blob, file.path);
+      } catch (error) {
+        // Handle any errors that occur during fetch
+        console.error('Error fetching image blob:', error);
+        toast.error(`Error uploading file: ${file.path}`);
+        // Optionally, break or continue based on your needs
+        // break;
+      }
+    }
+
+
+    // //Authorization
     const token = Cookies.get("token");
     const headers = {
       'authorization': `Bearer ${token}`
@@ -270,9 +241,11 @@ const RentModal = () => {
         />
         <CountrySelect 
           value={location} 
-          onChange={(value) => setCustomValue('location', value)} 
+          onChangeProvince={(value) => setCustomValue('province', value)} 
+          onChangesubsetProvince={(value) => setCustomValue('subsetprovince', value)} 
+
         />
-        <Map center={location?.latlng} />
+        {/* <Map  /> */}
       </div>
     );
   }

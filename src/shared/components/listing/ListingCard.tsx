@@ -30,9 +30,20 @@ interface ListingCardProps {
   myreservpage?:boolean
 };
 const categoryDic={
-  "1":"ماشین",
-  "2":"موتورسیکلت"
+  1: "ماشین",
+  2: "موتورسیکلت",
+  3: "دوچرخه",
+  4: "موبایل و تبلت",
+  5: "رایانه",
+  6: "کنسول بازی",
+  7: "دوربین",
+  8: "ابزارآلات",
+  9: "لوازم ورزشی",
+  10: "آلات موسیقی",
+  11: "لباس",
+  12: "کتونی و کفش"
 }
+
  
 const ListingCard: React.FC<ListingCardProps> = ({
   data,
@@ -48,7 +59,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   onActionConfirm,
   myreservpage
 }) => {
-console.log(reservation)
+console.log(data)
   const router = useRouter();
   const userInfoModal=useUserInfoModal()
   const hostInFoModal=useHostInfoModal()
@@ -176,7 +187,7 @@ console.log(reservation)
           </div>
         </div>
         <div className="font-semibold text-lg">
-          {"تهران"}, {"نازی آباد"}
+        {data?.province?data?.province:"تهران"} , {data?.subsetprovince?data?.subsetprovince:"تهران"}
         </div>
         <div className="font-light text-neutral-500">
           {reservationDate || categoryDic[data.category_id] as string }

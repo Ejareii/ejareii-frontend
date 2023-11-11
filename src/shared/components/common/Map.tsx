@@ -15,11 +15,8 @@ import "leaflet/dist/leaflet.css";
 import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
-import PointerMarker from "public/pics/pointer.svg";
-import { GrGamepad } from "react-icons/gr";
 import { useSearchParams } from "next/navigation";
 import { iconDic } from "../navigation/Categories";
-import { IconType } from "react-icons";
 import { RentalEntity } from "../../dtos/rental.dto";
 import { useEffect, useState } from "react";
 import qs from "query-string";
@@ -49,6 +46,7 @@ const googleMapURL =
 const JwagSunnyAtribution =
   '<a href="http://jawg.io" title="Tiles Courtesy of Jawg Maps" target="_blank">&copy; <b>Jawg</b>Maps</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 const googleMapAttribution = "Google Maps";
+
 const generateAndReturnIconURL = (iconComponent: React.JSX.Element): string => {
   let iconSvg = ReactDOMServer.renderToStaticMarkup(iconComponent);
 

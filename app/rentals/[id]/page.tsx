@@ -80,10 +80,6 @@ const ListingPage =  ({ params }: { params: IParams }) => {
 
 
 
- 
-console.log("testt")
-
-
   if(loading){
     return(
       <>

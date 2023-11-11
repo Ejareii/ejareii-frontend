@@ -11,9 +11,10 @@ import SearchModal from '@/src/shared/components/modals/SearchModal'
 import Cookies from 'js-cookie';
 import getCurrentUser from '@/app/actions/getCurrentUser';
 import  { useEffect, useState } from 'react';
-import GuestInfoModal from '@/src/shared/components/modals/guestInfoModal';
+
 import HostInfoModal from '@/src/shared/components/modals/HostInfoModal';
 import ForgetPassModal from '@/src/shared/components/modals/ForgetPassModal';
+import GuestInfoModal from '@/src/shared/components/modals/GuestInfoModal';
 
 
 // import "swiper/css";

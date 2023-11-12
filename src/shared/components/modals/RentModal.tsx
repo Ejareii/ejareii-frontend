@@ -54,6 +54,9 @@ const RentModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CATEGORY);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  let formData={}
+
+  // rentModal.ad
 
   // const handleFilesChange = (files: File[]) => {
   //   setUploadedFiles(files);
@@ -61,6 +64,19 @@ const RentModal = () => {
   const handleFileChange = (event:any) => {
 
     setUploadedFiles(event);
+}
+if(rentModal.ad){
+   formData = {
+    category_id: rentModal.ad.category_id,
+    province: rentModal.ad.province,
+    subsetprovince: rentModal.ad.subsetprovince,
+    Strictness_number: rentModal.ad.Strictness_number,
+    imageSrc: "",
+    price: rentModal.ad.price,
+    name: rentModal.ad.name,
+    description: rentModal.ad.description
+};
+console.log(formData,"dd")
 }
 
   const { 
@@ -73,7 +89,10 @@ const RentModal = () => {
     },
     reset,
   } = useForm<FieldValues>({
-       defaultValues: {
+       defaultValues:
+       formData?formData:
+       {
+
       category_id: '',
       province: '',
       subsetprovince:"",

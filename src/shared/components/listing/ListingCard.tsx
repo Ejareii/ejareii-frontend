@@ -13,6 +13,7 @@ import Carousel from "../common/Carousel";
 import useUserInfoModal from "@/src/hooks/useUserInfoModal";
 import getUserInfo from "@/app/actions/getUserInfo";
 import useHostInfoModal from "@/src/hooks/useHostInfoModal";
+import useRentModal from "@/src/hooks/useRentModal";
 
 
 interface ListingCardProps {
@@ -28,6 +29,7 @@ interface ListingCardProps {
   actionLabelInfo?:string
   actionLabelConfirm?:string
   myreservpage?:boolean
+  myAdsPage?:boolean
 };
 const categoryDic={
   1: "ماشین",
@@ -57,12 +59,14 @@ const ListingCard: React.FC<ListingCardProps> = ({
   actionLabelInfo,
   actionLabelConfirm,
   onActionConfirm,
-  myreservpage
+  myreservpage,
+  myAdsPage
 }) => {
-console.log(data)
+console.log(data,"s")
   const router = useRouter();
   const userInfoModal=useUserInfoModal()
   const hostInFoModal=useHostInfoModal()
+  const rentalModal = useRentModal()
   // const { getByValue } = useCountries();
 
   // const location = getByValue(data.locationValue);
@@ -107,6 +111,15 @@ console.log(data)
     };
     fetchData();
   }, [disabled, onAction, author_id]);
+
+  const handleUpdateAds=useCallback (
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    rentalModal.onOpen(data)
+
+ 
+  }, [disabled, onAction, author_id]);
+
 
   const handleInfoHost = useCallback (
     (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -208,7 +221,7 @@ console.log(data)
               </div>
         )}
       
-        <div className="flex flex-row gap-2">
+  <div className="flex flex-row gap-2">
   {/* Small Button */}
   {!reservation?.approve && actionLabelConfirm && (
   <Button
@@ -218,11 +231,28 @@ console.log(data)
     />
   ) }
 
-  {!reservation?.approve && onAction && actionLabel && (
+  { !reservation?.approve && onAction && actionLabel && !myAdsPage &&(
     <Button
       disabled={disabled}
       small
       label={"لغو کردن"}
+      onClick={handleCancel}
+    />
+  )}
+
+{myAdsPage && (
+    <Button
+      disabled={disabled}
+      small
+      label={"ویرایش کردن آگهی"}
+      onClick={handleUpdateAds}
+    />
+  )}
+  {myAdsPage && onAction && actionLabel && (
+    <Button
+      disabled={disabled}
+      small
+      label={actionLabel}
       onClick={handleCancel}
     />
   )}

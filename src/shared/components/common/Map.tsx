@@ -66,10 +66,12 @@ const generateAndReturnIconURL = (iconComponent: React.JSX.Element): string => {
   <g>
   <g>
   <path fill="#000000" d="M128,10c-48.9,0-88.5,39.6-88.5,88.5C39.5,147.4,128,246,128,246s88.5-98.6,88.5-147.5C216.5,49.6,176.9,10,128,10z M128,172.5c-41.1,0-74.5-33.4-74.5-74.5c0-41.1,33.4-74.5,74.5-74.5s74.5,33.4,74.5,74.5S169.1,172.5,128,172.5z"/>
-  <image x="65" y="30" width="130" height="130" xlink:href="${base64Image}" />
+  <circle cx="128" cy="98" r="75" fill="white" />
+  <image x="73" y="30" width="110" height="130" xlink:href="${base64Image}" />
   </g>
   </g>
   </svg>`;
+  
 
   let data = new Blob([gpsShapeSVg], { type: "image/svg+xml" });
 

@@ -14,6 +14,8 @@ export type CountrySelectValue = {
 
 interface CountrySelectProps {
   value?: CountrySelectValue;
+  valueProvince?:string
+  valueSubProvince?:string
   onChangeProvince: (value: any) => void;
   onChangesubsetProvince: (value: any) => void;
 
@@ -21,12 +23,14 @@ interface CountrySelectProps {
 
 const CountrySelect: React.FC<CountrySelectProps> = ({
   value,
+  valueSubProvince,
+  valueProvince,
   onChangeProvince,
   onChangesubsetProvince
 }) => {
   const { getAll,getAllProvince } = useCountries();
-  const [selectedProvince, setSelectedProvince] = useState('');
-  const [selectedSubset, setSelectedSubset] = useState('');
+  const [selectedProvince, setSelectedProvince] = useState(valueProvince);
+  const [selectedSubset, setSelectedSubset] = useState(valueSubProvince);
   
   const provinces = getAll();
   const provinceOptions =getAllProvince();
@@ -34,13 +38,13 @@ const CountrySelect: React.FC<CountrySelectProps> = ({
 
   const handleProvinceChange = (selectedOption:any) => {
     console.log(selectedOption)
-    setSelectedProvince(selectedOption ? selectedOption.value.toString() : '');
+    setSelectedProvince(selectedOption ? selectedOption.label.toString() : '');
     setSelectedSubset('');
     onChangeProvince(selectedOption.label ||'');
   };
 
   const handleSubsetChange = (selectedOption: any) => {
-    setSelectedSubset(selectedOption ? selectedOption.value.toString() : '');
+    setSelectedSubset(selectedOption ? selectedOption.label.toString() : '');
     onChangesubsetProvince(selectedOption.label || '');
   };
 
@@ -49,7 +53,7 @@ const CountrySelect: React.FC<CountrySelectProps> = ({
 
   const subsetOptions = selectedProvince
   ? provinces
-      .find((province) => province.id === parseInt(selectedProvince, 10))
+      .find((province) => province.name === selectedProvince)
       ?.subsets.map((subset) => ({
         label: subset.name,
         value: subset.id,
@@ -57,7 +61,7 @@ const CountrySelect: React.FC<CountrySelectProps> = ({
   : [];
 
 
-
+console.log(provinceOptions,"selectedProvince")
   return ( 
     <>
     <div>
@@ -66,7 +70,7 @@ const CountrySelect: React.FC<CountrySelectProps> = ({
         placeholder="هر جا!"
         isClearable
         options={provinceOptions}
-        value={provinceOptions.find((option) => option.value === parseInt(selectedProvince, 10))}
+        value={provinceOptions.find((option) => option.label === selectedProvince)}
         onChange={handleProvinceChange}
         formatOptionLabel={(option: any) => (
           <div className="
@@ -102,7 +106,7 @@ const CountrySelect: React.FC<CountrySelectProps> = ({
       placeholder="هر جا!"
       isClearable
       options={subsetOptions}
-      value={subsetOptions?.find((option) => option.value === parseInt(selectedSubset, 10))}
+      value={subsetOptions?.find((option) => option.label === selectedSubset)}
       onChange={handleSubsetChange}
       formatOptionLabel={(option: any) => (
         <div className="

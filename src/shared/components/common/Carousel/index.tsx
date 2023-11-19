@@ -52,7 +52,7 @@ interface CarouselProps {
 
 
 const Carousel : FC<CarouselProps> =  ({imageLink}) => {
-  console.log(imageLink)
+  // console.log(imageLink)
   return (
     <Swiper
       spaceBetween={20}

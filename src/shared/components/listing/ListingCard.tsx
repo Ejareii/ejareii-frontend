@@ -62,7 +62,7 @@ const ListingCard: React.FC<ListingCardProps> = ({
   myreservpage,
   myAdsPage
 }) => {
-console.log(data,"s")
+// console.log(data,"s")
   const router = useRouter();
   const userInfoModal=useUserInfoModal()
   const hostInFoModal=useHostInfoModal()

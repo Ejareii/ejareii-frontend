@@ -36,6 +36,21 @@ let category_Dic:any={
   "لباس":11,
 }
 
+let category_Dic_ud:any={
+  3: "دوچرخه",
+  4: "موبایل و تبلت",
+  7: "دوربین",
+  9: "لوازم ورزشی",
+  10: "آلات موسیقی",
+  1: "ماشین",
+  2: "موتورسیکلت",
+  5: "رایانه",
+  8: "ابزارآلات",
+  6: "کنسول بازی",
+  12: "کتونی و کفش",
+  11: "لباس"
+}
+
 
 enum STEPS {
   CATEGORY = 0,
@@ -67,7 +82,7 @@ const RentModal = () => {
 }
 if(rentModal.ad){
    formData = {
-    category_id: rentModal.ad.category_id,
+    category_id:category_Dic_ud[rentModal.ad.category_id] ,
     province: rentModal.ad.province,
     subsetprovince: rentModal.ad.subsetprovince,
     Strictness_number: rentModal.ad.Strictness_number,
@@ -90,30 +105,31 @@ console.log(formData,"dd")
     reset,
   } = useForm<FieldValues>({
        defaultValues:
-       formData?formData:
        {
-
-      category_id: '',
-      province: '',
-      subsetprovince:"",
-      Strictness_number: 1,
-      imageSrc: '',
-      price: 100000,
-      name: '',
-      description: '',
+        "category_id": "دوچرخه",
+        "province": "اردبیل",
+        "subsetprovince": "مشکین‌شهر",
+        "Strictness_number": 2,
+        "imageSrc": "",
+        "price": 1500,
+        "name": "dd",
+        "description": "dd",
+        "images": []
     }
   });
 
   const location = watch('location');
   const category_id = watch('category_id');
   const Strictness_number = watch('Strictness_number');
+  const province = watch("province")
+  const subProvince = watch("subsetprovince")
 
-  const imageSrc = watch('imageSrc');
+  console.log(province,"province")
+
 
   const Map = useMemo(() => dynamic(() => import('../common/Map'), { 
     ssr: false 
   }), [location]);
-
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -142,7 +158,6 @@ console.log(formData,"dd")
     if (step !== STEPS.PRICE) {
       return onNext();
     }
-   console.log(data)
 
     // setIsLoading(true);
   
@@ -238,8 +253,9 @@ console.log(formData,"dd")
         {CategoriesStore.categories.map((item) => (
           <div key={item.name} className="col-span-1">
             <CategoryInput
-              onClick={(category_id) => 
-              setCustomValue('category_id', category_id)}
+              onClick={(category_id) => {
+                console.log(category_id)
+              setCustomValue('category_id', category_id)}}
               selected={category_id === item.name}
               label={item.name}
               icon={iconDic[item.icon_name]}
@@ -259,7 +275,8 @@ console.log(formData,"dd")
           size="lg"
         />
         <CountrySelect 
-          value={location} 
+          valueProvince={province}
+          valueSubProvince={subProvince}
           onChangeProvince={(value) => setCustomValue('province', value)} 
           onChangesubsetProvince={(value) => setCustomValue('subsetprovince', value)} 
 

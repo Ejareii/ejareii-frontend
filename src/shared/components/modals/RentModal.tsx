@@ -8,7 +8,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Modal from "./Modal";
 import CategoryInput from '../inputs/CategoryInput';
 import { categories, iconDic } from '../navigation/Categories';
@@ -65,36 +65,15 @@ const RentModal = () => {
   const router = useRouter();
   const rentModal = useRentModal();
   const CategoriesStore=useCategoriesStore()
+  console.log(rentModal?.ad?.rental_id,"tt")
 
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CATEGORY);
   const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
-  let formData={}
 
-  // rentModal.ad
-
-  // const handleFilesChange = (files: File[]) => {
-  //   setUploadedFiles(files);
-  // };
-  const handleFileChange = (event:any) => {
-
-    setUploadedFiles(event);
-}
-if(rentModal.ad){
-   formData = {
-    category_id:category_Dic_ud[rentModal.ad.category_id] ,
-    province: rentModal.ad.province,
-    subsetprovince: rentModal.ad.subsetprovince,
-    Strictness_number: rentModal.ad.Strictness_number,
-    imageSrc: "",
-    price: rentModal.ad.price,
-    name: rentModal.ad.name,
-    description: rentModal.ad.description
-};
-console.log(formData,"dd")
-}
-
+  
   const { 
+    
     register, 
     handleSubmit,
     setValue,
@@ -103,20 +82,39 @@ console.log(formData,"dd")
       errors,
     },
     reset,
-  } = useForm<FieldValues>({
-       defaultValues:
-       {
-        "category_id": "دوچرخه",
-        "province": "اردبیل",
-        "subsetprovince": "مشکین‌شهر",
-        "Strictness_number": 2,
-        "imageSrc": "",
-        "price": 1500,
-        "name": "dd",
-        "description": "dd",
-        "images": []
-    }
-  });
+  } = useForm<FieldValues>();
+  
+  const handleFileChange = (event:any) => {
+
+    setUploadedFiles(event);
+}
+  useEffect(()=>{
+  if (rentModal.ad) {
+    // Set each field value from the ad data
+    setValue('category_id', category_Dic_ud[rentModal.ad.category_id]);
+    setValue('province', rentModal.ad.province);
+    setValue('subsetprovince', rentModal.ad.subsetprovince);
+    setValue('Strictness_number', rentModal.ad.Strictness_number);
+    setValue('price', rentModal.ad.price);
+    setValue('name', rentModal.ad.name);
+    setValue('description', rentModal.ad.description);
+  } else {
+    // Set default values
+    reset({
+      "category_id": "",
+      "province": "",
+      "subsetprovince": "",
+      "Strictness_number": 1,
+      "imageSrc": "",
+      "price": 1500,
+      "name": "",
+      "description": "",
+      "images": []
+    });
+  }
+
+},[rentModal.ad, setValue, reset])
+  
 
   const location = watch('location');
   const category_id = watch('category_id');
@@ -124,8 +122,7 @@ console.log(formData,"dd")
   const province = watch("province")
   const subProvince = watch("subsetprovince")
 
-  console.log(province,"province")
-
+  
 
   const Map = useMemo(() => dynamic(() => import('../common/Map'), { 
     ssr: false 
@@ -138,70 +135,93 @@ console.log(formData,"dd")
       shouldValidate: true
     })
   }
-
+  
   const onBack = () => {
     setStep((value) => value - 1);
   }
-
+  
   const onNext = () => {
     setStep((value) => value + 1);
   }
-
-
-
-
-
+  
+  
+  
+  
+  
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    data.images=uploadedFiles;
-    
-    
     if (step !== STEPS.PRICE) {
       return onNext();
     }
+    
+    setIsLoading(true);
 
-    // setIsLoading(true);
-  
-    // Overwrite data for finding the category id
+
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
     data.category_id = category_Dic[data.category_id];
   
-    // Create a new FormData instance
-    const formData = new FormData();
-    for (const key in data) {
-      if(key!=="images"){
-     
-        formData.append(key,data[key])
-      }
-    }
-
-    
-
-  
-    for (const file of uploadedFiles) {
-      try {
-        const response = await fetch(file.preview);
-        const blob = await response.blob();
-        formData.append('images', blob, file.path);
-      } catch (error) {
-        // Handle any errors that occur during fetch
-        console.error('Error fetching image blob:', error);
-        toast.error(`Error uploading file: ${file.path}`);
-        // Optionally, break or continue based on your needs
-        // break;
-      }
-    }
-
-
-    // //Authorization
     const token = Cookies.get("token");
     const headers = {
       'authorization': `Bearer ${token}`
     };
   
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    
   
-    axios.post(`${apiUrl}/v1/rentals/create`, formData, { headers })
+    
+    
+    
+    if(!rentModal.ad){
+      const formData = new FormData();
+      
+      for (const key in data) {
+        if(key!=="images"){
+          formData.append(key,data[key])
+        }
+      }
+      
+      data.images=uploadedFiles;
+      
+      for (const file of uploadedFiles) {
+        try {
+          const response = await fetch(file.preview);
+          const blob = await response.blob();
+          formData.append('images', blob, file.path);
+        } catch (error) {
+          // Handle any errors that occur during fetch
+          console.error('Error fetching image blob:', error);
+          toast.error(`Error uploading file: ${file.path}`);
+          // Optionally, break or continue based on your needs
+          // break;
+        }
+      }
+
+
+      axios.post(`${apiUrl}/v1/rentals/create`, formData, { headers })
       .then(() => {
-        toast.success('Listing created!');
+        router.refresh();
+        reset();
+        setStep(STEPS.CATEGORY);
+        rentModal.onClose();
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        console.log(e.response.data);  // Log server's error message for more detail
+        toast.error('Something went wrong.');
+        setIsLoading(false);
+      });
+
+    }
+  
+
+
+    // //Authorization
+
+    
+
+  
+    axios.put(`${apiUrl}/v1/rentals/update/${rentModal?.ad?.rental_id}`, data, { headers })
+      .then(() => {
         router.refresh();
         reset();
         setStep(STEPS.CATEGORY);
@@ -218,11 +238,15 @@ console.log(formData,"dd")
   
 
   const actionLabel = useMemo(() => {
-    if (step === STEPS.PRICE) {
+    if (rentModal.ad && step === STEPS.PRICE ) {
+      return 'ویرایش'
+    }else if(step === STEPS.PRICE){
       return 'ساختن'
+    }else{
+
+      return 'بعدی'
     }
 
-    return 'بعدی'
   }, [step]);
 
   const secondaryActionLabel = useMemo(() => {
@@ -323,7 +347,7 @@ console.log(formData,"dd")
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="کالای  خود را چگونه توصیف می کنید؟?"
+          title="کالای  خود را چگونه توصیف می کنید؟"
           subtitle="توصیف کوتاه  بهترین کار را می کند!"
           size='lg'
         />
@@ -373,12 +397,16 @@ console.log(formData,"dd")
     <Modal
       disabled={isLoading}
       isOpen={rentModal.isOpen}
-      title="اجاره دادن کالایتان "
+      title={rentModal.ad?"ویرایش کردن کالایتان":"اجاره دادن کالایتان"}
       actionLabel={actionLabel}
       onSubmit={handleSubmit(onSubmit)}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
-      onClose={rentModal.onClose}
+      onClose={() => {
+        setStep(STEPS.CATEGORY);
+        reset();
+        rentModal.onClose();
+      }}
       body={bodyContent}
     />
   );

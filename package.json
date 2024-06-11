@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev:local": "shx cp .env.development  .env && next dev",
-    "dev:server": "shx cp .env.production .env && next dev",
+    "dev:prod": "shx cp .env.production .env && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

@@ -176,7 +176,7 @@ console.log(reservation)
           </div>
         </div>
         <div className="font-semibold text-lg">
-          {"تهران"}, {"نازی آباد"}
+          {"تهران"}, {"پونک"}
         </div>
         <div className="font-light text-neutral-500">
           {reservationDate || categoryDic[data.category_id] as string }

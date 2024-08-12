@@ -20,11 +20,13 @@ import useRegisterModal from "@/src/hooks/useRegisterModal";
 import Heading from "../common/Heading";
 import Button from "../common/Button";
 import axios from "axios";
+import useForgetPassModal from "@/src/hooks/useForgetPassModal";
 
 const LoginModal = () => {
   const router = useRouter();
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
+  const forgetModal=useForgetPassModal()
   const [isLoading, setIsLoading] = useState(false);
 
   const { 
@@ -42,10 +44,11 @@ const LoginModal = () => {
   
   const onSubmit: SubmitHandler<FieldValues> = 
   (data) => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     console.log(data)
     setIsLoading(true);
     
-    axios.post('http://localhost:9000/v1/auth/login', data)
+    axios.post(`${apiUrl}/v1/auth/login`, data)
     .then((callback) =>{
       Cookies.set("token",callback?.data?.access_token,{ expires: 1 })
       toast.success('Logged in');
@@ -66,6 +69,11 @@ const LoginModal = () => {
     loginModal.onClose();
     registerModal.onOpen();
   }, [loginModal, registerModal])
+
+  const onToggleForget = useCallback(() => {
+    loginModal.onClose();
+    forgetModal.onOpen()
+  }, [loginModal, forgetModal])
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -110,6 +118,16 @@ const LoginModal = () => {
       />
       <div className="
       text-neutral-500 text-center mt-4 font-light">
+         <p>در حالتی که رمز حساب کاربری خود را فراموش کرده اید؟
+          <span 
+            onClick={onToggleForget} 
+            className="
+              text-neutral-800
+              cursor-pointer 
+              hover:underline
+            "
+            > فراموشی رمز عبور </span>
+        </p>
         <p>اولین باری که از اجاره ای استفاده می کنید؟
           <span 
             onClick={onToggle} 

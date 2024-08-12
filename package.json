@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev:local": "shx cp .env.development  .env && next dev",
+    "dev:prod": "shx cp .env.production .env && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -30,7 +31,7 @@
     "leaflet.awesome-markers": "^2.0.5",
     "lodash": "^4.17.21",
     "lucide-react": "^0.259.0",
-    "next": "13.4.6",
+    "next": "^13.5.6",
     "next-cloudinary": "^4.19.0",
     "query-string": "^8.1.0",
     "react": "18.2.0",
@@ -43,6 +44,7 @@
     "react-multi-date-picker": "^4.1.2",
     "react-select": "^5.7.4",
     "react-spinners": "^0.13.8",
+    "schema-dts": "^1.1.2",
     "shx": "^0.3.4",
     "swiper": "^10.2.0",
     "tailwind-merge": "^1.13.2",

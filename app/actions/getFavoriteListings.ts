@@ -1,7 +1,9 @@
 import axios from "axios";
 
 export default async function getFavoriteListings(user_id:string) {
-let url=`http://localhost:9000/v1/user/getFavorite/${user_id}`
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  
+let url=`${apiUrl}/v1/user/getFavorite/${user_id}`
   try {
   
     if (!user_id) {

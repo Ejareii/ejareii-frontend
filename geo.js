@@ -2,74 +2,12 @@ const fs = require('fs');
 
 let rawdata = fs.readFileSync('ir.geojson');
 let provinces = JSON.parse(rawdata);
-console.log(provinces.features.length);
 
-//Ray-Casting algp
-// function isPointInsidePolygon(point, polygonCoordinates) {
-//     const x = point[0];
-//     const y = point[1];
-//     let inside = false;
-
-//     for (let i = 0, j = polygonCoordinates.length - 1; i < polygonCoordinates.length; j = i++) {
-//       const xi = polygonCoordinates[i][0];
-//       const yi = polygonCoordinates[i][1];
-//       const xj = polygonCoordinates[j][0];
-//       const yj = polygonCoordinates[j][1];
-
-//       const intersect =
-//         ((yi > y) !== (yj > y)) &&
-//         (x < ((xj - xi) * (y - yi)) / (yj - yi) + xi);
-
-//       if (intersect) inside = !inside;
-//     }
-
-//     return inside;
-// }
-
-function isPointInsidePolygon(point, geometry) {
-  const x = point[0];
-  const y = point[1];
-  let inside = false;
-
-  const checkIntersect = (xi, yi, xj, yj) =>
-    ((yi > y) !== (yj > y)) && (x < ((xj - xi) * (y - yi)) / (yj - yi) + xi);
-
-  const processRing = (ring) => {
-    for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
-      const xi = ring[i][0];
-      const yi = ring[i][1];
-      const xj = ring[j][0];
-      const yj = ring[j][1];
-
-      if (checkIntersect(xi, yi, xj, yj)) {
-        inside = !inside;
-      }
-    }
-  };
-
-  if (geometry.type === 'Polygon') {
-    processRing(geometry.coordinates[0]); // Process the outer ring
-    // Check for inner rings (holes)
-    for (let k = 1; k < geometry.coordinates.length; k++) {
-      processRing(geometry.coordinates[k]);
-    }
-  } else if (geometry.type === 'MultiPolygon') {
-    geometry.coordinates.forEach((polygonCoordinates) => {
-      processRing(polygonCoordinates[0]); // Process the outer ring
-      // Check for inner rings (holes)
-      for (let k = 1; k < polygonCoordinates.length; k++) {
-        processRing(polygonCoordinates[k]);
-      }
-    });
-  }
-
-  return inside;
-}
 function pointInPolygon(polygon, point) {
   let odd = false;
   for (let i = 0, j = polygon.length - 1; i < polygon.length; i++) {
-    if (((polygon[i][1] > point[1]) !== (polygon[j][1] > point[1]))
-      && (point[0] < ((polygon[j][0] - polygon[i][0]) * (point[1] - polygon[i][1]) / (polygon[j][1] - polygon[i][1]) + polygon[i][0]))) {
+    if (((polygon[i][1] > point["latitude"]) !== (polygon[j][1] > point["latitude"]))
+      && (point["longitude"] < ((polygon[j][0] - polygon[i][0]) * (point["latitude"] - polygon[i][1]) / (polygon[j][1] - polygon[i][1]) + polygon[i][0]))) {
       odd = !odd;
     }
     j = i;
@@ -77,13 +15,33 @@ function pointInPolygon(polygon, point) {
   return odd;
 };
 
-const pointToCheck = [34.38641, 48.6141266];
+const pointToCheck = { "longitude" : 57.956, "latitude":30.9281 };
 
-for (let index = 0; index < provinces.features.length; index++) {
-  const province = provinces.features[index];
-  console.log(province.geometry.coordinates[0][0].length);
+function getProviceFromLatLng(pointToCheck){
+    let foundProvince;
+    for (let index = 0; index < provinces.features.length; index++) {
+        const province = provinces.features[index];
+        const isInsideProvince = pointInPolygon(province.geometry.coordinates[0][0], pointToCheck);
+        if(isInsideProvince) {
+            foundProvince = province
+            break;
+        }
+    }
+    if(foundProvince){
+        const normalizedProvinceObject = {
+            name: foundProvince.name,
+            properties: {
+                'name:fa': foundProvince.properties.name,
+                'name:en': foundProvince.properties['name:en'],
+                'ISO3166-2': foundProvince.properties['ISO3166-2'],
+            },
+            geometry: foundProvince.geometry
+        };
+        return normalizedProvinceObject
+    }else{
 
-  const isInside = pointInPolygon(province.geometry.coordinates[0][0], pointToCheck);
-
-  console.log(province.properties["name:en"], isInside);
+        throw new Error("Could not find province based on privided coordinates !")
+    }
 }
+
+console.log(getProviceFromLatLng(pointToCheck));

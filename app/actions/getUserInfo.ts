@@ -1,8 +1,9 @@
 import axios from "axios";
 
 export default async function getUserInfo (userId:any){
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     
-   let url = `http://localhost:9000/v1/user/${userId}`
+   let url = `${apiUrl}/v1/user/${userId}`
     try {
       const response = await axios.get(url);
   

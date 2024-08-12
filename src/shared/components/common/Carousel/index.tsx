@@ -52,16 +52,16 @@ interface CarouselProps {
 
 
 const Carousel : FC<CarouselProps> =  ({imageLink}) => {
-  let srcCustom;
-  if(imageLink.length>0){
-    srcCustom =imageLink[0]["image_data"]
-  }
+  // console.log(imageLink)
   return (
     <Swiper
       spaceBetween={20}
       slidesPerView={1}
-      onSlideChange={(e) => 
+      onSlideChange={(e) => {
         console.log('slide change')}
+        
+      }  
+
       onSwiper={()=>{}}
       navigation={true}
       pagination={{
@@ -70,59 +70,29 @@ const Carousel : FC<CarouselProps> =  ({imageLink}) => {
       modules={[Navigation , Pagination]}
       className="mySwiper h-[100%]"
     >
-      <SwiperSlide>
-        <Image
-          fill
-          className="
-              object-cover 
-              h-full 
-              w-full 
-              group-hover:scale-110 
-              transition
-            "
-          src={srcCustom||"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
-          alt="Listing"
-        />
-      </SwiperSlide>
-      <SwiperSlide>
-        <Image
-          fill
-          className="
-              object-cover 
-              h-full 
-              w-full 
-              group-hover:scale-110 
-              transition
-            "
-            src={srcCustom||"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
-          alt="Listing"
-        />
-      </SwiperSlide>
-      <SwiperSlide><Image
-        fill
-        className="
-              object-cover 
-              h-full 
-              w-full 
-              group-hover:scale-110 
-              transition
-            "
-            src={srcCustom||"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
-        alt="Listing"
-      /></SwiperSlide>
-      <SwiperSlide><Image
-        fill
-        className="
-              object-cover 
-              h-full 
-              w-full 
-              group-hover:scale-110 
-              transition
-            "
-          src={srcCustom||"https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"}
-           
-        alt="Listing"
-      /></SwiperSlide>
+
+{imageLink && imageLink.length > 0 ? (
+        imageLink.map((link, index) => (
+          <SwiperSlide key={index}>
+            <Image
+              layout="fill"
+              className="object-cover h-full w-full group-hover:scale-110 transition"
+              src={link.image_data}
+              alt={`Listing ${index + 1}`}
+            />
+          </SwiperSlide>
+        ))
+      ) : (
+        <SwiperSlide>
+          <Image
+            layout="fill"
+            className="object-cover h-full w-full group-hover:scale-110 transition"
+            src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+            alt="Listing"
+          />
+        </SwiperSlide>
+      )}    
+  
     </Swiper>
   );
 };

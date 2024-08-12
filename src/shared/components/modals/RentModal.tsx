@@ -8,7 +8,7 @@ import {
   useForm
 } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Modal from "./Modal";
 import CategoryInput from '../inputs/CategoryInput';
 import { categories, iconDic } from '../navigation/Categories';
@@ -36,6 +36,21 @@ let category_Dic:any={
   "لباس":11,
 }
 
+let category_Dic_ud:any={
+  3: "دوچرخه",
+  4: "موبایل و تبلت",
+  7: "دوربین",
+  9: "لوازم ورزشی",
+  10: "آلات موسیقی",
+  1: "ماشین",
+  2: "موتورسیکلت",
+  5: "رایانه",
+  8: "ابزارآلات",
+  6: "کنسول بازی",
+  12: "کتونی و کفش",
+  11: "لباس"
+}
+
 
 enum STEPS {
   CATEGORY = 0,
@@ -50,11 +65,15 @@ const RentModal = () => {
   const router = useRouter();
   const rentModal = useRentModal();
   const CategoriesStore=useCategoriesStore()
+  console.log(rentModal?.ad?.rental_id,"tt")
 
   const [isLoading, setIsLoading] = useState(false);
   const [step, setStep] = useState(STEPS.CATEGORY);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
+  
   const { 
+    
     register, 
     handleSubmit,
     setValue,
@@ -63,28 +82,51 @@ const RentModal = () => {
       errors,
     },
     reset,
-  } = useForm<FieldValues>({
-    defaultValues: {
-      category_id: '',
-      location: null,
-      Strictness_number: 1,
-      imageSrc: '',
-      price: 100000,
-      name: '',
-      description: '',
-    }
-  });
+  } = useForm<FieldValues>();
+  
+  const handleFileChange = (event:any) => {
+
+    setUploadedFiles(event);
+}
+  useEffect(()=>{
+  if (rentModal.ad) {
+    // Set each field value from the ad data
+    setValue('category_id', category_Dic_ud[rentModal.ad.category_id]);
+    setValue('province', rentModal.ad.province);
+    setValue('subsetprovince', rentModal.ad.subsetprovince);
+    setValue('Strictness_number', rentModal.ad.Strictness_number);
+    setValue('price', rentModal.ad.price);
+    setValue('name', rentModal.ad.name);
+    setValue('description', rentModal.ad.description);
+  } else {
+    // Set default values
+    reset({
+      "category_id": "",
+      "province": "",
+      "subsetprovince": "",
+      "Strictness_number": 1,
+      "imageSrc": "",
+      "price": 1500,
+      "name": "",
+      "description": "",
+      "images": []
+    });
+  }
+
+},[rentModal.ad, setValue, reset])
+  
 
   const location = watch('location');
   const category_id = watch('category_id');
   const Strictness_number = watch('Strictness_number');
+  const province = watch("province")
+  const subProvince = watch("subsetprovince")
 
-  const imageSrc = watch('imageSrc');
+  
 
   const Map = useMemo(() => dynamic(() => import('../common/Map'), { 
     ssr: false 
   }), [location]);
-
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -93,55 +135,118 @@ const RentModal = () => {
       shouldValidate: true
     })
   }
-
+  
   const onBack = () => {
     setStep((value) => value - 1);
   }
-
+  
   const onNext = () => {
     setStep((value) => value + 1);
   }
-
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+  
+  
+  
+  
+  
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     if (step !== STEPS.PRICE) {
       return onNext();
     }
     
     setIsLoading(true);
 
-    //overwrite data for sumit
-    data.category_id=category_Dic[data.category_id] //for finde id for category
-    
-    console.log(data)
-    const token=Cookies.get("token");
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+    data.category_id = category_Dic[data.category_id];
+  
+    const token = Cookies.get("token");
     const headers = {
-      'Content-Type': 'multipart/form-data',
       'authorization': `Bearer ${token}`
     };
+  
 
-    axios.post('http://localhost:9000/v1/rentals/create', data, { headers })
-    .then(() => {
-      toast.success('Listing created!');
-      router.refresh();
-      reset();
-      setStep(STEPS.CATEGORY)
-      rentModal.onClose();
-      setIsLoading(false);
-    })
-    .catch(() => {
-      toast.error('Something went wrong.');
-      setIsLoading(false);
-    })
- 
+    
+  
+    
+    
+    
+    if(!rentModal.ad){
+      const formData = new FormData();
+      
+      for (const key in data) {
+        if(key!=="images"){
+          formData.append(key,data[key])
+        }
+      }
+      
+      data.images=uploadedFiles;
+      
+      for (const file of uploadedFiles) {
+        try {
+          const response = await fetch(file.preview);
+          const blob = await response.blob();
+          formData.append('images', blob, file.path);
+        } catch (error) {
+          // Handle any errors that occur during fetch
+          console.error('Error fetching image blob:', error);
+          toast.error(`Error uploading file: ${file.path}`);
+          // Optionally, break or continue based on your needs
+          // break;
+        }
+      }
+
+
+      axios.post(`${apiUrl}/v1/rentals/create`, formData, { headers })
+      .then(() => {
+        router.refresh();
+        reset();
+        setStep(STEPS.CATEGORY);
+        rentModal.onClose();
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        console.log(e.response.data);  // Log server's error message for more detail
+        toast.error('Something went wrong.');
+        setIsLoading(false);
+      });
+
+    }
+  
+
+
+    // //Authorization
+
+    
+
+  
+    axios.put(`${apiUrl}/v1/rentals/update/${rentModal?.ad?.rental_id}`, data, { headers })
+      .then(() => {
+        router.refresh();
+        reset();
+        setStep(STEPS.CATEGORY);
+        rentModal.onClose();
+        setIsLoading(false);
+      })
+      .catch((e) => {
+        console.log(e.response.data);  // Log server's error message for more detail
+        toast.error('Something went wrong.');
+        setIsLoading(false);
+      });
   }
+  
+  
 
   const actionLabel = useMemo(() => {
-    if (step === STEPS.PRICE) {
+    if (rentModal.ad && step === STEPS.PRICE ) {
+      return 'ویرایش'
+    }else if(step === STEPS.PRICE){
       return 'ساختن'
+    }else{
+
+      return 'بعدی'
     }
 
-    return 'بعدی'
   }, [step]);
 
   const secondaryActionLabel = useMemo(() => {
@@ -172,8 +277,9 @@ const RentModal = () => {
         {CategoriesStore.categories.map((item) => (
           <div key={item.name} className="col-span-1">
             <CategoryInput
-              onClick={(category_id) => 
-              setCustomValue('category_id', category_id)}
+              onClick={(category_id) => {
+                console.log(category_id)
+              setCustomValue('category_id', category_id)}}
               selected={category_id === item.name}
               label={item.name}
               icon={iconDic[item.icon_name]}
@@ -193,10 +299,13 @@ const RentModal = () => {
           size="lg"
         />
         <CountrySelect 
-          value={location} 
-          onChange={(value) => setCustomValue('location', value)} 
+          valueProvince={province}
+          valueSubProvince={subProvince}
+          onChangeProvince={(value) => setCustomValue('province', value)} 
+          onChangesubsetProvince={(value) => setCustomValue('subsetprovince', value)} 
+
         />
-        <Map center={location?.latlng} />
+        {/* <Map  /> */}
       </div>
     );
   }
@@ -228,7 +337,7 @@ const RentModal = () => {
           subtitle="به کاربران نشان دهید که کالای شما چگونه است!"
           size='lg'
         />
-        <ImageUpload
+        <ImageUpload onFilesChange={handleFileChange}
         />
       </div>
     )
@@ -238,7 +347,7 @@ const RentModal = () => {
     bodyContent = (
       <div className="flex flex-col gap-8">
         <Heading
-          title="کالای  خود را چگونه توصیف می کنید؟?"
+          title="کالای  خود را چگونه توصیف می کنید؟"
           subtitle="توصیف کوتاه  بهترین کار را می کند!"
           size='lg'
         />
@@ -288,12 +397,16 @@ const RentModal = () => {
     <Modal
       disabled={isLoading}
       isOpen={rentModal.isOpen}
-      title="اجاره دادن کالایتان "
+      title={rentModal.ad?"ویرایش کردن کالایتان":"اجاره دادن کالایتان"}
       actionLabel={actionLabel}
       onSubmit={handleSubmit(onSubmit)}
       secondaryActionLabel={secondaryActionLabel}
       secondaryAction={step === STEPS.CATEGORY ? undefined : onBack}
-      onClose={rentModal.onClose}
+      onClose={() => {
+        setStep(STEPS.CATEGORY);
+        reset();
+        rentModal.onClose();
+      }}
       body={bodyContent}
     />
   );

@@ -5,7 +5,11 @@ import { ArrowUpTrayIcon } from '@heroicons/react/24/solid'
 import Image from 'next/image';
 import {HiXMark} from 'react-icons/hi2'
 
-const ImageUpload = () => {
+interface ImageUploadProps {
+  onFilesChange?: (files: File[]) => void;
+}
+
+const ImageUpload :React.FC<ImageUploadProps>= ({ onFilesChange }) => {
   const [files, setFiles] = useState<File[]>([])
   const [rejected, setRejected] = useState<FileRejection[]>([]);
 
@@ -34,9 +38,12 @@ const ImageUpload = () => {
   })
   
   useEffect(() => {
+    if (onFilesChange) {
+      onFilesChange(files);
+    }
     // Revoke the data uris to avoid memory leaks
     return () => files.forEach(file => URL.revokeObjectURL(file.type))
-  }, [files]);
+  }, [files,onFilesChange]);
 
  const removeFile = (name:any) => {
     setFiles(files => files.filter(file => file.name !== name))
@@ -111,9 +118,9 @@ const ImageUpload = () => {
                 alt={file.name}
                 width={100}
                 height={100}
-                onLoad={() => {
-                  URL.revokeObjectURL(file.preview)
-                }}
+                // onLoad={() => {
+                //   URL.revokeObjectURL(file.preview)
+                // }}
                 className='h-full w-full object-contain rounded-md'
               />
               <button

@@ -28,7 +28,7 @@ const LandingComponent = async ({ listings }: { listings: Array<RentalEntity> })
     <ClientOnly>
       {mapTabIsActive ? (
         <div className={"h-[100vh] "}>
-          <Map listings={listings}/>
+          <Map listings={listings} targetPath={"/"}/>
         </div>
       ) : (
         <Container>

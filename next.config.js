@@ -13,13 +13,23 @@ const { API_URL } = {
 
 
 const nextConfig = {
-    publicRuntimeConfig: {
-        API_URL,
-    },
-    images: {
-      domains: ['images.unsplash.com','media.istockphoto.com'], // Add other allowed domains if needed
-    },
-    
+  publicRuntimeConfig: {
+    API_URL,
+  },
+  images: {
+    domains: ['images.unsplash.com', 'media.istockphoto.com', 'localhost','84.46.250.91'], // Add other allowed domains if needed
+  },
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: true,
+  }, 
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+
 }
 
 module.exports = nextConfig

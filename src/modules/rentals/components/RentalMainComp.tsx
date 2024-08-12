@@ -40,6 +40,7 @@ const RentalMainComp: React.FC<any> = ({
   reservations = [],
   currentUser
 }) => {
+  console.log(listing,"ll")
   const CategoriesStore=useCategoriesStore()
   const loginModal = useLoginModal();
   const router = useRouter();
@@ -86,6 +87,7 @@ const RentalMainComp: React.FC<any> = ({
     const [dateRange, setDateRange] = useState(initialDateRange);
 
     const onCreateReservation = useCallback(() => {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
       const token=Cookies.get("token")
         if (!currentUser) {
           return loginModal.onOpen();
@@ -98,7 +100,7 @@ const RentalMainComp: React.FC<any> = ({
         })
         // setIsLoading(true);
 
-        axios.post('http://localhost:9000/v1/reserv/create', {
+        axios.post(`${apiUrl}/v1/reserv/create`, {
           totalPrice,
           startDate: dateRange.startDate,
           endDate: dateRange.endDate,
@@ -156,7 +158,7 @@ const RentalMainComp: React.FC<any> = ({
         <div className="flex flex-col gap-6">
           <RentalHead
             title={listing.name}
-            locationValue={'تهران ,نازی آباد'}
+            locationValue={`${listing.province} , ${listing.subsetprovince}`}
             imageSrc={'/pics/mock1.webp'}
 
           // imageSrc={listing.imageSrc}

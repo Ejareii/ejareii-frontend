@@ -19,8 +19,9 @@ const useFavorite = ({ listingId, currentUser }: IUseFavorite) => {
   const [hasFavorited, setHasFavorited] = useState<boolean>(false);
 
 useEffect(() => {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   if (currentUser) {
-    axios.get(`http://localhost:9000/v1/user/${currentUser.user_id}`)
+    axios.get(`${apiUrl}/v1/user/${currentUser.user_id}`)
       .then(response => {
         const user = response.data;
         const list = user?.favoriteIds || [];
@@ -40,14 +41,13 @@ const toggleFavorite = useCallback(async (e: React.MouseEvent<HTMLDivElement>) =
   }
 
   try {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
     let request;
 
     if (hasFavorited) {
-      console.log(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`)
-      request = () => axios.delete(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`);
+      request = () => axios.delete(`${apiUrl}/v1/user/${currentUser.user_id}/${listingId}`);
     } else {
-      console.log(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`)
-      request = () => axios.post(`http://localhost:9000/v1/user/${currentUser.user_id}/${listingId}`);
+      request = () => axios.post(`${apiUrl}/v1/user/${currentUser.user_id}/${listingId}`);
     }
 
     await request();
